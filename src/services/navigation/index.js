@@ -4,56 +4,63 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import HomeScreen from '../../screens/MainScreens/HomeScreen';
 import ProfileScreen from '../../screens/MainScreens/ProfileScreen';
 import ExploreScreen from '../../screens/MainScreens/ExploreScreen';
-import {
-    MaterialIcons,
-    AntDesign,
-    Ionicons
-} from '@expo/vector-icons'
+import LoginScreen from '../../screens/AuthScreens/LoginScreen';
+
+import { MaterialIcons, AntDesign, Ionicons } from '@expo/vector-icons';
 
 const Tab = createBottomTabNavigator();
 
 const TabNav = () => (
-    <Tab.Navigator
-        tabBarOptions={{
-            showLabel: false
-        }}
-    >
-        <Tab.Screen
-            name="Home"
-            component={HomeScreen}
-            options={{
-                tabBarIcon: ({ focused, size }) =>
-                    (
-                        <AntDesign name="home" size={size} color={focused ? "blue" : "black"} />
-                    )
-                ,
-            }}
-        />
-        <Tab.Screen
-            name="Add Post"
-            component={ExploreScreen}
-            options={{
-                tabBarIcon: ({ focused, size }) => (
-                    <Ionicons name="ios-add-circle-outline" size={size} color={focused ? "blue" : "black"} />
-                ),
-            }}
-        />
-        <Tab.Screen
-            name="Profile"
-            component={ProfileScreen}
-            options={{
-                tabBarIcon: ({ focused, size }) => (
-                    <MaterialIcons name="person-outline" size={size} color={focused ? "blue" : "black"} />
-                ),
-            }}
-        />
-    </Tab.Navigator>
-)
+  <Tab.Navigator
+    tabBarOptions={{
+      showLabel: false,
+    }}>
+    <Tab.Screen
+      name="Home"
+      component={LoginScreen}
+      options={{
+        tabBarIcon: ({ focused, size }) => (
+          <AntDesign
+            name="home"
+            size={size}
+            color={focused ? 'blue' : 'black'}
+          />
+        ),
+      }}
+    />
+    <Tab.Screen
+      name="Add Post"
+      component={ExploreScreen}
+      options={{
+        tabBarIcon: ({ focused, size }) => (
+          <Ionicons
+            name="ios-add-circle-outline"
+            size={size}
+            color={focused ? 'blue' : 'black'}
+          />
+        ),
+      }}
+    />
+    <Tab.Screen
+      name="Profile"
+      component={ProfileScreen}
+      options={{
+        tabBarIcon: ({ focused, size }) => (
+          <MaterialIcons
+            name="person-outline"
+            size={size}
+            color={focused ? 'blue' : 'black'}
+          />
+        ),
+      }}
+    />
+  </Tab.Navigator>
+);
 
 export default function navigation() {
-    return (
-        <NavigationContainer>
-            <TabNav />
-        </NavigationContainer>
-    );
+  return (
+    <NavigationContainer>
+      <TabNav />
+    </NavigationContainer>
+  );
 }
