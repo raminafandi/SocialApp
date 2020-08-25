@@ -84,7 +84,6 @@ const ProfileScreen = ({}) => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: 'white',
     flex: 1,
     paddingTop: 20,
   },
@@ -102,7 +101,6 @@ const styles = StyleSheet.create({
     borderRadius: 50,
   },
   profileNameContainer: {
-    // alignSelf: 'center',
     paddingHorizontal: 20,
     paddingVertical: 10,
   },
