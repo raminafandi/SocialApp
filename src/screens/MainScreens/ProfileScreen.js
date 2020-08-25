@@ -20,7 +20,6 @@ import {
 const ProfileScreen = ({}) => {
   return (
     <View style={styles.container}>
-      <View style={styles.profileContainer}>
         <View style={styles.profileInitialContainer}>
           <Image
             style={styles.profilePhoto}
@@ -30,8 +29,8 @@ const ProfileScreen = ({}) => {
             }}
           />
           <View style={styles.profileNameContainer}>
-            <Text style={styles.profileName}>mbeer</Text>
-            <Text style={styles.profileType}>Who let the dogs out? </Text>
+            {/* <Text style={styles.profileName}>mbeer</Text> */}
+            <Text style={[styles.profileName, styles.profileType]}>Who let the dogs out? </Text>
           </View>
         </View>
         <View style={styles.headerContainer}>
@@ -44,7 +43,6 @@ const ProfileScreen = ({}) => {
           <View style={styles.header}>
             <Text>Contacts</Text>
           </View>
-          <View style={styles.options}></View>
         </View>
         <View style={styles.profileInfoContainer}>
           <View style={styles.profileInfo}>
@@ -77,7 +75,6 @@ const ProfileScreen = ({}) => {
             <Feather name="bookmark" size={30} color="black" />
           </View>
         </View>
-      </View>
     </View>
   );
 };
@@ -86,10 +83,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingTop: 20,
-  },
-
-  profileContainer: {
-    flexDirection: 'column',
   },
   profileInitialContainer: {
     flexDirection: 'row',
@@ -101,8 +94,8 @@ const styles = StyleSheet.create({
     borderRadius: 50,
   },
   profileNameContainer: {
-    paddingHorizontal: wsize(20),
-    paddingVertical: hsize(10),
+    marginLeft: wsize(30),
+    marginTop: hsize(30),
   },
   profileName: {
     fontSize: 22,
@@ -112,8 +105,8 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   profileInfoContainer: {
-    paddingTop: 5,
-    paddingHorizontal: 25,
+    paddingTop: hsize(10),
+    marginLeft: wsize(14),
   },
   profileInfo: {
     flexDirection: 'row',
@@ -122,7 +115,7 @@ const styles = StyleSheet.create({
     fontSize: 15,
   },
   headerContainer: {
-    paddingHorizontal: wsize(10),
+    marginLeft: wsize(14),
     flexDirection: 'row',
   },
   header: {
@@ -134,22 +127,13 @@ const styles = StyleSheet.create({
     width: '27%',
     marginHorizontal: wsize(5),
   },
-  options: {
-    borderWidth: 1,
-    borderRadius: 3,
-    borderColor: 'grey',
-    alignItems: 'center',
-    padding: 5,
-    width: '10%',
-  },
   followersContainer: {
-    paddingVertical: hsize(10),
+    marginTop: hsize(14),
     flexDirection: 'row',
     justifyContent: 'center',
   },
   followers: {
     alignItems: 'center',
-    padding: 7,
     paddingHorizontal: wsize(15),
   },
   followersNumbers: {
@@ -161,7 +145,8 @@ const styles = StyleSheet.create({
   },
   tabContainer: {
     borderWidth: 1,
-    padding: 7,
+    padding: hsize(9),
+    borderColor: '#DADBDA',
     flexDirection: 'row',
     justifyContent: 'space-around',
   },

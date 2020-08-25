@@ -8,8 +8,8 @@ export const window = {
     height: Dimensions.get('window').height,
 }
 
-export const wsize = (size) => size/window.width * window.width;
-export const hsize = (size) => size/window.height * window.height;
+export const wsize = size => size/375 * window.width;
+export const hsize = size => size/812 * window.height;
 
 export const fontSize = {
     
