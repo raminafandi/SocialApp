@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import HomeScreen from '../../screens/HomeScreen';
-import ProfileScreen from '../../screens/ProfileScreen';
-import ExploreScreen from '../../screens/ExploreScreen';
+import HomeScreen from '../../screens/MainScreens/HomeScreen';
+import ProfileScreen from '../../screens/MainScreens/ProfileScreen';
+import ExploreScreen from '../../screens/MainScreens/ExploreScreen';
 import {
     MaterialIcons,
     AntDesign,

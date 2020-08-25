@@ -9,12 +9,12 @@ import {
   TouchableOpacity,
   Share,
 } from 'react-native';
-
+import {
+  wsize,
+  hsize
+} from '../../entities/constants'
 import {
   Feather,
-  FontAwesome5,
-  Entypo,
-  MaterialIcons,
 } from '@expo/vector-icons';
 
 const ProfileScreen = ({}) => {
@@ -101,8 +101,8 @@ const styles = StyleSheet.create({
     borderRadius: 50,
   },
   profileNameContainer: {
-    paddingHorizontal: 20,
-    paddingVertical: 10,
+    paddingHorizontal: wsize(20),
+    paddingVertical: hsize(10),
   },
   profileName: {
     fontSize: 22,
@@ -122,7 +122,7 @@ const styles = StyleSheet.create({
     fontSize: 15,
   },
   headerContainer: {
-    paddingHorizontal: 10,
+    paddingHorizontal: wsize(10),
     flexDirection: 'row',
   },
   header: {
@@ -132,7 +132,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 5,
     width: '27%',
-    marginHorizontal: 5,
+    marginHorizontal: wsize(5),
   },
   options: {
     borderWidth: 1,
@@ -143,14 +143,14 @@ const styles = StyleSheet.create({
     width: '10%',
   },
   followersContainer: {
-    paddingVertical: 10,
+    paddingVertical: hsize(10),
     flexDirection: 'row',
     justifyContent: 'center',
   },
   followers: {
     alignItems: 'center',
     padding: 7,
-    paddingHorizontal: 15,
+    paddingHorizontal: wsize(15),
   },
   followersNumbers: {
     fontSize: 18,
