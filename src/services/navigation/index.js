@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -9,6 +9,7 @@ import LoginScreen from '../../screens/AuthScreens/LoginScreen';
 import SignupScreen from '../../screens/AuthScreens/SignupScreen';
 import SignupFirstScreen from '../../screens/AuthScreens/SignupFirstScreen';
 
+import { AuthContext, AuthProvider } from '../context/AuthContext'
 import { MaterialIcons, AntDesign, Ionicons } from '@expo/vector-icons';
 
 const Tab = createBottomTabNavigator();
@@ -75,8 +76,19 @@ const TabNav = () => (
 export default function navigation() {
   const [auth, setAuth] = useState(true);
   return (
-    <NavigationContainer>
-      {auth ? <AuthFlow /> : <TabNav />}
-    </NavigationContainer>
+    <AuthProvider>
+      <AuthContext.Consumer>
+        {({auhtenticated}) => (
+          <NavigationContainer>
+            {
+              auhtenticated ?
+                <TabNav />
+                :
+                <AuthFlow />
+            }
+          </NavigationContainer>
+        )}
+      </AuthContext.Consumer>
+    </AuthProvider>
   );
 }
