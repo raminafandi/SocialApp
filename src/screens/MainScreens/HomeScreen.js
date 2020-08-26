@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, SafeAreaView } from 'react-native';
 import {
   window,
   wsize,
@@ -8,9 +8,9 @@ import {
 
 const HomeScreen = ({}) => {
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <Text>Home Screen</Text>
-    </View>
+    </SafeAreaView>
   );
 };
 

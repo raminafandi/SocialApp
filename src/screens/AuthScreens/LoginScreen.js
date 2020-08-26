@@ -19,9 +19,6 @@ const LoginScreen = ({ navigation }) => {
     <View style={styles.container}>
       <Logo />
       <View style={styles.mainContainer}>
-        <Input placeholder="Phone Number, username or email" />
-        <Input placeholder="Password" secureTextEntry />
-        <Button title="Login" />
         <Input
           placeholder="Phone Number, username or email"
         />

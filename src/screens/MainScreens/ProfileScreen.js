@@ -8,6 +8,7 @@ import {
   Image,
   TouchableOpacity,
   Share,
+  SafeAreaView
 } from 'react-native';
 import {
   wsize,
@@ -19,7 +20,7 @@ import {
 
 const ProfileScreen = ({}) => {
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
         <View style={styles.profileInitialContainer}>
           <Image
             style={styles.profilePhoto}
@@ -75,7 +76,7 @@ const ProfileScreen = ({}) => {
             <Feather name="bookmark" size={30} color="black" />
           </View>
         </View>
-    </View>
+    </SafeAreaView>
   );
 };
 
