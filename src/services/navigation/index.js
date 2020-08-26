@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { createStackNavigator } from '@react-navigation/stack'
+import { createStackNavigator } from '@react-navigation/stack';
 import HomeScreen from '../../screens/MainScreens/HomeScreen';
 import ProfileScreen from '../../screens/MainScreens/ProfileScreen';
 import AddPostScreen from '../../screens/MainScreens/AddPostScreen';
 import LoginScreen from '../../screens/AuthScreens/LoginScreen';
 import SignupScreen from '../../screens/AuthScreens/SignupScreen';
+import SignupFirstScreen from '../../screens/AuthScreens/SignupFirstScreen';
 
 import { MaterialIcons, AntDesign, Ionicons } from '@expo/vector-icons';
 
@@ -17,12 +18,12 @@ const AuthFlow = () => (
   <AuthStack.Navigator
     screenOptions={{
       headerShown: false,
-    }}
-  >
+    }}>
     <AuthStack.Screen name="Login" component={LoginScreen} />
+    <AuthStack.Screen name="SignupFirst" component={SignupFirstScreen} />
     <AuthStack.Screen name="Signup" component={SignupScreen} />
   </AuthStack.Navigator>
-)
+);
 
 const TabNav = () => (
   <Tab.Navigator
@@ -72,15 +73,10 @@ const TabNav = () => (
 );
 
 export default function navigation() {
-  const [auth, setAuth] = useState(true)
+  const [auth, setAuth] = useState(true);
   return (
     <NavigationContainer>
-      {
-        auth ?
-          <AuthFlow />
-          :
-          <TabNav />
-      }
+      {auth ? <AuthFlow /> : <TabNav />}
     </NavigationContainer>
   );
 }
