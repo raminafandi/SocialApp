@@ -10,8 +10,6 @@ import { window, wsize, hsize } from '../../entities/constants';
 import Logo from '../../components/Logo';
 import { Button } from 'react-native-elements';
 
-import { Entypo } from '@expo/vector-icons';
-
 const SignupScreen = ({}) => {
   return (
     <View style={styles.container}>
@@ -20,8 +18,14 @@ const SignupScreen = ({}) => {
         <View style={styles.userNameContainer}>
           <TextInput
             style={styles.userNameInput}
-            placeholder="Phone Number, username or email"
+            placeholder="Mobile Number or Email"
           />
+        </View>
+        <View style={styles.userNameContainer}>
+          <TextInput style={styles.userNameInput} placeholder="Full Name" />
+        </View>
+        <View style={styles.userNameContainer}>
+          <TextInput style={styles.userNameInput} placeholder="Username" />
         </View>
         <View style={styles.userNameContainer}>
           <TextInput
@@ -31,7 +35,7 @@ const SignupScreen = ({}) => {
           />
         </View>
         <Button
-          title="Login"
+          title="Sign Up"
           buttonStyle={{
             marginHorizontal: wsize(34),
             marginTop: hsize(13),
@@ -47,29 +51,10 @@ const SignupScreen = ({}) => {
           </TouchableOpacity>
         </View>
       </View>
-      <View style={{ marginTop: hsize(24), alignItems: 'center' }}>
-        <Text style={{ color: '#939094', fontSize: 18, fontWeight: '500' }}>
-          or
-        </Text>
-      </View>
-      <TouchableOpacity>
-        <View style={styles.getHelpContainer}>
-          <Entypo name="facebook" size={28} color="#4267B2" />
-          <Text
-            style={{
-              alignSelf: 'center',
-              marginLeft: wsize(8),
-              fontSize: 18,
-              fontWeight: 'bold',
-              color: '#52BDEB',
-            }}>
-            Log In With Facebook
-          </Text>
-        </View>
-      </TouchableOpacity>
+
       <View style={styles.bottomContainer}>
-        <Text style={styles.getHelpText}>Don't have an account?</Text>
-        <Text style={styles.getHelpLink}>Sign up</Text>
+        <Text style={styles.getHelpText}>Already have an account?</Text>
+        <Text style={styles.getHelpLink}>Log In</Text>
       </View>
     </View>
   );
@@ -107,6 +92,7 @@ const styles = StyleSheet.create({
   getHelpLink: {
     color: '#52BDEB',
     fontWeight: 'bold',
+    marginLeft: wsize(3),
   },
   bottomContainer: {
     justifyContent: 'center',

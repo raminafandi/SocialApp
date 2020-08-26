@@ -5,6 +5,7 @@ import HomeScreen from '../../screens/MainScreens/HomeScreen';
 import ProfileScreen from '../../screens/MainScreens/ProfileScreen';
 import ExploreScreen from '../../screens/MainScreens/ExploreScreen';
 import LoginScreen from '../../screens/AuthScreens/LoginScreen';
+import SignupScreen from '../../screens/AuthScreens/SignupScreen';
 
 import { MaterialIcons, AntDesign, Ionicons } from '@expo/vector-icons';
 
@@ -30,7 +31,7 @@ const TabNav = () => (
     />
     <Tab.Screen
       name="Add Post"
-      component={ExploreScreen}
+      component={SignupScreen}
       options={{
         tabBarIcon: ({ focused, size }) => (
           <Ionicons
