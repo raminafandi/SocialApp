@@ -8,11 +8,11 @@ import {
 } from 'react-native';
 import { window, wsize, hsize } from '../../entities/constants';
 import Logo from '../../components/Logo';
-import { Button, Icon } from 'react-native-elements';
+import { Button } from 'react-native-elements';
 
 import { Entypo } from '@expo/vector-icons';
 
-const LoginScreen = ({}) => {
+const SignupScreen = ({}) => {
   return (
     <View style={styles.container}>
       <Logo />
@@ -52,23 +52,25 @@ const LoginScreen = ({}) => {
           or
         </Text>
       </View>
-      <TouchableOpacity style={styles.getHelpContainer}>
-        <Entypo name="facebook" size={28} color="#4267B2" />
-        <Text
-          style={{
-            alignSelf: 'center',
-            marginLeft: wsize(8),
-            fontSize: 18,
-            fontWeight: 'bold',
-            color: '#52BDEB',
-          }}>
-          Log In With Facebook
-        </Text>
+      <TouchableOpacity>
+        <View style={styles.getHelpContainer}>
+          <Entypo name="facebook" size={28} color="#4267B2" />
+          <Text
+            style={{
+              alignSelf: 'center',
+              marginLeft: wsize(8),
+              fontSize: 18,
+              fontWeight: 'bold',
+              color: '#52BDEB',
+            }}>
+            Log In With Facebook
+          </Text>
+        </View>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.bottomContainer}>
+      <View style={styles.bottomContainer}>
         <Text style={styles.getHelpText}>Don't have an account?</Text>
         <Text style={styles.getHelpLink}>Sign up</Text>
-      </TouchableOpacity>
+      </View>
     </View>
   );
 };
@@ -76,7 +78,6 @@ const LoginScreen = ({}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    height: window.height,
   },
   userNameContainer: {
     borderColor: '#ececec',
@@ -106,7 +107,6 @@ const styles = StyleSheet.create({
   getHelpLink: {
     color: '#52BDEB',
     fontWeight: 'bold',
-    marginLeft: wsize(3),
   },
   bottomContainer: {
     justifyContent: 'center',
@@ -120,4 +120,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default LoginScreen;
+export default SignupScreen;
