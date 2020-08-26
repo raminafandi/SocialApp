@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
-const ExploreScreen = ({}) => {
+const AddPost = ({}) => {
   return (
     <View style={styles.container}>
       <Text>Explore Screen</Text>
@@ -11,4 +11,4 @@ const ExploreScreen = ({}) => {
 
 const styles = StyleSheet.create({});
 
-export default ExploreScreen;
+export default AddPost;

@@ -7,7 +7,7 @@ export default function () {
   return (
     <LinearGradient
       // Background Linear Gradient
-      colors={['#52BDEB', '#6044F0']}
+      colors={['#52BDEB', '#0148FF']}
       start={[0, 1]}
       end={[1, 1]}
       style={styles.gradientStyle}>
@@ -26,7 +26,6 @@ const styles = StyleSheet.create({
     height: hsize(176),
     padding: 15,
     alignItems: 'center',
-    borderRadius: 5,
     justifyContent: 'center',
   },
 });

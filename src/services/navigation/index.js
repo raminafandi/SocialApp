@@ -1,15 +1,28 @@
-import * as React from 'react';
+import React, { useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createStackNavigator } from '@react-navigation/stack'
 import HomeScreen from '../../screens/MainScreens/HomeScreen';
 import ProfileScreen from '../../screens/MainScreens/ProfileScreen';
-import ExploreScreen from '../../screens/MainScreens/ExploreScreen';
+import AddPostScreen from '../../screens/MainScreens/AddPostScreen';
 import LoginScreen from '../../screens/AuthScreens/LoginScreen';
 import SignupScreen from '../../screens/AuthScreens/SignupScreen';
 
 import { MaterialIcons, AntDesign, Ionicons } from '@expo/vector-icons';
 
 const Tab = createBottomTabNavigator();
+const AuthStack = createStackNavigator();
+
+const AuthFlow = () => (
+  <AuthStack.Navigator
+    screenOptions={{
+      headerShown: false,
+    }}
+  >
+    <AuthStack.Screen name="Login" component={LoginScreen} />
+    <AuthStack.Screen name="Signup" component={SignupScreen} />
+  </AuthStack.Navigator>
+)
 
 const TabNav = () => (
   <Tab.Navigator
@@ -18,7 +31,7 @@ const TabNav = () => (
     }}>
     <Tab.Screen
       name="Home"
-      component={LoginScreen}
+      component={HomeScreen}
       options={{
         tabBarIcon: ({ focused, size }) => (
           <AntDesign
@@ -31,7 +44,7 @@ const TabNav = () => (
     />
     <Tab.Screen
       name="Add Post"
-      component={SignupScreen}
+      component={AddPostScreen}
       options={{
         tabBarIcon: ({ focused, size }) => (
           <Ionicons
@@ -59,9 +72,15 @@ const TabNav = () => (
 );
 
 export default function navigation() {
+  const [auth, setAuth] = useState(true)
   return (
     <NavigationContainer>
-      <TabNav />
+      {
+        auth ?
+          <AuthFlow />
+          :
+          <TabNav />
+      }
     </NavigationContainer>
   );
 }

@@ -3,48 +3,33 @@ import {
   View,
   Text,
   StyleSheet,
-  TextInput,
   TouchableOpacity,
 } from 'react-native';
+import TextButton from '../../components/TextButton'
 import { window, wsize, hsize } from '../../entities/constants';
 import Logo from '../../components/Logo';
-import { Button, Icon } from 'react-native-elements';
-
+import Button from '../../components/Button'
+import Input from '../../components/Input'
 import { Entypo } from '@expo/vector-icons';
 
-const LoginScreen = ({}) => {
+const LoginScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <Logo />
       <View style={styles.mainContainer}>
-        <View style={styles.userNameContainer}>
-          <TextInput
-            style={styles.userNameInput}
-            placeholder="Phone Number, username or email"
-          />
-        </View>
-        <View style={styles.userNameContainer}>
-          <TextInput
-            style={styles.userNameInput}
-            placeholder="Password"
-            secureTextEntry
-          />
-        </View>
+        <Input
+          placeholder="Phone Number, username or email"
+        />
+        <Input
+          placeholder="Password"
+          secureTextEntry
+        />
         <Button
           title="Login"
-          buttonStyle={{
-            marginHorizontal: wsize(34),
-            marginTop: hsize(13),
-            borderRadius: 4,
-            padding: 10,
-          }}
-          titleStyle={{}}
         />
         <View style={styles.getHelpContainer}>
           <Text style={styles.getHelpText}>Forgot your login details? </Text>
-          <TouchableOpacity>
-            <Text style={styles.getHelpLink}>Get help signing in</Text>
-          </TouchableOpacity>
+          <TextButton>Get help signing in</TextButton>
         </View>
       </View>
       <View style={{ marginTop: hsize(24), alignItems: 'center' }}>
@@ -65,10 +50,10 @@ const LoginScreen = ({}) => {
           Log In With Facebook
         </Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.bottomContainer}>
+      <View style={styles.bottomContainer}>
         <Text style={styles.getHelpText}>Don't have an account?</Text>
-        <Text style={styles.getHelpLink}>Sign up</Text>
-      </TouchableOpacity>
+        <TextButton onPress={() => navigation.navigate('Signup')}>Sign up</TextButton>
+      </View>
     </View>
   );
 };
@@ -76,20 +61,6 @@ const LoginScreen = ({}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    height: window.height,
-  },
-  userNameContainer: {
-    borderColor: '#ececec',
-    backgroundColor: '#fafafa',
-    borderWidth: 1,
-    borderRadius: 5,
-    height: hsize(68),
-    justifyContent: 'center',
-    marginHorizontal: wsize(34),
-    marginBottom: hsize(2),
-  },
-  userNameInput: {
-    marginStart: 10,
   },
   mainContainer: {
     marginTop: hsize(54),
@@ -102,11 +73,6 @@ const styles = StyleSheet.create({
   },
   getHelpText: {
     color: '#939094',
-  },
-  getHelpLink: {
-    color: '#52BDEB',
-    fontWeight: 'bold',
-    marginLeft: wsize(3),
   },
   bottomContainer: {
     justifyContent: 'center',
