@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import { window, wsize, hsize } from '../../entities/constants';
 import { Entypo } from '@expo/vector-icons';
