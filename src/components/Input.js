@@ -16,12 +16,13 @@ const styles = StyleSheet.create({
     container: {
         borderColor: '#ececec',
         backgroundColor: '#fafafa',
+        alignSelf: 'center',
         borderWidth: 1,
         borderRadius: 5,
-        height: hsize(68),
+        width: wsize(293),
+        height: hsize(56),
         justifyContent: 'center',
-        marginHorizontal: wsize(34),
-        marginBottom: hsize(2),
-        paddingStart: 10,
+        marginBottom: hsize(10),
+        paddingStart: wsize(17),
     },
 })
