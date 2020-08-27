@@ -18,13 +18,14 @@ export default function () {
 
 const styles = StyleSheet.create({
   headerText: {
-    fontSize: 37,
+    fontSize: wsize(48),
+    lineHeight: wsize(46),
     fontWeight: 'bold',
     color: 'white',
   },
   gradientStyle: {
     height: hsize(176),
-    padding: 15,
+    width: '100%',
     alignItems: 'center',
     justifyContent: 'center',
   },

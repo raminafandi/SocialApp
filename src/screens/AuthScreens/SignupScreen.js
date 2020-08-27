@@ -14,26 +14,29 @@ import Input from '../../components/Input'
 const SignupScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
-      <Logo />
-      <View style={styles.mainContainer}>
-        <Input
-          placeholder="Mobile Number or Email"
-        />
-        <Input placeholder="Full Name" />
-        <Input placeholder="Username" />
-        <Input
-          placeholder="Password"
-          secureTextEntry
-        />
-        <Button
-          title="Sign Up"
-        />
-        <View style={styles.getHelpContainer}>
-          <Text style={styles.getHelpText}>Forgot your login details? </Text>
-          <TextButton>Get help signing in</TextButton>
+      <View>
+        <Logo />
+        <View style={styles.mainContainer}>
+          <Input
+            placeholder="Mobile Number or Email"
+          />
+          <Input placeholder="Full Name" />
+          <Input placeholder="Username" />
+          <Input
+            placeholder="Password"
+            secureTextEntry
+          />
+          <Button
+            title="Sign Up"
+            style={{ backgroundColor: '#52BDEB' }}
+            titleStyle={{ color: 'white' }}
+          />
+          <View style={styles.getHelpContainer}>
+            <Text style={styles.getHelpText}>Forgot your login details? </Text>
+            <TextButton>Get help signing in</TextButton>
+          </View>
         </View>
       </View>
-
       <View style={styles.bottomContainer}>
         <Text style={styles.getHelpText}>Already have an account?</Text>
         <TextButton onPress={() => navigation.navigate('Login')}>Log In</TextButton>
@@ -45,6 +48,7 @@ const SignupScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    justifyContent: 'space-between'
   },
   mainContainer: {
     marginTop: hsize(54),
@@ -60,8 +64,6 @@ const styles = StyleSheet.create({
   },
   bottomContainer: {
     justifyContent: 'center',
-    position: 'absolute',
-    bottom: 0,
     flexDirection: 'row',
     borderTopWidth: 1,
     padding: 20,
