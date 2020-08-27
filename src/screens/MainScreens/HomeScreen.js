@@ -1,12 +1,22 @@
 import React from 'react';
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  TouchableOpacity,
+  ScrollView,
+} from 'react-native';
 
-import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
+import Tag from '../../components/Tag';
+import Comment from '../../components/Comment';
+
 import { window, wsize, hsize } from '../../entities/constants';
-import { Entypo } from '@expo/vector-icons';
+import { Entypo, Feather, AntDesign } from '@expo/vector-icons';
 const HomeScreen = ({}) => {
   return (
-    <View style={styles.container}>
-      <View style={styles.post}>
+    <ScrollView style={styles.container}>
+      <View style={styles.postContainer}>
         <View style={styles.postHeaderContainer}>
           <TouchableOpacity style={styles.postHeaderFirst}>
             <Image
@@ -16,7 +26,7 @@ const HomeScreen = ({}) => {
               }}
               style={styles.postHeaderIcon}
             />
-            <Text>sjohansson</Text>
+            <Text style={styles.postHeaderProfileName}>sjohansson</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.postHeaderSecond}>
             <Entypo name="dots-three-horizontal" size={24} color="black" />
@@ -31,9 +41,58 @@ const HomeScreen = ({}) => {
             style={styles.postImage}
           />
         </View>
-        <View style={styles.postActionsContainer}></View>
+        <View style={styles.postActionsContainer}>
+          <View style={styles.postActionsLeft}>
+            <TouchableOpacity>
+              <AntDesign
+                name="hearto"
+                size={28}
+                color="black"
+                style={styles.postActionIcon}
+              />
+            </TouchableOpacity>
+            <TouchableOpacity>
+              <Feather
+                name="message-circle"
+                size={28}
+                color="black"
+                style={styles.postActionIcon}
+              />
+            </TouchableOpacity>
+            <TouchableOpacity>
+              <Entypo
+                name="direction"
+                size={28}
+                color="black"
+                style={styles.postActionIcon}
+              />
+            </TouchableOpacity>
+          </View>
+          <TouchableOpacity>
+            <Feather
+              name="bookmark"
+              size={28}
+              color="black"
+              style={styles.postActionIcon}
+            />
+          </TouchableOpacity>
+        </View>
+        <View style={styles.likesContainer}>
+          <Text style={styles.likesText}>Liked by nee and 115 321 others</Text>
+        </View>
+        <View style={styles.postInfoContainer}>
+          <Text style={styles.profileName}>sjohansson</Text>
+          <Tag title="bucket hat" />
+          <Tag title="white sneakers" />
+          <Tag title="effortless" />
+          <Tag title="sik sok" />
+          <Comment
+            profileName="sassyfairy"
+            comment="This is me hahahaha! I need to get a white hat like that tho"
+          />
+        </View>
       </View>
-    </View>
+    </ScrollView>
   );
 };
 
@@ -42,29 +101,68 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingTop: 30,
   },
+  postContainer: {
+    marginHorizontal: wsize(12),
+    marginBottom: hsize(30),
+  },
   postHeaderContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     width: '100%',
+    marginBottom: hsize(11),
   },
   postHeaderFirst: {
     flexDirection: 'row',
   },
   postHeaderSecond: {
-    marginRight: wsize(14),
+    marginRight: wsize(2),
+  },
+  postHeaderProfileName: {
+    alignSelf: 'center',
+    fontWeight: '500',
+    fontSize: wsize(14),
+    marginLeft: wsize(9),
+    color: '#262626',
   },
   postHeaderIcon: {
-    width: wsize(34),
-    height: hsize(34),
+    width: 34,
+    height: 34,
+    borderRadius: 17,
   },
   postImageContainer: {
     justifyContent: 'center',
     alignItems: 'center',
+    marginBottom: hsize(41),
   },
   postImage: {
-    width: wsize(340),
+    width: wsize(349),
     height: hsize(340),
   },
+  postActionsContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: hsize(13),
+  },
+  postActionsLeft: {
+    flexDirection: 'row',
+    marginLeft: wsize(10),
+  },
+  postActionIcon: {
+    marginRight: wsize(10),
+  },
+  likesContainer: {
+    paddingHorizontal: wsize(4),
+    marginBottom: hsize(11),
+  },
+  likesText: {},
+  postInfoContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    marginLeft: wsize(2),
+  },
+  profileName: {
+    color: '#0148FF',
+    fontWeight: 'bold',
+  },
 });
-
 export default HomeScreen;
