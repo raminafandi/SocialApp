@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import {
   View,
   Text,
@@ -11,8 +11,10 @@ import { wsize, hsize } from '../../entities/constants';
 import { Feather } from '@expo/vector-icons';
 
 import Button from '../../components/Button';
+import { AuthContext } from '../../services/context/AuthContext';
 
-const ProfileScreen = ({}) => {
+const ProfileScreen = ({ }) => {
+  const authContext = useContext(AuthContext)
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.profileInitialContainer}>
@@ -62,6 +64,7 @@ const ProfileScreen = ({}) => {
         </View>
         <Button
           title="sub"
+          onPress={authContext.logout}
           style={{
             backgroundColor: '#0148FF',
             marginTop: wsize(20),
