@@ -6,7 +6,7 @@ import {
   Image,
   TouchableOpacity,
   ScrollView,
-  SafeAreaView
+  SafeAreaView,
 } from 'react-native';
 
 import Tag from '../../components/Tag';
@@ -14,10 +14,10 @@ import Comment from '../../components/Comment';
 
 import { window, wsize, hsize } from '../../entities/constants';
 import { Entypo, Feather, AntDesign } from '@expo/vector-icons';
-const HomeScreen = ({ }) => {
+const HomeScreen = ({}) => {
   const iconSize = wsize(28);
   return (
-    <SafeAreaView style={{flex:1,}}>
+    <SafeAreaView style={{ flex: 1 }}>
       <ScrollView style={styles.container}>
         <View style={styles.postContainer}>
           <View style={styles.postHeaderContainer}>
@@ -32,7 +32,11 @@ const HomeScreen = ({ }) => {
               <Text style={styles.postHeaderProfileName}>sjohansson</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.postHeaderSecond}>
-              <Entypo name="dots-three-horizontal" size={wsize(24)} color="black" />
+              <Entypo
+                name="dots-three-horizontal"
+                size={wsize(24)}
+                color="black"
+              />
             </TouchableOpacity>
           </View>
           <View style={styles.postImageContainer}>
@@ -81,7 +85,9 @@ const HomeScreen = ({ }) => {
             </TouchableOpacity>
           </View>
           <View style={styles.likesContainer}>
-            <Text style={styles.likesText}>Liked by nee and 115 321 others</Text>
+            <Text style={styles.likesText}>
+              Liked by nee and 115 321 others
+            </Text>
           </View>
           <View style={styles.postInfoContainer}>
             <Text style={styles.profileName}>sjohansson</Text>
@@ -97,13 +103,13 @@ const HomeScreen = ({ }) => {
         </View>
       </ScrollView>
     </SafeAreaView>
-
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    paddingTop: 30,
   },
   postContainer: {
     marginHorizontal: wsize(12),

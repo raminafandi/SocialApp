@@ -5,11 +5,12 @@ const CustomButton = ({ style, title, titleStyle, icon, ...props }) => {
   return (
     <TouchableOpacity style={[styles.button, style]} {...props}>
       {icon}
-      <Text adjustsFontSizeToFit style={[styles.text, titleStyle]}>{title}</Text>
+      <Text adjustsFontSizeToFit style={[styles.text, titleStyle]}>
+        {title}
+      </Text>
     </TouchableOpacity>
   );
 };
-
 
 export default CustomButton;
 
@@ -32,5 +33,5 @@ const styles = StyleSheet.create({
     lineHeight: wsize(18),
     letterSpacing: 0.6,
     color: '#313131',
-  }
+  },
 });
