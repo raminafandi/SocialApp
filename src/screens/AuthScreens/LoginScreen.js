@@ -38,7 +38,6 @@ const LoginScreen = ({ navigation }) => {
             <Text style={styles.getHelpText}>Forgot your login details? </Text>
             <TextButton>Get help signing in</TextButton>
           </View>
-        </View>
         <View style={{ marginTop: hsize(24), alignItems: 'center' }}>
           <Text style={{ color: '#939094', fontSize: wsize(18), fontWeight: '500' }}>
             or
@@ -57,6 +56,7 @@ const LoginScreen = ({ navigation }) => {
             Log In With Facebook
         </Text>
         </TouchableOpacity>
+        </View>
         <View style={styles.bottomContainer}>
           <Text style={styles.getHelpText}>Don't have an account?</Text>
           <TextButton onPress={() => navigation.navigate('SignupFirst')}>
