@@ -4,6 +4,7 @@ import {
   Text,
   StyleSheet,
   TouchableOpacity,
+  SafeAreaView
 } from 'react-native';
 import TextButton from '../../components/TextButton'
 import { window, wsize, hsize } from '../../entities/constants';
@@ -16,9 +17,9 @@ import { AuthContext } from '../../services/context/AuthContext'
 const LoginScreen = ({ navigation }) => {
   const authContext = useContext(AuthContext)
   return (
-    <View style={styles.container}>
-      <View>
-        <Logo />
+    <>
+      <Logo />
+      <SafeAreaView style={styles.container}>
         <View style={styles.mainContainer}>
           <Input
             placeholder="Phone Number, username or email"
@@ -30,7 +31,7 @@ const LoginScreen = ({ navigation }) => {
           <Button
             title="Login"
             onPress={authContext.login}
-            style={{ backgroundColor: '#52BDEB' }}
+            style={{ backgroundColor: '#52BDEB', marginTop: wsize(5) }}
             titleStyle={{ color: 'white' }}
           />
           <View style={styles.getHelpContainer}>
@@ -39,12 +40,12 @@ const LoginScreen = ({ navigation }) => {
           </View>
         </View>
         <View style={{ marginTop: hsize(24), alignItems: 'center' }}>
-          <Text style={{ color: '#939094', fontSize: 18, fontWeight: '500' }}>
+          <Text style={{ color: '#939094', fontSize: wsize(18), fontWeight: '500' }}>
             or
         </Text>
         </View>
         <TouchableOpacity style={styles.getHelpContainer}>
-          <Entypo name="facebook" size={28} color="#4267B2" />
+          <Entypo name="facebook" size={wsize(28)} color="#4267B2" />
           <Text
             style={{
               alignSelf: 'center',
@@ -56,21 +57,21 @@ const LoginScreen = ({ navigation }) => {
             Log In With Facebook
         </Text>
         </TouchableOpacity>
-      </View>
-      <View style={styles.bottomContainer}>
-        <Text style={styles.getHelpText}>Don't have an account?</Text>
-        <TextButton onPress={() => navigation.navigate('SignupFirst')}>
-          Sign up
+        <View style={styles.bottomContainer}>
+          <Text style={styles.getHelpText}>Don't have an account?</Text>
+          <TextButton onPress={() => navigation.navigate('SignupFirst')}>
+            Sign up
         </TextButton>
-      </View>
-    </View>
+        </View>
+      </SafeAreaView>
+    </>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
   },
   mainContainer: {
     marginTop: hsize(54),
@@ -86,10 +87,10 @@ const styles = StyleSheet.create({
   },
   bottomContainer: {
     justifyContent: 'center',
+    alignItems: 'center',
     flexDirection: 'row',
     borderTopWidth: 1,
-    paddingTop: hsize(30),
-    paddingBottom: hsize(33),
+    height: hsize(79),
     width: '100%',
     borderColor: '#DADBDA',
   },

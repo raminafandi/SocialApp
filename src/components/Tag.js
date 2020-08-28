@@ -2,10 +2,10 @@ import React from 'react';
 import { TouchableOpacity, Text, StyleSheet } from 'react-native';
 import { wsize } from '../entities/constants';
 
-export default function Tag({ title }) {
+export default function Tag({ title, style, titleStyle, ...props }) {
   return (
-    <TouchableOpacity style={styles.tag}>
-      <Text style={styles.tagText}>{title}</Text>
+    <TouchableOpacity style={[styles.tag, style]} {...props}>
+      <Text style={[styles.tagText, titleStyle]}>{title}</Text>
     </TouchableOpacity>
   );
 }

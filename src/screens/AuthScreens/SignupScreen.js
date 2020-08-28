@@ -5,6 +5,7 @@ import {
   StyleSheet,
   TextInput,
   TouchableOpacity,
+  SafeAreaView
 } from 'react-native';
 import { window, wsize, hsize } from '../../entities/constants';
 import Logo from '../../components/Logo';
@@ -13,9 +14,9 @@ import Button from '../../components/Button'
 import Input from '../../components/Input'
 const SignupScreen = ({ navigation }) => {
   return (
-    <View style={styles.container}>
-      <View>
-        <Logo />
+    <>
+      <Logo />
+      <SafeAreaView style={styles.container}>
         <View style={styles.mainContainer}>
           <Input
             placeholder="Mobile Number or Email"
@@ -28,7 +29,7 @@ const SignupScreen = ({ navigation }) => {
           />
           <Button
             title="Sign Up"
-            style={{ backgroundColor: '#52BDEB' }}
+            style={{ backgroundColor: '#52BDEB', marginTop: wsize(5) }}
             titleStyle={{ color: 'white' }}
           />
           <View style={styles.getHelpContainer}>
@@ -36,12 +37,12 @@ const SignupScreen = ({ navigation }) => {
             <TextButton>Get help signing in</TextButton>
           </View>
         </View>
-      </View>
       <View style={styles.bottomContainer}>
         <Text style={styles.getHelpText}>Already have an account?</Text>
         <TextButton onPress={() => navigation.navigate('Login')}>Log In</TextButton>
       </View>
-    </View>
+    </SafeAreaView>
+    </>
   );
 };
 
@@ -64,10 +65,11 @@ const styles = StyleSheet.create({
   },
   bottomContainer: {
     justifyContent: 'center',
+    alignItems: 'center',
     flexDirection: 'row',
     borderTopWidth: 1,
-    padding: 20,
     width: '100%',
+    height: hsize(79),
     borderColor: '#DADBDA',
   },
 });

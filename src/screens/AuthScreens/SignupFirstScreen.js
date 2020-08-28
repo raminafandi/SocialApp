@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, SafeAreaView } from 'react-native';
 import TextButton from '../../components/TextButton';
 import { window, wsize, hsize } from '../../entities/constants';
 import Logo from '../../components/Logo';
@@ -8,16 +8,17 @@ import Input from '../../components/Input';
 import { Entypo, Ionicons, AntDesign } from '@expo/vector-icons';
 
 const LoginScreen = ({ navigation }) => {
+  const iconSize = wsize(24);
   return (
-    <View style={styles.container}>
-      <View>
-        <Logo />
+    <>
+      <Logo />
+      <SafeAreaView style={styles.container}>
         <View style={styles.mainContainer}>
           <Button
             icon={
               <Ionicons
                 name="md-person"
-                size={24}
+                size={iconSize}
                 color="black"
                 style={styles.iconStyle}
               />
@@ -31,7 +32,7 @@ const LoginScreen = ({ navigation }) => {
             icon={
               <Entypo
                 name="facebook"
-                size={24}
+                size={iconSize}
                 color="#4267B2"
                 style={styles.iconStyle}
               />
@@ -44,7 +45,7 @@ const LoginScreen = ({ navigation }) => {
             icon={
               <AntDesign
                 name="google"
-                size={24}
+                size={iconSize}
                 color="black"
                 style={styles.iconStyle}
               />
@@ -54,14 +55,14 @@ const LoginScreen = ({ navigation }) => {
             titleStyle={styles.titleStyle}
           />
         </View>
-      </View>
-      <View style={styles.bottomContainer}>
-        <Text style={styles.getHelpText}>Already have an account?</Text>
-        <TextButton onPress={() => navigation.navigate('Login')}>
-          Log In
+        <View style={styles.bottomContainer}>
+          <Text style={styles.getHelpText}>Already have an account?</Text>
+          <TextButton onPress={() => navigation.navigate('Login')}>
+            Log In
         </TextButton>
-      </View>
-    </View>
+        </View>
+      </SafeAreaView>
+    </>
   );
 };
 
@@ -84,11 +85,12 @@ const styles = StyleSheet.create({
   },
   bottomContainer: {
     justifyContent: 'center',
+    alignItems: 'center',
     position: 'absolute',
     bottom: 0,
     flexDirection: 'row',
     borderTopWidth: 1,
-    padding: 20,
+    height: hsize(79),
     width: '100%',
     borderColor: '#DADBDA',
   },

@@ -6,6 +6,7 @@ import {
   Image,
   TouchableOpacity,
   ScrollView,
+  SafeAreaView
 } from 'react-native';
 
 import Tag from '../../components/Tag';
@@ -13,93 +14,96 @@ import Comment from '../../components/Comment';
 
 import { window, wsize, hsize } from '../../entities/constants';
 import { Entypo, Feather, AntDesign } from '@expo/vector-icons';
-const HomeScreen = ({}) => {
+const HomeScreen = ({ }) => {
+  const iconSize = wsize(28);
   return (
-    <ScrollView style={styles.container}>
-      <View style={styles.postContainer}>
-        <View style={styles.postHeaderContainer}>
-          <TouchableOpacity style={styles.postHeaderFirst}>
+    <SafeAreaView style={{flex:1,}}>
+      <ScrollView style={styles.container}>
+        <View style={styles.postContainer}>
+          <View style={styles.postHeaderContainer}>
+            <TouchableOpacity style={styles.postHeaderFirst}>
+              <Image
+                source={{
+                  uri:
+                    'https://m.media-amazon.com/images/M/MV5BMTM3OTUwMDYwNl5BMl5BanBnXkFtZTcwNTUyNzc3Nw@@._V1_.jpg',
+                }}
+                style={styles.postHeaderIcon}
+              />
+              <Text style={styles.postHeaderProfileName}>sjohansson</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.postHeaderSecond}>
+              <Entypo name="dots-three-horizontal" size={wsize(24)} color="black" />
+            </TouchableOpacity>
+          </View>
+          <View style={styles.postImageContainer}>
             <Image
               source={{
                 uri:
-                  'https://m.media-amazon.com/images/M/MV5BMTM3OTUwMDYwNl5BMl5BanBnXkFtZTcwNTUyNzc3Nw@@._V1_.jpg',
+                  'https://cdn.kimkim.com/files/a/content_articles/featured_photos/40a4a0466cf71488066604a768343bbd2e3ec887/big-cc0db690aecc5bfb792026baff489302.jpg',
               }}
-              style={styles.postHeaderIcon}
+              style={styles.postImage}
             />
-            <Text style={styles.postHeaderProfileName}>sjohansson</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.postHeaderSecond}>
-            <Entypo name="dots-three-horizontal" size={24} color="black" />
-          </TouchableOpacity>
-        </View>
-        <View style={styles.postImageContainer}>
-          <Image
-            source={{
-              uri:
-                'https://cdn.kimkim.com/files/a/content_articles/featured_photos/40a4a0466cf71488066604a768343bbd2e3ec887/big-cc0db690aecc5bfb792026baff489302.jpg',
-            }}
-            style={styles.postImage}
-          />
-        </View>
-        <View style={styles.postActionsContainer}>
-          <View style={styles.postActionsLeft}>
-            <TouchableOpacity>
-              <AntDesign
-                name="hearto"
-                size={28}
-                color="black"
-                style={styles.postActionIcon}
-              />
-            </TouchableOpacity>
+          </View>
+          <View style={styles.postActionsContainer}>
+            <View style={styles.postActionsLeft}>
+              <TouchableOpacity>
+                <AntDesign
+                  name="hearto"
+                  size={iconSize}
+                  color="black"
+                  style={styles.postActionIcon}
+                />
+              </TouchableOpacity>
+              <TouchableOpacity>
+                <Feather
+                  name="message-circle"
+                  size={iconSize}
+                  color="black"
+                  style={styles.postActionIcon}
+                />
+              </TouchableOpacity>
+              <TouchableOpacity>
+                <Entypo
+                  name="direction"
+                  size={iconSize}
+                  color="black"
+                  style={styles.postActionIcon}
+                />
+              </TouchableOpacity>
+            </View>
             <TouchableOpacity>
               <Feather
-                name="message-circle"
-                size={28}
-                color="black"
-                style={styles.postActionIcon}
-              />
-            </TouchableOpacity>
-            <TouchableOpacity>
-              <Entypo
-                name="direction"
-                size={28}
+                name="bookmark"
+                size={iconSize}
                 color="black"
                 style={styles.postActionIcon}
               />
             </TouchableOpacity>
           </View>
-          <TouchableOpacity>
-            <Feather
-              name="bookmark"
-              size={28}
-              color="black"
-              style={styles.postActionIcon}
+          <View style={styles.likesContainer}>
+            <Text style={styles.likesText}>Liked by nee and 115 321 others</Text>
+          </View>
+          <View style={styles.postInfoContainer}>
+            <Text style={styles.profileName}>sjohansson</Text>
+            <Tag title="bucket hat" />
+            <Tag title="white sneakers" />
+            <Tag title="effortless" />
+            <Tag title="sik sok" />
+            <Comment
+              profileName="sassyfairy"
+              comment="This is me hahahaha! I need to get a white hat like that tho"
             />
-          </TouchableOpacity>
+          </View>
         </View>
-        <View style={styles.likesContainer}>
-          <Text style={styles.likesText}>Liked by nee and 115 321 others</Text>
-        </View>
-        <View style={styles.postInfoContainer}>
-          <Text style={styles.profileName}>sjohansson</Text>
-          <Tag title="bucket hat" />
-          <Tag title="white sneakers" />
-          <Tag title="effortless" />
-          <Tag title="sik sok" />
-          <Comment
-            profileName="sassyfairy"
-            comment="This is me hahahaha! I need to get a white hat like that tho"
-          />
-        </View>
-      </View>
-    </ScrollView>
+      </ScrollView>
+    </SafeAreaView>
+
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 30,
   },
   postContainer: {
     marginHorizontal: wsize(12),
@@ -125,9 +129,9 @@ const styles = StyleSheet.create({
     color: '#262626',
   },
   postHeaderIcon: {
-    width: 34,
-    height: 34,
-    borderRadius: 17,
+    width: wsize(34),
+    height: wsize(34),
+    borderRadius: wsize(17),
   },
   postImageContainer: {
     justifyContent: 'center',

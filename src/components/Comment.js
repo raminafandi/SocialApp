@@ -12,13 +12,17 @@ export default function Comment({ style, profileName, comment }) {
 }
 
 const styles = StyleSheet.create({
+  commentContainer: {
+    flexDirection: 'row',
+    width: wsize(327),
+  },
   profileName: {
     color: '#0148FF',
     fontWeight: 'bold',
   },
-
-  commentContainer: {
-    flexDirection: 'row',
+  
+  commentText: {
+    marginLeft: wsize(4),
+    flexShrink: 1
   },
-  commentText: {},
 });
