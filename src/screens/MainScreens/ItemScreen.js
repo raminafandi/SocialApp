@@ -14,7 +14,7 @@ import { Entypo, Feather, AntDesign } from '@expo/vector-icons';
 import TextButton from '../../components/TextButton';
 import Tag from '../../components/Tag';
 
-const AddPostScreen = ({}) => {
+const ItemScreen = ({}) => {
   const iconSize = wsize(26);
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -117,4 +117,4 @@ const styles = StyleSheet.create({
     paddingVertical: hsize(13),
   },
 });
-export default AddPostScreen;
+export default ItemScreen;
