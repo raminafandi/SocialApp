@@ -4,13 +4,13 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import HomeScreen from '../../screens/MainScreens/HomeScreen';
 import ProfileScreen from '../../screens/MainScreens/ProfileScreen';
+import ItemScreen from '../../screens/MainScreens/ItemScreen';
 import AddPostScreen from '../../screens/MainScreens/AddPostScreen';
 import LoginScreen from '../../screens/AuthScreens/LoginScreen';
 import SignupScreen from '../../screens/AuthScreens/SignupScreen';
 import SignupFirstScreen from '../../screens/AuthScreens/SignupFirstScreen';
-import LoadingScreen from '../../screens/OtherScreens/LoadingScreen'
-
-import { AuthContext, AuthProvider } from '../context/AuthContext'
+import LoadingScreen from '../../screens/OtherScreens/LoadingScreen';
+import { AuthContext, AuthProvider } from '../context/AuthContext';
 import { MaterialIcons, AntDesign, Ionicons } from '@expo/vector-icons';
 
 const Tab = createBottomTabNavigator();
@@ -27,6 +27,21 @@ const AuthFlow = () => (
   </AuthStack.Navigator>
 );
 
+const ProfileStack = createStackNavigator();
+function ProfileStackScreen() {
+  return (
+    <ProfileStack.Navigator>
+      <ProfileStack.Screen
+        name="Profile"
+        component={ProfileScreen}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <ProfileStack.Screen name="Item" component={ItemScreen} />
+    </ProfileStack.Navigator>
+  );
+}
 const TabNav = () => (
   <Tab.Navigator
     tabBarOptions={{
@@ -60,7 +75,7 @@ const TabNav = () => (
     />
     <Tab.Screen
       name="Profile"
-      component={ProfileScreen}
+      component={ProfileStackScreen}
       options={{
         tabBarIcon: ({ focused, size }) => (
           <MaterialIcons
@@ -80,20 +95,16 @@ export default React.memo(function navigation() {
       <AuthContext.Consumer>
         {({ auhtenticated, loading }) => (
           <NavigationContainer>
-            {
-              loading
-                ?
-                <LoadingScreen />
-                :
-                auhtenticated
-                  ?
-                  <TabNav />
-                  :
-                  <AuthFlow />
-            }
+            {loading ? (
+              <LoadingScreen />
+            ) : auhtenticated ? (
+              <TabNav />
+            ) : (
+              <AuthFlow />
+            )}
           </NavigationContainer>
         )}
       </AuthContext.Consumer>
     </AuthProvider>
   );
-})
+});

@@ -14,34 +14,29 @@ import { Entypo, Feather, AntDesign } from '@expo/vector-icons';
 import TextButton from '../../components/TextButton';
 import Tag from '../../components/Tag';
 
-const ItemScreen = ({}) => {
+const ItemScreen = ({ route }) => {
   const iconSize = wsize(26);
+  const { img, title, price, info, author } = route.params;
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <View style={styles.container}>
+      <ScrollView style={styles.container}>
         <View style={styles.postContainer}>
           <View style={styles.postImageContainer}>
             <Image
               source={{
-                uri: 'https://i.imgur.com/IkNSDQF.jpg',
+                uri: img,
               }}
               style={styles.postImage}
             />
           </View>
           <View style={styles.postInfoContainer}>
-            <Text style={styles.postTitle}>Geralt of Rivia Collection</Text>
+            <Text style={styles.postTitle}>{title}</Text>
             <Text style={styles.postBrand}>CDPR</Text>
-            <Text style={styles.postPrice}>$50</Text>
-            <Text style={styles.postDescription}>
-              Careless white bucket hat with metal decor
-            </Text>
+            <Text style={styles.postPrice}>{price}</Text>
+            <Text style={styles.postDescription}>{info}</Text>
             <View style={{ flexDirection: 'row' }}>
               <Text style={styles.postPublisher}>added by</Text>
-              <TextButton
-                style={styles.postPublisherLink}
-                onPress={() => navigation.navigate('SignupFirst')}>
-                neonfava
-              </TextButton>
+              <TextButton style={styles.postPublisherLink}>{author}</TextButton>
             </View>
             <View style={styles.postActions}>
               <TouchableOpacity>
@@ -61,7 +56,7 @@ const ItemScreen = ({}) => {
             </View>
           </View>
         </View>
-      </View>
+      </ScrollView>
     </SafeAreaView>
   );
 };

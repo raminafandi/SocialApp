@@ -12,9 +12,11 @@ import { Feather } from '@expo/vector-icons';
 
 import Button from '../../components/Button';
 import { AuthContext } from '../../services/context/AuthContext';
+import { FlatList } from 'react-native-gesture-handler';
 
-const ProfileScreen = ({ }) => {
-  const authContext = useContext(AuthContext)
+import data from '../../data/mock.json';
+const ProfileScreen = ({ navigation }) => {
+  const authContext = useContext(AuthContext);
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.profileInitialContainer}>
@@ -76,7 +78,6 @@ const ProfileScreen = ({ }) => {
           }}
         />
       </View>
-
       <View style={styles.tabContainer}>
         <View style={styles.tab}>
           <Feather name="folder" size={30} color="black" />
@@ -84,6 +85,23 @@ const ProfileScreen = ({ }) => {
         <View style={styles.tab}>
           <Feather name="bookmark" size={30} color="black" />
         </View>
+      </View>
+      <View>
+        <FlatList
+          numColumns={3}
+          data={data}
+          renderItem={({ item }) => (
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate('Item', item);
+              }}>
+              <Image
+                style={{ width: wsize(124), height: hsize(123) }}
+                source={{ uri: item.img }}
+              />
+            </TouchableOpacity>
+          )}
+        />
       </View>
     </SafeAreaView>
   );
