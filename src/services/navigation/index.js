@@ -8,6 +8,7 @@ import AddPostScreen from '../../screens/MainScreens/AddPostScreen';
 import LoginScreen from '../../screens/AuthScreens/LoginScreen';
 import SignupScreen from '../../screens/AuthScreens/SignupScreen';
 import SignupFirstScreen from '../../screens/AuthScreens/SignupFirstScreen';
+import LoadingScreen from '../../screens/OtherScreens/LoadingScreen'
 
 import { AuthContext, AuthProvider } from '../context/AuthContext'
 import { MaterialIcons, AntDesign, Ionicons } from '@expo/vector-icons';
@@ -73,22 +74,26 @@ const TabNav = () => (
   </Tab.Navigator>
 );
 
-export default function navigation() {
-  const [auth, setAuth] = useState(true);
+export default React.memo(function navigation() {
   return (
     <AuthProvider>
       <AuthContext.Consumer>
-        {({auhtenticated}) => (
+        {({ auhtenticated, loading }) => (
           <NavigationContainer>
             {
-              auhtenticated ?
-                <TabNav />
+              loading
+                ?
+                <LoadingScreen />
                 :
-                <AuthFlow />
+                auhtenticated
+                  ?
+                  <TabNav />
+                  :
+                  <AuthFlow />
             }
           </NavigationContainer>
         )}
       </AuthContext.Consumer>
     </AuthProvider>
   );
-}
+})

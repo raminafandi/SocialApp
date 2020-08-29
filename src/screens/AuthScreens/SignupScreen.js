@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useContext } from 'react';
 import {
   View,
   Text,
@@ -8,11 +8,15 @@ import {
   SafeAreaView
 } from 'react-native';
 import { window, wsize, hsize } from '../../entities/constants';
+import { AuthContext } from '../../services/context/AuthContext'
 import Logo from '../../components/Logo';
 import TextButton from '../../components/TextButton'
 import Button from '../../components/Button'
 import Input from '../../components/Input'
 const SignupScreen = ({ navigation }) => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const authContext = useContext(AuthContext)
   return (
     <>
       <Logo />
@@ -20,28 +24,31 @@ const SignupScreen = ({ navigation }) => {
         <View style={styles.mainContainer}>
           <Input
             placeholder="Mobile Number or Email"
+            onChangeText={text => setEmail(text)}
           />
           <Input placeholder="Full Name" />
           <Input placeholder="Username" />
           <Input
             placeholder="Password"
+            onChangeText={text => setPassword(text)}
             secureTextEntry
           />
           <Button
             title="Sign Up"
             style={{ backgroundColor: '#52BDEB', marginTop: wsize(5) }}
             titleStyle={{ color: 'white' }}
+            onPress={() => authContext.register(email, password)}
           />
           <View style={styles.getHelpContainer}>
             <Text style={styles.getHelpText}>Forgot your login details? </Text>
             <TextButton>Get help signing in</TextButton>
           </View>
         </View>
-      <View style={styles.bottomContainer}>
-        <Text style={styles.getHelpText}>Already have an account?</Text>
-        <TextButton onPress={() => navigation.navigate('Login')}>Log In</TextButton>
-      </View>
-    </SafeAreaView>
+        <View style={styles.bottomContainer}>
+          <Text style={styles.getHelpText}>Already have an account?</Text>
+          <TextButton onPress={() => navigation.navigate('Login')}>Log In</TextButton>
+        </View>
+      </SafeAreaView>
     </>
   );
 };

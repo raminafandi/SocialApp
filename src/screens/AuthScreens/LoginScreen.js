@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import {
   View,
   Text,
@@ -15,6 +15,8 @@ import { Entypo } from '@expo/vector-icons';
 import { AuthContext } from '../../services/context/AuthContext'
 
 const LoginScreen = ({ navigation }) => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const authContext = useContext(AuthContext)
   return (
     <>
@@ -23,14 +25,16 @@ const LoginScreen = ({ navigation }) => {
         <View style={styles.mainContainer}>
           <Input
             placeholder="Phone Number, username or email"
+            onChangeText={text => setEmail(text)}
           />
           <Input
             placeholder="Password"
+            onChangeText={text => setPassword(text)}
             secureTextEntry
           />
           <Button
             title="Login"
-            onPress={authContext.login}
+            onPress={() => authContext.login(email, password)}
             style={{ backgroundColor: '#52BDEB', marginTop: wsize(5) }}
             titleStyle={{ color: 'white' }}
           />
@@ -38,25 +42,25 @@ const LoginScreen = ({ navigation }) => {
             <Text style={styles.getHelpText}>Forgot your login details? </Text>
             <TextButton>Get help signing in</TextButton>
           </View>
-        </View>
-        <View style={{ marginTop: hsize(24), alignItems: 'center' }}>
-          <Text style={{ color: '#939094', fontSize: wsize(18), fontWeight: '500' }}>
-            or
+          <View style={{ marginTop: hsize(24), alignItems: 'center' }}>
+            <Text style={{ color: '#939094', fontSize: wsize(18), fontWeight: '500' }}>
+              or
         </Text>
-        </View>
-        <TouchableOpacity style={styles.getHelpContainer}>
-          <Entypo name="facebook" size={wsize(28)} color="#4267B2" />
-          <Text
-            style={{
-              alignSelf: 'center',
-              marginLeft: wsize(8),
-              fontSize: wsize(18),
-              fontWeight: 'bold',
-              color: '#52BDEB',
-            }}>
-            Log In With Facebook
+          </View>
+          <TouchableOpacity style={styles.getHelpContainer}>
+            <Entypo name="facebook" size={wsize(28)} color="#4267B2" />
+            <Text
+              style={{
+                alignSelf: 'center',
+                marginLeft: wsize(8),
+                fontSize: wsize(18),
+                fontWeight: 'bold',
+                color: '#52BDEB',
+              }}>
+              Log In With Facebook
         </Text>
-        </TouchableOpacity>
+          </TouchableOpacity>
+        </View>
         <View style={styles.bottomContainer}>
           <Text style={styles.getHelpText}>Don't have an account?</Text>
           <TextButton onPress={() => navigation.navigate('SignupFirst')}>
