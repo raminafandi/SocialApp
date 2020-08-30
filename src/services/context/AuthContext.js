@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import { YellowBox } from 'react-native'
 import firebase from '../firebase/index'
-import { auth } from 'firebase';
-
 const AuthContext = React.createContext({
     auhtenticated: false,
     login: () => { },
@@ -15,7 +14,9 @@ const AuthProvider = ({ children, ...props }) => {
     const [auhtenticated, setAuhtenticated] = useState(false);
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true)
+    const db = firebase.firestore();
     useEffect(() => {
+        YellowBox.ignoreWarnings(['Setting a timer']);
         const subscriber = firebase.auth().onAuthStateChanged(onAuthStateChanged);
         return subscriber; // unsubscribe on unmount
     }, []);
@@ -27,11 +28,34 @@ const AuthProvider = ({ children, ...props }) => {
         setLoading(false);
     }
 
-    const registerHandler = (email, password) => {
+    const registerHandler = (email, password, userName, fullName) => {
+        console.log(fullName)
         setLoading(true);
-        auth()
+        firebase
+            .auth()
             .createUserWithEmailAndPassword(email, password)
-            .then(() => {
+            .then(({ user }) => {
+                user.updateProfile({
+                    displayName: userName,
+                    photoURL: 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png'
+                })
+                db.collection('users').doc(user.uid).set({
+                    fullName: '',
+                    status: '',
+                    city: '',
+                    link: '',
+                    additionalInfo: '',
+                    friends: 0,
+                    subs: 0,
+                    saved: {
+                        items: [],
+                        items_snip: {},
+                        packs: [],
+                        packs_snip: {},
+                    },
+
+                })
+                // console.log('cred', user)
                 console.log('User account created & signed in!');
             })
             .catch(error => {
@@ -48,15 +72,18 @@ const AuthProvider = ({ children, ...props }) => {
     }
     const loginHandler = (email, password) => {
         setLoading(true);
-        auth()
+        firebase
+            .auth()
             .signInWithEmailAndPassword(email, password)
+            .then(cred => console.log('display-name', cred.user.displayName))
             .catch((err) => {
                 console.error(err);
             })
     }
     const logoutHandler = () => {
         setLoading(true);
-        auth()
+        firebase
+            .auth()
             .signOut()
             .then(() => {
                 console.log('User signed out!')
