@@ -16,6 +16,7 @@ import Input from '../../components/Input'
 const SignupScreen = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [userName, setUserName] = useState('');
   const authContext = useContext(AuthContext)
   return (
     <>
@@ -27,7 +28,9 @@ const SignupScreen = ({ navigation }) => {
             onChangeText={text => setEmail(text)}
           />
           <Input placeholder="Full Name" />
-          <Input placeholder="Username" />
+          <Input placeholder="Username"
+            onChangeText={text => setUserName(text)}
+          />
           <Input
             placeholder="Password"
             onChangeText={text => setPassword(text)}
@@ -37,7 +40,7 @@ const SignupScreen = ({ navigation }) => {
             title="Sign Up"
             style={{ backgroundColor: '#52BDEB', marginTop: wsize(5) }}
             titleStyle={{ color: 'white' }}
-            onPress={() => authContext.register(email, password)}
+            onPress={() => authContext.register(email, password, userName)}
           />
           <View style={styles.getHelpContainer}>
             <Text style={styles.getHelpText}>Forgot your login details? </Text>
