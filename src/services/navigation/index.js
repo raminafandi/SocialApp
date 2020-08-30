@@ -1,47 +1,17 @@
 import React, { useState, useContext } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { createStackNavigator } from '@react-navigation/stack';
+import { MaterialIcons, AntDesign, Ionicons } from '@expo/vector-icons';
 import HomeScreen from '../../screens/MainScreens/HomeScreen';
-import ProfileScreen from '../../screens/MainScreens/ProfileScreen';
-import ItemScreen from '../../screens/MainScreens/ItemScreen';
-import AddPostScreen from '../../screens/MainScreens/AddPostScreen';
-import LoginScreen from '../../screens/AuthScreens/LoginScreen';
-import SignupScreen from '../../screens/AuthScreens/SignupScreen';
-import SignupFirstScreen from '../../screens/AuthScreens/SignupFirstScreen';
 import LoadingScreen from '../../screens/OtherScreens/LoadingScreen';
 import { AuthContext, AuthProvider } from '../context/AuthContext';
-import { MaterialIcons, AntDesign, Ionicons } from '@expo/vector-icons';
+
+import ProfileStackScreen from './ProfileStack';
+import AuthFlow from './AuthStack';
+import AddPostStack from './AddPostStack';
 
 const Tab = createBottomTabNavigator();
-const AuthStack = createStackNavigator();
 
-const AuthFlow = () => (
-  <AuthStack.Navigator
-    screenOptions={{
-      headerShown: false,
-    }}>
-    <AuthStack.Screen name="Login" component={LoginScreen} />
-    <AuthStack.Screen name="SignupFirst" component={SignupFirstScreen} />
-    <AuthStack.Screen name="Signup" component={SignupScreen} />
-  </AuthStack.Navigator>
-);
-
-const ProfileStack = createStackNavigator();
-function ProfileStackScreen() {
-  return (
-    <ProfileStack.Navigator>
-      <ProfileStack.Screen
-        name="Profile"
-        component={ProfileScreen}
-        options={{
-          headerShown: false,
-        }}
-      />
-      <ProfileStack.Screen name="Item" component={ItemScreen} />
-    </ProfileStack.Navigator>
-  );
-}
 const TabNav = () => (
   <Tab.Navigator
     tabBarOptions={{
@@ -62,7 +32,7 @@ const TabNav = () => (
     />
     <Tab.Screen
       name="Add Post"
-      component={AddPostScreen}
+      component={AddPostStack}
       options={{
         tabBarIcon: ({ focused, size }) => (
           <Ionicons
