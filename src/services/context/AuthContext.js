@@ -29,7 +29,6 @@ const AuthProvider = ({ children, ...props }) => {
     }
 
     const registerHandler = (email, password, userName, fullName) => {
-        console.log(fullName)
         setLoading(true);
         firebase
             .auth()
@@ -40,7 +39,7 @@ const AuthProvider = ({ children, ...props }) => {
                     photoURL: 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png'
                 })
                 db.collection('users').doc(user.uid).set({
-                    fullName: '',
+                    fullName: fullName,
                     status: '',
                     city: '',
                     link: '',

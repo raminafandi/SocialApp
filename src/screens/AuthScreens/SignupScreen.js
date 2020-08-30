@@ -17,6 +17,7 @@ const SignupScreen = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [userName, setUserName] = useState('');
+  const [fullName, setFullName] = useState('');
   const authContext = useContext(AuthContext)
   return (
     <>
@@ -27,7 +28,9 @@ const SignupScreen = ({ navigation }) => {
             placeholder="Mobile Number or Email"
             onChangeText={text => setEmail(text)}
           />
-          <Input placeholder="Full Name" />
+          <Input placeholder="Full Name"
+            onChangeText={text => setFullName(text)}
+          />
           <Input placeholder="Username"
             onChangeText={text => setUserName(text)}
           />
@@ -40,7 +43,7 @@ const SignupScreen = ({ navigation }) => {
             title="Sign Up"
             style={{ backgroundColor: '#52BDEB', marginTop: wsize(5) }}
             titleStyle={{ color: 'white' }}
-            onPress={() => authContext.register(email, password, userName)}
+            onPress={() => authContext.register(email, password, userName, fullName)}
           />
           <View style={styles.getHelpContainer}>
             <Text style={styles.getHelpText}>Forgot your login details? </Text>
