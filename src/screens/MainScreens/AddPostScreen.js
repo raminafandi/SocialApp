@@ -1,29 +1,14 @@
 import React from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  Image,
-  TouchableOpacity,
-  ScrollView,
-  SafeAreaView,
-  Alert,
-} from 'react-native';
+import { View, Text, StyleSheet, SafeAreaView } from 'react-native';
 
 import { window, wsize, hsize } from '../../entities/constants';
-import { Entypo, Feather, AntDesign } from '@expo/vector-icons';
-import TextButton from '../../components/TextButton';
 import Button from '../../components/Button';
-import Tag from '../../components/Tag';
 
-const AddPostScreen = ({}) => {
-  const iconSize = wsize(26);
+const AddPostScreen = ({ navigation }) => {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <View style={styles.container}>
-        <View>
-          <Text style={styles.title}>add new</Text>
-        </View>
+        <Text style={styles.title}>add new</Text>
         <Button
           title="look"
           style={{
@@ -36,6 +21,7 @@ const AddPostScreen = ({}) => {
         />
         <Button
           title="item"
+          onPress={() => navigation.navigate('AddPhoto')}
           style={{
             backgroundColor: '#0148FF',
             marginTop: wsize(5),
