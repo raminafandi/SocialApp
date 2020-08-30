@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import { YellowBox, Alert } from 'react-native';
 import firebase from '../firebase/index';
-import { auth } from 'firebase';
-import { Alert } from 'react-native';
-
 const AuthContext = React.createContext({
   auhtenticated: false,
   login: () => {},
@@ -16,7 +14,9 @@ const AuthProvider = ({ children, ...props }) => {
   const [auhtenticated, setAuhtenticated] = useState(false);
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const db = firebase.firestore();
   useEffect(() => {
+    YellowBox.ignoreWarnings(['Setting a timer']);
     const subscriber = firebase.auth().onAuthStateChanged(onAuthStateChanged);
     return subscriber; // unsubscribe on unmount
   }, []);
@@ -28,11 +28,35 @@ const AuthProvider = ({ children, ...props }) => {
     setLoading(false);
   };
 
-  const registerHandler = (email, password) => {
+  const registerHandler = (email, password, userName, fullName) => {
     setLoading(true);
-    auth()
+    firebase
+      .auth()
       .createUserWithEmailAndPassword(email, password)
-      .then(() => {
+      .then(({ user }) => {
+        user.updateProfile({
+          displayName: userName,
+          photoURL:
+            'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png',
+        });
+        db.collection('users')
+          .doc(user.uid)
+          .set({
+            fullName: fullName,
+            status: '',
+            city: '',
+            link: '',
+            additionalInfo: '',
+            friends: 0,
+            subs: 0,
+            saved: {
+              items: [],
+              items_snip: {},
+              packs: [],
+              packs_snip: {},
+            },
+          });
+        // console.log('cred', user)
         console.log('User account created & signed in!');
       })
       .catch((error) => {
@@ -42,28 +66,30 @@ const AuthProvider = ({ children, ...props }) => {
             'That email address is already in use!'
           );
           setLoading(false);
-        }
-
-        if (error.code === 'auth/invalid-email') {
+        } else if (error.code === 'auth/invalid-email') {
           Alert.alert('Wrong Credentials', 'That email address is invalid!');
           setLoading(false);
-          console.log();
+        } else {
+          Alert.alert('Wrong Credentials', error);
+          setLoading(false);
         }
       });
   };
   const loginHandler = (email, password) => {
     setLoading(true);
-    auth()
+    firebase
+      .auth()
       .signInWithEmailAndPassword(email, password)
+      .then((cred) => console.log('display-name', cred.user.displayName))
       .catch((err) => {
-        Alert.alert('Wrong Credentials', err.message);
+        Alert.alert('Wrong Credentials', 'Login Credentials are not valid');
         setLoading(false);
-        // console.error(err);
       });
   };
   const logoutHandler = () => {
     setLoading(true);
-    auth()
+    firebase
+      .auth()
       .signOut()
       .then(() => {
         console.log('User signed out!');

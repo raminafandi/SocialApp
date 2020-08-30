@@ -15,18 +15,18 @@ import Button from '../../components/Button';
 import Input from '../../components/Input';
 const SignupScreen = ({ navigation }) => {
   const [email, setEmail] = useState('');
-  const [fname, setFname] = useState('');
-  const [uname, setUname] = useState('');
+  const [fullName, setFullName] = useState('');
+  const [userName, setUserName] = useState('');
   const [password, setPassword] = useState('');
   const [confPassword, setConfPassword] = useState('');
   const authContext = useContext(AuthContext);
 
-  const authHandler = (email, fname, uname, password) => {
+  const authHandler = (email, fullName, userName, password) => {
     if (
       email === '' ||
       password === '' ||
-      fname == '' ||
-      uname == '' ||
+      fullName == '' ||
+      userName == '' ||
       confPassword
     ) {
       Alert.alert('Wrong Credentials', 'Empty Fields.');
@@ -37,7 +37,7 @@ const SignupScreen = ({ navigation }) => {
       if (!expression.test(String(email).toLowerCase())) {
         Alert.alert('Wrong Credentials', 'Wrong Email Format.');
       } else {
-        authContext.register(email, password);
+        authContext.register(email, password, userName, fullName);
       }
     }
   };
@@ -52,11 +52,11 @@ const SignupScreen = ({ navigation }) => {
           />
           <Input
             placeholder="Full Name"
-            onChangeText={(text) => setFname(text)}
+            onChangeText={(text) => setFullName(text)}
           />
           <Input
             placeholder="Username"
-            onChangeText={(text) => setUname(text)}
+            onChangeText={(text) => setUserName(text)}
           />
           <Input
             placeholder="Password"
