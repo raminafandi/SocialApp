@@ -9,7 +9,13 @@ const AddPostStack = createStackNavigator();
 export default function ProfileStackScreen() {
   return (
     <AddPostStack.Navigator>
-      <AddPostStack.Screen name="AddPost" component={AddPostScreen} />
+      <AddPostStack.Screen
+        name="AddPost"
+        component={AddPostScreen}
+        options={{
+          headerShown: false,
+        }}
+      />
       <AddPostStack.Screen name="AddPhoto" component={AddPhotoScreen} />
     </AddPostStack.Navigator>
   );
