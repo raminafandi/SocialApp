@@ -11,6 +11,7 @@ const AddPostScreen = ({ navigation }) => {
         <Text style={styles.title}>add new</Text>
         <Button
           title="look"
+          onPress={() => navigation.navigate('SearchLook')}
           style={{
             backgroundColor: '#52BDEB',
             marginTop: wsize(5),
