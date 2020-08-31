@@ -14,31 +14,25 @@ import Input from '../../components/Input';
 import { window, wsize, hsize } from '../../entities/constants';
 import { AntDesign, Feather, MaterialIcons } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
-import firebase from '../../services/firebase/index';
 
 const AddPhotoScreen = ({ navigation }) => {
   const [link, setLink] = useState('');
-  const [imageLoading, setImageLoading] = useState(false);
-  const [imageUrl, setImageUrl] = useState('');
+
+  const linkHandler = () => {
+    const alertMessage = Alert.alert.bind(null, 'Error', 'Unable to get image from url')
+    fetch(link)
+      .then((res) => {
+        if (res.status === 404)
+          alertMessage()
+        else
+          navigation.navigate('AddItem', { img: link })
+      })
+      .catch(err => alertMessage())
+  }
   const cameraHandler = async () => {
     let result = await ImagePicker.launchCameraAsync();
     if (!result.cancelled) {
       navigation.navigate('AddItem', { img: result.uri });
-      return;
-      setImageLoading(true);
-      const response = await fetch(result.uri);
-      const blob = await response.blob();
-      const ref = firebase
-        .storage()
-        .ref('itemImages/')
-        .child(result.uri.split('/').pop());
-      ref.put(blob).then((data) => {
-        console.log('Image uploaded to the bucket!');
-        ref.getDownloadURL().then((url) => {
-          setImageUrl(url);
-        });
-        setImageLoading(false);
-      });
     }
   };
 
@@ -46,21 +40,6 @@ const AddPhotoScreen = ({ navigation }) => {
     let result = await ImagePicker.launchImageLibraryAsync();
     if (!result.cancelled) {
       navigation.navigate('AddItem', { img: result.uri });
-      return;
-      setImageLoading(true);
-      const response = await fetch(result.uri);
-      const blob = await response.blob();
-      const ref = firebase
-        .storage()
-        .ref('itemImages/')
-        .child(result.uri.split('/').pop());
-      ref.put(blob).then((data) => {
-        console.log('Image uploaded to the bucket!');
-        ref.getDownloadURL().then((url) => {
-          setImageUrl(url);
-        });
-        setImageLoading(false);
-      });
     }
   };
   return (
@@ -70,11 +49,12 @@ const AddPhotoScreen = ({ navigation }) => {
           <TextInput
             placeholder="Paste the Link"
             onChangeText={(text) => setLink(text)}
+            selectTextOnFocus={true}
             style={styles.textInput}
           />
           <TouchableOpacity
             style={styles.enterButton}
-            onPress={() => navigation.navigate('AddItem')}>
+            onPress={linkHandler}>
             <AntDesign name="right" size={24} color="black" />
           </TouchableOpacity>
         </View>
@@ -88,8 +68,6 @@ const AddPhotoScreen = ({ navigation }) => {
             <MaterialIcons name="insert-photo" size={wsize(32)} color="black" />
           </TouchableOpacity>
         </View>
-        {/* {imageLoading && <ActivityIndicator size="large" style={{ marginTop: hsize(150) }} />}
-        {imageUrl && !imageLoading && <Image source={{ uri: imageUrl }} style={{ marginTop: hsize(50), width: wsize(300), height: hsize(300) }} />} */}
       </View>
     </SafeAreaView>
   );
@@ -111,11 +89,13 @@ const styles = StyleSheet.create({
     height: hsize(70),
     borderRadius: wsize(12),
     justifyContent: 'space-between',
+    overflow: 'hidden',
     paddingStart: wsize(17),
     flexDirection: 'row',
   },
   textInput: {
     fontSize: wsize(18),
+    width: wsize(240)
   },
   enterButton: {
     borderLeftWidth: 1,

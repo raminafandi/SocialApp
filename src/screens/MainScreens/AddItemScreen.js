@@ -8,31 +8,78 @@ import {
   TextInput,
   ScrollView,
   SafeAreaView,
+  Alert,
 } from 'react-native';
 
 import { window, wsize, hsize } from '../../entities/constants';
 import { Entypo, Feather, AntDesign } from '@expo/vector-icons';
 import Button from '../../components/Button';
 import Tag from '../../components/Tag';
+import firebase from '../../services/firebase/index';
+import LoadingScreen from '../OtherScreens/LoadingScreen'
 
-const AddItemScreen = ({ route }) => {
+const AddItemScreen = ({ route, navigation }) => {
   const iconSize = wsize(26);
   const [name, setName] = useState('');
   const [brand, setBrand] = useState('');
   const [price, setPrice] = useState('');
   const [description, setDescription] = useState('');
+  const [imageLoading, setImageLoading] = useState(false);
+  const db = firebase.firestore();
+  const { img } = route.params;
 
-  //   const { img, title, price, info, author } = route.params;
+  const saveHandler = async () => {
+    setImageLoading(true);
+    const response = await fetch(img);
+    const blob = await response.blob();
+    const ref =
+      firebase
+        .storage()
+        .ref('itemImages/')
+        .child(img.split('/').pop());
+    ref.put(blob).then(() => {
+      console.log('Image uploaded to the bucket!');
+      return ref.getDownloadURL()
+    })
+    .then((url) => {
+      return db.collection('items').add({
+        name: name,
+        brand: brand,
+        image: url,
+        info: {
+          description: description,
+          price: price,
+          userId: firebase.auth().currentUser.uid,
+        },
+        tags: [],
+        url: ''
+      });
+    })
+    .then(() => {
+      setImageLoading(false);
+      Alert.alert('Completed!', 'Item has successfully added')
+      navigation.navigate('AddPhoto');
+    })
+  }
+  if(imageLoading){
+    return (
+      <LoadingScreen />
+    )
+  }
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <ScrollView style={styles.container}>
         <View style={styles.postContainer}>
           <View style={styles.postImageContainer}>
             <Image
-              source={{
-                uri:
-                  'https://images-na.ssl-images-amazon.com/images/I/71MmCZd9fKL._AC_UX385_.jpg',
+              onError={() => {
+                Alert.alert('Error', 'No image has found')
+                navigation.goBack()
               }}
+              source={{
+                uri: img
+              }}
+              resizeMode="contain"
               style={styles.postImage}
             />
           </View>
@@ -49,6 +96,7 @@ const AddItemScreen = ({ route }) => {
             />
             <TextInput
               placeholder="Price of Item"
+              keyboardType="numeric"
               onChangeText={(text) => setPrice(text)}
               style={styles.textInput}
             />
@@ -58,7 +106,11 @@ const AddItemScreen = ({ route }) => {
               style={styles.textInput}
             />
           </View>
-          <Button title="Save" style={{ backgroundColor: 'red' }} />
+          <Button
+            title="Save"
+            style={{ backgroundColor: 'red' }}
+            onPress={saveHandler}
+          />
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -68,7 +120,7 @@ const AddItemScreen = ({ route }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 30,
+    paddingTop: hsize(24),
   },
   postContainer: {
     justifyContent: 'center',
@@ -77,8 +129,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   postImage: {
-    width: wsize(288),
-    height: hsize(219),
+    width: wsize(304),
+    height: hsize(235),
   },
 
   textInput: {

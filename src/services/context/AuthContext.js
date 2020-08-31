@@ -51,12 +51,9 @@ const AuthProvider = ({ children, ...props }) => {
             subs: 0,
             saved: {
               items: [],
-              items_snip: {},
               packs: [],
-              packs_snip: {},
             },
           });
-        // console.log('cred', user)
         console.log('User account created & signed in!');
       })
       .catch((error) => {
