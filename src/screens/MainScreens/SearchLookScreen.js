@@ -28,7 +28,11 @@ const SearchLookScreen = ({ navigation }) => {
             }}>
             <Text style={styles.tabText}>unisex</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.tabNormal}>
+          <TouchableOpacity
+            style={styles.tabNormal}
+            onPress={() => {
+              navigation.navigate('PhotoCarousel');
+            }}>
             <Text style={styles.tabText}>men</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.tabFocused}>

@@ -6,6 +6,7 @@ import AddPhotoScreen from '../../screens/MainScreens/AddPhotoScreen';
 import AddItemScreen from '../../screens/MainScreens/AddItemScreen';
 import SearchLookScreen from '../../screens/MainScreens/SearchLookScreen';
 import PhotoGrid from '../../screens/MainScreens/PhotoGrid';
+import PhotoCarousel from '../../screens/MainScreens/PhotoCarousel';
 const AddPostStack = createStackNavigator();
 
 export default function ProfileStackScreen() {
@@ -22,6 +23,7 @@ export default function ProfileStackScreen() {
       <AddPostStack.Screen name="AddItem" component={AddItemScreen} />
       <AddPostStack.Screen name="SearchLook" component={SearchLookScreen} />
       <AddPostStack.Screen name="PhotoGrid" component={PhotoGrid} />
+      <AddPostStack.Screen name="PhotoCarousel" component={PhotoCarousel} />
     </AddPostStack.Navigator>
   );
 }
