@@ -17,7 +17,7 @@ export default function PhotoCarousel({}) {
           <Image source={{ uri: item.img }} style={styles.img} />
         )}
         onSnapToItem={(index) => {
-          setSlider1ActiveSlide({ slider1ActiveSlide: index });
+          setSlider1ActiveSlide(index);
         }}
       />
       <Pagination

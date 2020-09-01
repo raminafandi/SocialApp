@@ -3,6 +3,7 @@ import React, { useState, useContext } from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import ProfileScreen from '../../screens/MainScreens/ProfileScreen';
 import ItemScreen from '../../screens/MainScreens/ItemScreen';
+import EditProfileScreen from '../../screens/MainScreens/EditProfileScreen';
 
 const ProfileStack = createStackNavigator();
 export default function ProfileStackScreen() {
@@ -16,6 +17,7 @@ export default function ProfileStackScreen() {
         }}
       />
       <ProfileStack.Screen name="Item" component={ItemScreen} />
+      <ProfileStack.Screen name="EditProfile" component={EditProfileScreen} />
     </ProfileStack.Navigator>
   );
 }

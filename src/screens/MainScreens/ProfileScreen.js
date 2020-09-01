@@ -82,9 +82,13 @@ const ProfileScreen = ({ navigation }) => {
         <View style={styles.tab}>
           <Feather name="folder" size={30} color="black" />
         </View>
-        <View style={styles.tab}>
+        <TouchableOpacity
+          style={styles.tab}
+          onPress={() => {
+            navigation.navigate('EditProfile');
+          }}>
           <Feather name="bookmark" size={30} color="black" />
-        </View>
+        </TouchableOpacity>
       </View>
       <View>
         <FlatList

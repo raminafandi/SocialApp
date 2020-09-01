@@ -16,10 +16,11 @@ import Search from '../../components/Search';
 
 import { window, wsize, hsize } from '../../entities/constants';
 const SearchLookScreen = ({ navigation }) => {
+  const [search, setSearch] = useState('');
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <View style={styles.container}>
-        <Search setSearch={setSearch}/>
+        <Search setSearch={setSearch} />
         <View style={styles.tabContainer}>
           <TouchableOpacity
             style={styles.tabNormal}
