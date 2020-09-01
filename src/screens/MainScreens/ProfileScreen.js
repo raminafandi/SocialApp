@@ -96,7 +96,7 @@ const ProfileScreen = ({ navigation }) => {
                 navigation.navigate('Item', item);
               }}>
               <Image
-                style={{ width: wsize(124), height: hsize(123) }}
+                style={{ width: wsize(124), height: wsize(123) }}
                 source={{ uri: item.img }}
               />
             </TouchableOpacity>

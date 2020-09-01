@@ -15,14 +15,17 @@ import LookCategory from '../../components/LookCategory';
 import Search from '../../components/Search';
 
 import { window, wsize, hsize } from '../../entities/constants';
-const SearchLookScreen = ({}) => {
-  const [search, setSearch] = useState('');
+const SearchLookScreen = ({ navigation }) => {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <View style={styles.container}>
         <Search />
         <View style={styles.tabContainer}>
-          <TouchableOpacity style={styles.tabNormal}>
+          <TouchableOpacity
+            style={styles.tabNormal}
+            onPress={() => {
+              navigation.navigate('PhotoGrid');
+            }}>
             <Text style={styles.tabText}>unisex</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.tabNormal}>

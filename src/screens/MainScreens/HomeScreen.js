@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   View,
   Text,
@@ -14,6 +14,7 @@ import Comment from '../../components/Comment';
 
 import { window, wsize, hsize } from '../../entities/constants';
 import { Entypo, Feather, AntDesign } from '@expo/vector-icons';
+
 const HomeScreen = ({}) => {
   const iconSize = wsize(28);
   return (

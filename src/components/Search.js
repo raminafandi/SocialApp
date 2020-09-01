@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, StyleSheet, TextInput } from 'react-native';
 import { wsize, hsize } from '../entities/constants';
 import { AntDesign } from '@expo/vector-icons';
 
 export default function Search({ style, iconStyle, textStyle, ...props }) {
+  const [search, setSearch] = useState('');
+
   return (
     <View style={styles.searchContainer}>
       <AntDesign
@@ -16,6 +18,7 @@ export default function Search({ style, iconStyle, textStyle, ...props }) {
         placeholder="search"
         onChangeText={(text) => setSearch(text)}
         style={styles.searchInput}
+        maxLength={30}
       />
     </View>
   );
