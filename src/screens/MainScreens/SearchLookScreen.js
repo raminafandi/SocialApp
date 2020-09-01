@@ -19,7 +19,7 @@ const SearchLookScreen = ({ navigation }) => {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <View style={styles.container}>
-        <Search />
+        <Search setSearch={setSearch}/>
         <View style={styles.tabContainer}>
           <TouchableOpacity
             style={styles.tabNormal}

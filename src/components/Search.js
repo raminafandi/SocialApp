@@ -3,26 +3,25 @@ import { View, Text, StyleSheet, TextInput } from 'react-native';
 import { wsize, hsize } from '../entities/constants';
 import { AntDesign } from '@expo/vector-icons';
 
-export default function Search({ style, iconStyle, textStyle, ...props }) {
-  const [search, setSearch] = useState('');
 
+export default React.memo(function Search({ style, iconStyle, textStyle, setSearch, ...props }) {
   return (
-    <View style={styles.searchContainer}>
+    <View style={[styles.searchContainer, style]} {...props}>
       <AntDesign
         name="search1"
         size={wsize(13)}
         color="black"
-        style={styles.searchIcon}
+        style={[styles.searchIcon, iconStyle]}
       />
       <TextInput
         placeholder="search"
         onChangeText={(text) => setSearch(text)}
-        style={styles.searchInput}
+        style={[styles.searchInput, textStyle]}
         maxLength={30}
       />
     </View>
   );
-}
+})
 const styles = StyleSheet.create({
   searchContainer: {
     borderColor: '#ececec',
@@ -41,6 +40,6 @@ const styles = StyleSheet.create({
     marginRight: wsize(10),
   },
   searchInput: {
-    fontSize: 15,
+    fontSize: wsize(15),
   },
 });
