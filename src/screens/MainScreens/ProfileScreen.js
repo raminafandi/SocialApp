@@ -1,10 +1,12 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import {
   View,
   Text,
   StyleSheet,
   Image,
   SafeAreaView,
+  Modal,
+  TouchableHighlight,
   TouchableOpacity,
 } from 'react-native';
 import { wsize, hsize } from '../../entities/constants';
@@ -17,8 +19,34 @@ import { FlatList } from 'react-native-gesture-handler';
 import data from '../../data/mock.json';
 const ProfileScreen = ({ navigation }) => {
   const authContext = useContext(AuthContext);
+  const [modalVisible, setModalVisible] = useState(false);
   return (
     <SafeAreaView style={styles.container}>
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => {
+          Alert.alert('Modal has been closed.');
+        }}>
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <TouchableOpacity style={styles.modalOption}>
+              <Text>Settings</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.modalOption}>
+              <Text>Add Friends</Text>
+            </TouchableOpacity>
+            <TouchableHighlight
+              style={{ ...styles.openButton, backgroundColor: '#2196F3' }}
+              onPress={() => {
+                setModalVisible(!modalVisible);
+              }}>
+              <Text style={styles.textStyle}>Hide Modal</Text>
+            </TouchableHighlight>
+          </View>
+        </View>
+      </Modal>
       <View style={styles.profileInitialContainer}>
         <Image
           style={styles.profilePhoto}
@@ -59,7 +87,11 @@ const ProfileScreen = ({ navigation }) => {
             <TouchableOpacity style={styles.followersLittleButton}>
               <Text style={styles.lbuttonText}>chat</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.followersLittleButton}>
+            <TouchableOpacity
+              style={styles.followersLittleButton}
+              onPress={() => {
+                setModalVisible(true);
+              }}>
               <Text style={styles.lbuttonText}>info</Text>
             </TouchableOpacity>
           </View>
@@ -199,6 +231,19 @@ const styles = StyleSheet.create({
   },
   tab: {
     alignItems: 'center',
+  },
+  modalView: {
+    width: '100%',
+    marginTop: hsize(307),
+    height: hsize(537),
+    backgroundColor: 'white',
+    borderRadius: 20,
+    padding: 35,
+    alignItems: 'center',
+  },
+  modalText: {
+    marginBottom: 15,
+    textAlign: 'center',
   },
 });
 

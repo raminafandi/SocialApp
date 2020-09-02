@@ -36,7 +36,11 @@ const SearchLookScreen = ({ navigation }) => {
             }}>
             <Text style={styles.tabText}>men</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.tabFocused}>
+          <TouchableOpacity
+            style={styles.tabFocused}
+            onPress={() => {
+              navigation.navigate('Album');
+            }}>
             <Text style={styles.tabTextFocused}>women</Text>
           </TouchableOpacity>
         </View>
