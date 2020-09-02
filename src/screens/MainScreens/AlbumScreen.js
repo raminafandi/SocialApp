@@ -42,6 +42,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
   },
   list: {
+    marginTop: hsize(31),
     marginHorizontal: wsize(5),
   },
   img: {
