@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   StyleSheet,
   Text,
@@ -14,50 +14,40 @@ import {
 
 /*this is a react native version of this code https://github.com/Expertizo/react-fb-image-grid*/
 
-export default class PhotoGrid extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      countFrom: 5,
-      conditionalRender: false,
-      images: [
-        'https://bootdey.com/img/Content/avatar/avatar1.png',
-        'https://bootdey.com/img/Content/avatar/avatar6.png',
-        'https://bootdey.com/img/Content/avatar/avatar8.png',
-        'https://bootdey.com/img/Content/avatar/avatar7.png',
-        'https://bootdey.com/img/Content/avatar/avatar5.png',
-        'https://bootdey.com/img/Content/avatar/avatar6.png',
-        'https://bootdey.com/img/Content/avatar/avatar4.png',
-        'https://bootdey.com/img/Content/avatar/avatar1.png',
-        'https://bootdey.com/img/Content/avatar/avatar2.png',
-        'https://bootdey.com/img/Content/avatar/avatar3.png',
-      ],
-    };
-  }
 
-  clickEventListener = () => {
+export default function () {
+  const [countFrom, setCountFrom] = useState(5);
+  const [conditionalRender, setConditionalRender] = useState(false);
+  const [images, setImages] = useState([
+    'https://bootdey.com/img/Content/avatar/avatar1.png',
+    'https://bootdey.com/img/Content/avatar/avatar6.png',
+    'https://bootdey.com/img/Content/avatar/avatar8.png',
+    'https://bootdey.com/img/Content/avatar/avatar7.png',
+    'https://bootdey.com/img/Content/avatar/avatar5.png',
+    'https://bootdey.com/img/Content/avatar/avatar6.png',
+    'https://bootdey.com/img/Content/avatar/avatar4.png',
+    'https://bootdey.com/img/Content/avatar/avatar1.png',
+    'https://bootdey.com/img/Content/avatar/avatar2.png',
+    'https://bootdey.com/img/Content/avatar/avatar3.png',
+  ])
+  const clickEventListener = () => {
     Alert.alert('Alert', 'image clicked');
   };
 
-  renderOne() {
-    const { images } = this.state;
-    const { countFrom } = this.state;
+  const RenderOne = ({ images, clickEventListener }) => {
     return (
       <View style={styles.row}>
         <TouchableOpacity
           style={[styles.imageContent, styles.imageContent1]}
-          onPress={() => {
-            this.clickEventListener();
-          }}>
+          onPress={clickEventListener}>
           <Image style={styles.image} source={{ uri: images[0] }} />
         </TouchableOpacity>
       </View>
     );
   }
 
-  renderTwo() {
-    const { images } = this.state;
-    const { countFrom } = this.state;
+
+  const RenderTwo = ({ images, countFrom, clickEventListener }) => {
     const conditionalRender =
       [3, 4].includes(images.length) ||
       (images.length > +countFrom && [3, 4].includes(+countFrom));
@@ -67,7 +57,7 @@ export default class PhotoGrid extends React.Component {
         <TouchableOpacity
           style={[styles.imageContent, styles.imageContent2]}
           onPress={() => {
-            this.clickEventListener();
+            clickEventListener();
           }}>
           <Image
             style={styles.image}
@@ -77,7 +67,7 @@ export default class PhotoGrid extends React.Component {
         <TouchableOpacity
           style={[styles.imageContent, styles.imageContent2]}
           onPress={() => {
-            this.clickEventListener();
+            clickEventListener();
           }}>
           <Image
             style={styles.image}
@@ -88,15 +78,13 @@ export default class PhotoGrid extends React.Component {
     );
   }
 
-  renderThree() {
-    const { images } = this.state;
-    const { countFrom } = this.state;
+  const RenderThree = ({ images, countFrom, clickEventListener}) => {
     const overlay =
       !countFrom ||
-      countFrom > 5 ||
-      (images.length > countFrom && [4, 5].includes(+countFrom))
-        ? this.renderCountOverlay(true)
-        : this.renderOverlay();
+        countFrom > 5 ||
+        (images.length > countFrom && [4, 5].includes(+countFrom))
+        ? <RenderCountOverlay more images={images} countFrom={countFrom} clickEventListener={clickEventListener} conditionalRender={conditionalRender} />
+        : <RenderCountOverlay images={images} countFrom={countFrom} clickEventListener={clickEventListener} conditionalRender={conditionalRender} />;
     const conditionalRender =
       images.length == 4 || (images.length > +countFrom && +countFrom == 4);
 
@@ -105,7 +93,7 @@ export default class PhotoGrid extends React.Component {
         <TouchableOpacity
           style={[styles.imageContent, styles.imageContent3]}
           onPress={() => {
-            this.clickEventListener();
+            clickEventListener();
           }}>
           <Image
             style={styles.image}
@@ -115,7 +103,7 @@ export default class PhotoGrid extends React.Component {
         <TouchableOpacity
           style={[styles.imageContent, styles.imageContent3]}
           onPress={() => {
-            this.clickEventListener();
+            clickEventListener();
           }}>
           <Image
             style={styles.image}
@@ -127,13 +115,12 @@ export default class PhotoGrid extends React.Component {
     );
   }
 
-  renderOverlay() {
-    const { images } = this.state;
+  const RenderOverlay = ({ images, clickEventListener }) => {
     return (
       <TouchableOpacity
         style={[styles.imageContent, styles.imageContent3]}
         onPress={() => {
-          this.clickEventListener();
+          clickEventListener();
         }}>
         <Image
           style={styles.image}
@@ -143,9 +130,7 @@ export default class PhotoGrid extends React.Component {
     );
   }
 
-  renderCountOverlay(more) {
-    const { images } = this.state;
-    const { countFrom } = this.state;
+  const RenderCountOverlay = ({ more, images, countFrom, clickEventListener }) => {
     const extra = images.length - (countFrom && countFrom > 5 ? 5 : countFrom);
     const conditionalRender =
       images.length == 4 || (images.length > +countFrom && +countFrom == 4);
@@ -153,7 +138,7 @@ export default class PhotoGrid extends React.Component {
       <TouchableOpacity
         style={[styles.imageContent, styles.imageContent3]}
         onPress={() => {
-          this.clickEventListener();
+          clickEventListener();
         }}>
         <Image
           style={styles.image}
@@ -167,26 +152,21 @@ export default class PhotoGrid extends React.Component {
       </TouchableOpacity>
     );
   }
+  const imagesToShow = [...images];
 
-  render() {
-    const { modal, index, countFrom } = this.state;
-    const { images } = this.state;
-    const imagesToShow = [...images];
-
-    if (countFrom && images.length > countFrom) {
-      imagesToShow.length = countFrom;
-    }
-
-    return (
-      <View style={styles.container}>
-        {[1, 3, 4].includes(imagesToShow.length) && this.renderOne()}
-        {imagesToShow.length >= 2 &&
-          imagesToShow.length != 4 &&
-          this.renderTwo()}
-        {imagesToShow.length >= 4 && this.renderThree()}
-      </View>
-    );
+  if (countFrom && images.length > countFrom) {
+    imagesToShow.length = countFrom;
   }
+
+  return (
+    <View style={styles.container}>
+      {[1, 3, 4].includes(imagesToShow.length) && <RenderOne clickEventListener={clickEventListener} images={images} />}
+      {imagesToShow.length >= 2 &&
+        imagesToShow.length != 4 &&
+        <RenderTwo clickEventListener={clickEventListener} countFrom={countFrom} images={images} />}
+      {imagesToShow.length >= 4 && <RenderThree clickEventListener={clickEventListener} countFrom={countFrom} images={images}/>}
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
