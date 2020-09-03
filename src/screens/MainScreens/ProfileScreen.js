@@ -16,9 +16,9 @@ import LoadingScreen from '../OtherScreens/LoadingScreen'
 import { AuthContext } from '../../services/context/AuthContext';
 import { FlatList } from 'react-native-gesture-handler';
 import UserModal from '../../components/UserModal';
-
 import data from '../../data/mock.json';
 import * as userAPI from '../../services/api/user'
+import * as itemAPI from '../../services/api/item'
 const tabs = {
   items: 'items',
   looks: 'looks',
@@ -29,24 +29,40 @@ const LooksTab = ({ navigation }) => {
   return (
     <FlatList
       numColumns={3}
-      // data={data}
-      // renderItem={({ item }) => (
-      //   <TouchableOpacity
-      //     onPress={() => {
-      //       navigation.navigate('Item', item);
-      //     }}>
-      //     <Image
-      //       style={{ width: wsize(124), height: wsize(123) }}
-      //       source={{ uri: item.img }}
-      //     />
-      //   </TouchableOpacity>
-      // )}
+    // data={data}
+    // renderItem={({ item }) => (
+    //   <TouchableOpacity
+    //     onPress={() => {
+    //       navigation.navigate('Item', item);
+    //     }}>
+    //     <Image
+    //       style={{ width: wsize(124), height: wsize(123) }}
+    //       source={{ uri: item.img }}
+    //     />
+    //   </TouchableOpacity>
+    // )}
     />
   )
 }
 
 
-const ItemsTab = ({ navigation }) => {
+const ItemsTab = React.memo(function ({ navigation }) {
+  const [data, setData] = useState([])
+  const [loading, setLoading] = useState(false)
+  useEffect(() => {
+    setLoading(true);
+    itemAPI.getUserItems().then(querySnapshot => {
+      const allData = [];
+      querySnapshot.forEach(doc => {
+        allData.push({ key: doc.id, ...doc.data() })
+      })
+      setData(allData)
+      setLoading(false)
+    })
+  }, [])
+  if(loading){
+    return (<LoadingScreen />)
+  }
   return (
     <FlatList
       numColumns={3}
@@ -58,13 +74,13 @@ const ItemsTab = ({ navigation }) => {
           }}>
           <Image
             style={{ width: wsize(124), height: wsize(123) }}
-            source={{ uri: item.img }}
+            source={{ uri: item.image}}
           />
         </TouchableOpacity>
       )}
     />
   )
-}
+})
 
 const BookmarsTab = ({ navigation }) => {
   return (
@@ -183,9 +199,9 @@ const ProfileScreen = ({ navigation }) => {
         </TouchableOpacity>
       </View>
       <View>
-        {currentTab === looks && <LooksTab navigation={navigation}/>}
-        {currentTab === items && <ItemsTab navigation={navigation}/>}
-        {currentTab === bookmarks && <BookmarsTab navigation={navigation}/>}
+        {currentTab === looks && <LooksTab navigation={navigation} />}
+        {currentTab === items && <ItemsTab navigation={navigation} />}
+        {currentTab === bookmarks && <BookmarsTab navigation={navigation} />}
       </View>
       <UserModal setModalVisible={setModalVisible} visible={modalVisible} />
     </SafeAreaView>
