@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: wsize(15),
-    lineHeight: wsize(18),
+    // lineHeight: wsize(18),
     letterSpacing: 0.6,
     color: '#313131',
   },

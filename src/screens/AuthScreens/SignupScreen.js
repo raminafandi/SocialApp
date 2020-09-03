@@ -6,6 +6,7 @@ import {
   TextInput,
   TouchableOpacity,
   SafeAreaView,
+  Alert
 } from 'react-native';
 import { window, wsize, hsize } from '../../entities/constants';
 import { AuthContext } from '../../services/context/AuthContext';
@@ -25,9 +26,9 @@ const SignupScreen = ({ navigation }) => {
     if (
       email === '' ||
       password === '' ||
-      fullName == '' ||
-      userName == '' ||
-      confPassword
+      fullName === '' ||
+      userName === '' ||
+      confPassword === ''
     ) {
       Alert.alert('Wrong Credentials', 'Empty Fields.');
     } else if (password !== confPassword) {
@@ -73,7 +74,7 @@ const SignupScreen = ({ navigation }) => {
             style={{ backgroundColor: '#52BDEB', marginTop: wsize(5) }}
             titleStyle={{ color: 'white' }}
             onPress={() =>
-              authHandler(email, fname, uname, password, confPassword)
+              authHandler(email, fullName, userName, password, confPassword)
             }
           />
           <View style={styles.getHelpContainer}>
