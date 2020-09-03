@@ -4,15 +4,13 @@ import { wsize, hsize } from '../entities/constants';
 import { BlurView } from 'expo-blur';
 import { Feather, AntDesign } from '@expo/vector-icons';
 
-export default function UserModal({ setModalVisible, ...props }) {
+export default React.memo(function UserModal({ setModalVisible, ...props }) {
   return (
     <Modal
       animationType="fade"
       transparent={true}
       {...props}
-      onRequestClose={() => {
-        Alert.alert('Modal has been closed.');
-      }}>
+    >
       <BlurView tint="dark" intensity={100} style={StyleSheet.absoluteFill}>
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
@@ -37,7 +35,7 @@ export default function UserModal({ setModalVisible, ...props }) {
       </BlurView>
     </Modal>
   );
-}
+})
 
 const styles = StyleSheet.create({
   modalText: {

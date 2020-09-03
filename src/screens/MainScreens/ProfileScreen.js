@@ -16,7 +16,6 @@ import LoadingScreen from '../OtherScreens/LoadingScreen'
 import { AuthContext } from '../../services/context/AuthContext';
 import { FlatList } from 'react-native-gesture-handler';
 import UserModal from '../../components/UserModal';
-import data from '../../data/mock.json';
 import * as userAPI from '../../services/api/user'
 import * as itemAPI from '../../services/api/item'
 const tabs = {
