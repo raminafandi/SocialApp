@@ -4,7 +4,9 @@ import { wsize, hsize } from '../entities/constants';
 import { BlurView } from 'expo-blur';
 import { Feather, AntDesign } from '@expo/vector-icons';
 
-export default function UserModal({ setModalVisible, ...props }) {
+import Option from './Option';
+
+export default function UserModal({ setModalVisible, navigation, ...props }) {
   return (
     <Modal
       animationType="fade"
@@ -16,14 +18,16 @@ export default function UserModal({ setModalVisible, ...props }) {
       <BlurView tint="dark" intensity={100} style={StyleSheet.absoluteFill}>
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
-            <TouchableOpacity style={styles.modalOption}>
+            <Option
+              title="Settings"
+              navigation={navigation}
+              navigateTo="Settings">
               <Feather name="settings" size={29} color="black" />
-              <Text style={styles.modalOptionText}>Settings</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.modalOption}>
+            </Option>
+            <Option title="Add Friends" navigation={navigation} navigateTo="">
               <AntDesign name="adduser" size={29} color="black" />
-              <Text style={styles.modalOptionText}>Add Friends</Text>
-            </TouchableOpacity>
+            </Option>
+
             <TouchableOpacity
               style={styles.modalOption}
               onPress={() => {
@@ -57,18 +61,7 @@ const styles = StyleSheet.create({
     marginLeft: wsize(19),
   },
   modalText: {
-    marginBottom: 15,
+    marginBottom: wsize(15),
     textAlign: 'center',
-  },
-  modalOption: {
-    flexDirection: 'row',
-    borderBottomWidth: 1,
-    borderColor: '#DADBDA',
-    padding: wsize(4),
-    paddingLeft: wsize(19),
-  },
-  modalOptionText: {
-    fontSize: wsize(18),
-    marginLeft: wsize(19),
   },
 });
