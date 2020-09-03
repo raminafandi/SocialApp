@@ -63,11 +63,11 @@ export default React.memo(function navigation() {
   return (
     <AuthProvider>
       <AuthContext.Consumer>
-        {({ auhtenticated, loading }) => (
+        {({ authenticated, loading }) => (
           <NavigationContainer>
             {loading ? (
               <LoadingScreen />
-            ) : auhtenticated ? (
+            ) : authenticated ? (
               <TabNav />
             ) : (
               <AuthFlow />

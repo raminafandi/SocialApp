@@ -12,7 +12,12 @@ const AddPostStack = createStackNavigator();
 
 export default function ProfileStackScreen() {
   return (
-    <AddPostStack.Navigator>
+    <AddPostStack.Navigator
+      screenOptions={{
+        headerStyle: {
+          backgroundColor: "#F9FAF9"
+        }
+      }}>
       <AddPostStack.Screen
         name="AddPost"
         component={AddPostScreen}

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import {
   View,
   Text,
@@ -8,16 +8,46 @@ import {
   ScrollView,
   SafeAreaView,
   TextInput,
+  Button
 } from 'react-native';
 
-import Tag from '../../components/Tag';
-import Comment from '../../components/Comment';
-
+import LoadingScreen from '../OtherScreens/LoadingScreen'
+import { AuthContext } from '../../services/context/AuthContext';
 import { window, wsize, hsize } from '../../entities/constants';
+import { updateUserInfo } from '../../services/api/user'
 const borderCOLOR = '#DADBDA';
 
-const EditProfileScreen = ({}) => {
+const EditProfileScreen = ({ route, navigation }) => {
+  const authContext = useContext(AuthContext);
+  const { user } = authContext;
+  const { userExtraInfo } = route.params;
+  const [name, setName] = useState(userExtraInfo.fullName);
+  const [userName, setUserName] = useState(user.displayName);
+  const [status, setStatus] = useState(userExtraInfo.status);
+  const [city, setCity] = useState(userExtraInfo.city);
+  const [link, setLink] = useState(userExtraInfo.link);
+  const [description, setDescription] = useState(userExtraInfo.additionalInfo);
+  const [email, setEmail] = useState(user.email);
+  const [phone, setPhone] = useState(user.phoneNumber);
+  const [gender, setGender] = useState(userExtraInfo.gender);
+  const [photoURL, setPhotoURL] = useState(user.photoURL);
+  const [loading, setLoading] = useState(false)
   const iconSize = wsize(28);
+  const submitHandler = () => {
+    setLoading(true)
+    updateUserInfo(user, {name, photoURL, userName, status, city, link, description, email, phone, gender}).then(()=> {
+      setLoading(false)
+      navigation.navigate('Profile')
+    });
+  }
+  navigation.setOptions({
+    headerRight: () => {
+      return (<Button title="Save" onPress={submitHandler} />)
+    }
+  })
+  if(loading){
+    return (<LoadingScreen />)
+  }
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <ScrollView style={styles.container}>
@@ -26,7 +56,7 @@ const EditProfileScreen = ({}) => {
             style={styles.profilePhoto}
             source={{
               uri:
-                'https://i.pinimg.com/originals/13/cd/aa/13cdaa237c11e435b7a03f3ba7bc8fd3.jpg',
+                photoURL
             }}
           />
           <TouchableOpacity>
@@ -36,42 +66,76 @@ const EditProfileScreen = ({}) => {
         <View style={styles.aboutPageContainer}>
           <View style={styles.lineContainer}>
             <Text style={styles.lineTitle}>Name</Text>
-            <TextInput style={styles.lineInput} />
+            <TextInput
+              style={styles.lineInput}
+              value={name}
+              onChangeText={(text) => setName(text)}
+            />
           </View>
           <View style={styles.lineContainer}>
             <Text style={styles.lineTitle}>Username</Text>
-            <TextInput style={styles.lineInput} />
+            <TextInput
+              style={styles.lineInput}
+              value={userName}
+              onChangeText={(text) => setUserName(text)} />
           </View>
           <View style={styles.lineContainer}>
             <Text style={styles.lineTitle}>Status</Text>
-            <TextInput style={styles.lineInput} />
+            <TextInput
+              style={styles.lineInput}
+              value={status}
+              onChangeText={(text) => setStatus(text)}
+            />
           </View>
           <View style={styles.lineContainer}>
             <Text style={styles.lineTitle}>City</Text>
-            <TextInput style={styles.lineInput} />
+            <TextInput
+              style={styles.lineInput}
+              value={city}
+              onChangeText={(text) => setCity(text)}
+            />
           </View>
           <View style={styles.lineContainer}>
             <Text style={styles.lineTitle}>Link</Text>
-            <TextInput style={styles.lineInput} />
+            <TextInput
+              style={styles.lineInput}
+              value={link}
+              onChangeText={(text) => setLink(text)}
+            />
           </View>
           <View style={styles.lineContainer}>
             <Text style={styles.lineTitle}>About me </Text>
-            <TextInput style={styles.lineInput} />
+            <TextInput
+              style={styles.lineInput}
+              value={description}
+              onChangeText={(text) => setDescription(text)}
+            />
           </View>
           <View style={styles.titleContainer}>
             <Text style={styles.titleMain}>Private Information</Text>
           </View>
           <View style={styles.lineContainer}>
             <Text style={styles.lineTitle}>Email</Text>
-            <TextInput style={styles.lineInput} />
+            <TextInput
+              style={styles.lineInput}
+              value={email}
+              onChangeText={(text) => setEmail(text)}
+            />
           </View>
           <View style={styles.lineContainer}>
             <Text style={styles.lineTitle}>Phone</Text>
-            <TextInput style={styles.lineInput} />
+            <TextInput
+              style={styles.lineInput}
+              value={phone}
+              onChangeText={(text) => setPhone(text)} />
           </View>
           <View style={styles.lineContainer}>
             <Text style={styles.lineTitle}>Gender</Text>
-            <TextInput style={styles.lineInput} />
+            <TextInput
+              style={styles.lineInput}
+              value={gender}
+              onChangeText={(text) => setGender(text)}
+            />
           </View>
           <View style={styles.lineContainer}></View>
         </View>
@@ -90,15 +154,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   profilePhoto: {
-    width: 80,
-    height: 80,
+    width: wsize(80),
+    height: wsize(80),
     borderRadius: wsize(40),
   },
   lineContainer: {
     flexDirection: 'row',
     borderTopWidth: 1,
     borderColor: borderCOLOR,
-    padding: wsize(4),
+    padding: wsize(8),
     paddingLeft: wsize(19),
   },
   lineTitle: {

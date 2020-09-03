@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import {
   View,
   Text,
@@ -10,16 +10,94 @@ import {
 } from 'react-native';
 import { wsize, hsize } from '../../entities/constants';
 import { Feather } from '@expo/vector-icons';
-
+import { useIsFocused } from '@react-navigation/native';
 import Button from '../../components/Button';
+import LoadingScreen from '../OtherScreens/LoadingScreen'
 import { AuthContext } from '../../services/context/AuthContext';
 import { FlatList } from 'react-native-gesture-handler';
 import UserModal from '../../components/UserModal';
 
 import data from '../../data/mock.json';
+import * as userAPI from '../../services/api/user'
+const tabs = {
+  items: 'items',
+  looks: 'looks',
+  bookmarks: 'bookmarks',
+}
+
+const LooksTab = ({ navigation }) => {
+  return (
+    <FlatList
+      numColumns={3}
+      // data={data}
+      // renderItem={({ item }) => (
+      //   <TouchableOpacity
+      //     onPress={() => {
+      //       navigation.navigate('Item', item);
+      //     }}>
+      //     <Image
+      //       style={{ width: wsize(124), height: wsize(123) }}
+      //       source={{ uri: item.img }}
+      //     />
+      //   </TouchableOpacity>
+      // )}
+    />
+  )
+}
+
+
+const ItemsTab = ({ navigation }) => {
+  return (
+    <FlatList
+      numColumns={3}
+      data={data}
+      renderItem={({ item }) => (
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate('Item', item);
+          }}>
+          <Image
+            style={{ width: wsize(124), height: wsize(123) }}
+            source={{ uri: item.img }}
+          />
+        </TouchableOpacity>
+      )}
+    />
+  )
+}
+
+const BookmarsTab = ({ navigation }) => {
+  return (
+    <FlatList
+      numColumns={3}
+    // data={data}
+    // renderItem={({ item }) => (
+    //   <TouchableOpacity
+    //     onPress={() => {
+    //       navigation.navigate('Item', item);
+    //     }}>
+    //     <Image
+    //       style={{ width: wsize(124), height: wsize(123) }}
+    //       source={{ uri: item.img }}
+    //     />
+    //   </TouchableOpacity>
+    // )}
+    />
+  )
+}
 const ProfileScreen = ({ navigation }) => {
   const authContext = useContext(AuthContext);
   const [modalVisible, setModalVisible] = useState(false);
+  const { user, logout } = authContext;
+  const { bookmarks, items, looks } = tabs;
+  const [userExtraInfo, setUserExstraInfo] = useState(null);
+  const [currentTab, setCurrentTab] = useState(looks)
+  const isFocused = useIsFocused();
+  useEffect(() => {
+    userAPI.getUserInfo(user).then(doc => setUserExstraInfo(doc.data()))
+  }, [isFocused])
+  if (!userExtraInfo)
+    return <LoadingScreen />
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.profileInitialContainer}>
@@ -27,20 +105,20 @@ const ProfileScreen = ({ navigation }) => {
           style={styles.profilePhoto}
           source={{
             uri:
-              'https://i.pinimg.com/originals/13/cd/aa/13cdaa237c11e435b7a03f3ba7bc8fd3.jpg',
+              user.photoURL
           }}
         />
         <View style={styles.profileNameContainer}>
-          <Text style={styles.profileName}>mbeer</Text>
-          <Text style={styles.profileType}>Who let the dogs out?</Text>
+          <Text style={styles.profileName}>{user.displayName}</Text>
+          <Text style={styles.profileType}>{userExtraInfo.status}</Text>
         </View>
       </View>
       <View style={styles.profileInfoContainer}>
         <View style={styles.profileInfo}>
-          <Text style={styles.textInfo}>city:New York</Text>
+          <Text style={styles.textInfo}>{userExtraInfo.city}</Text>
         </View>
         <TouchableOpacity style={styles.profileInfo}>
-          <Text style={styles.linkInfo}>m.youtube.com</Text>
+          <Text style={styles.linkInfo}>{userExtraInfo.link}</Text>
         </TouchableOpacity>
         <View style={styles.profileInfo}>
           <Text style={styles.textInfo}>
@@ -50,11 +128,11 @@ const ProfileScreen = ({ navigation }) => {
         <View style={styles.followersContainer}>
           <View style={styles.followersContainerLeft}>
             <View style={styles.followers}>
-              <Text style={styles.followersNumbers}>213</Text>
+              <Text style={styles.followersNumbers}>{userExtraInfo.friends}</Text>
               <Text style={styles.followersText}>friends</Text>
             </View>
             <View style={styles.followers}>
-              <Text style={styles.followersNumbers}>863</Text>
+              <Text style={styles.followersNumbers}>{userExtraInfo.subs}</Text>
               <Text style={styles.followersText}>subs</Text>
             </View>
           </View>
@@ -72,47 +150,42 @@ const ProfileScreen = ({ navigation }) => {
           </View>
         </View>
         <Button
-          title="sub"
-          onPress={authContext.logout}
+          title="edit info"
+          onPress={() => {
+            navigation.navigate('EditProfile', { userExtraInfo });
+          }}
           style={{
-            backgroundColor: '#0148FF',
+            backgroundColor: '#D8D8D8',
             marginTop: wsize(20),
             width: wsize(327),
           }}
           titleStyle={{
-            color: 'white',
+            color: '#444444',
             fontSize: wsize(21),
           }}
         />
       </View>
       <View style={styles.tabContainer}>
-        <View style={styles.tab}>
-          <Feather name="folder" size={30} color="black" />
-        </View>
         <TouchableOpacity
-          style={styles.tab}
-          onPress={() => {
-            navigation.navigate('EditProfile');
-          }}>
-          <Feather name="bookmark" size={30} color="black" />
+          onPress={() => setCurrentTab(looks)}
+        >
+          <Feather name="package" size={30} color={currentTab === looks ? 'blue' : 'black'} />
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => setCurrentTab(items)}
+        >
+          <Feather name="file" size={30} color={currentTab === items ? 'blue' : 'black'} />
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => setCurrentTab(bookmarks)}
+        >
+          <Feather name="bookmark" size={30} color={currentTab === bookmarks ? 'blue' : 'black'} />
         </TouchableOpacity>
       </View>
       <View>
-        <FlatList
-          numColumns={3}
-          data={data}
-          renderItem={({ item }) => (
-            <TouchableOpacity
-              onPress={() => {
-                navigation.navigate('Item', item);
-              }}>
-              <Image
-                style={{ width: wsize(124), height: wsize(123) }}
-                source={{ uri: item.img }}
-              />
-            </TouchableOpacity>
-          )}
-        />
+        {currentTab === looks && <LooksTab navigation={navigation}/>}
+        {currentTab === items && <ItemsTab navigation={navigation}/>}
+        {currentTab === bookmarks && <BookmarsTab navigation={navigation}/>}
       </View>
       <UserModal setModalVisible={setModalVisible} visible={modalVisible} />
     </SafeAreaView>
@@ -200,13 +273,11 @@ const styles = StyleSheet.create({
   },
   tabContainer: {
     borderWidth: 1,
-    padding: hsize(9),
+    height: hsize(50),
+    alignItems: 'center',
     borderColor: '#DADBDA',
     flexDirection: 'row',
     justifyContent: 'space-around',
-  },
-  tab: {
-    alignItems: 'center',
   },
 });
 
