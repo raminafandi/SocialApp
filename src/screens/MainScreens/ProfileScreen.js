@@ -17,10 +17,78 @@ import { FlatList } from 'react-native-gesture-handler';
 
 import data from '../../data/mock.json';
 import * as userAPI from '../../services/api/user'
+const tabs = {
+  items: 'items',
+  looks: 'looks',
+  bookmarks: 'bookmarks',
+}
+
+const LooksTab = ({ navigation }) => {
+  return (
+    <FlatList
+      numColumns={3}
+      // data={data}
+      // renderItem={({ item }) => (
+      //   <TouchableOpacity
+      //     onPress={() => {
+      //       navigation.navigate('Item', item);
+      //     }}>
+      //     <Image
+      //       style={{ width: wsize(124), height: wsize(123) }}
+      //       source={{ uri: item.img }}
+      //     />
+      //   </TouchableOpacity>
+      // )}
+    />
+  )
+}
+
+
+const ItemsTab = ({ navigation }) => {
+  return (
+    <FlatList
+      numColumns={3}
+      data={data}
+      renderItem={({ item }) => (
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate('Item', item);
+          }}>
+          <Image
+            style={{ width: wsize(124), height: wsize(123) }}
+            source={{ uri: item.img }}
+          />
+        </TouchableOpacity>
+      )}
+    />
+  )
+}
+
+const BookmarsTab = ({ navigation }) => {
+  return (
+    <FlatList
+      numColumns={3}
+    // data={data}
+    // renderItem={({ item }) => (
+    //   <TouchableOpacity
+    //     onPress={() => {
+    //       navigation.navigate('Item', item);
+    //     }}>
+    //     <Image
+    //       style={{ width: wsize(124), height: wsize(123) }}
+    //       source={{ uri: item.img }}
+    //     />
+    //   </TouchableOpacity>
+    // )}
+    />
+  )
+}
 const ProfileScreen = ({ navigation }) => {
   const authContext = useContext(AuthContext);
   const { user, logout } = authContext;
+  const { bookmarks, items, looks } = tabs;
   const [userExtraInfo, setUserExstraInfo] = useState(null);
+  const [currentTab, setCurrentTab] = useState(looks)
   const isFocused = useIsFocused();
   useEffect(() => {
     userAPI.getUserInfo(user).then(doc => setUserExstraInfo(doc.data()))
@@ -76,7 +144,9 @@ const ProfileScreen = ({ navigation }) => {
         </View>
         <Button
           title="edit info"
-          onPress={logout}
+          onPress={() => {
+            navigation.navigate('EditProfile', { userExtraInfo });
+          }}
           style={{
             backgroundColor: '#D8D8D8',
             marginTop: wsize(20),
@@ -89,33 +159,26 @@ const ProfileScreen = ({ navigation }) => {
         />
       </View>
       <View style={styles.tabContainer}>
-        <View style={styles.tab}>
-          <Feather name="folder" size={30} color="black" />
-        </View>
         <TouchableOpacity
-          style={styles.tab}
-          onPress={() => {
-            navigation.navigate('EditProfile', { userExtraInfo });
-          }}>
-          <Feather name="bookmark" size={30} color="black" />
+          onPress={() => setCurrentTab(looks)}
+        >
+          <Feather name="package" size={30} color={currentTab === looks ? 'blue' : 'black'} />
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => setCurrentTab(items)}
+        >
+          <Feather name="file" size={30} color={currentTab === items ? 'blue' : 'black'} />
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => setCurrentTab(bookmarks)}
+        >
+          <Feather name="bookmark" size={30} color={currentTab === bookmarks ? 'blue' : 'black'} />
         </TouchableOpacity>
       </View>
       <View>
-        <FlatList
-          numColumns={3}
-          data={data}
-          renderItem={({ item }) => (
-            <TouchableOpacity
-              onPress={() => {
-                navigation.navigate('Item', item);
-              }}>
-              <Image
-                style={{ width: wsize(124), height: wsize(123) }}
-                source={{ uri: item.img }}
-              />
-            </TouchableOpacity>
-          )}
-        />
+        {currentTab === looks && <LooksTab navigation={navigation}/>}
+        {currentTab === items && <ItemsTab navigation={navigation}/>}
+        {currentTab === bookmarks && <BookmarsTab navigation={navigation}/>}
       </View>
     </SafeAreaView>
   );
@@ -202,13 +265,11 @@ const styles = StyleSheet.create({
   },
   tabContainer: {
     borderWidth: 1,
-    padding: hsize(9),
+    height: hsize(50),
+    alignItems: 'center',
     borderColor: '#DADBDA',
     flexDirection: 'row',
     justifyContent: 'space-around',
-  },
-  tab: {
-    alignItems: 'center',
   },
 });
 
