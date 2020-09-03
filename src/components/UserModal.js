@@ -3,12 +3,15 @@ import { TouchableOpacity, Text, View, StyleSheet, Modal } from 'react-native';
 import { wsize, hsize } from '../entities/constants';
 import { BlurView } from 'expo-blur';
 import { Feather, AntDesign } from '@expo/vector-icons';
+import Option from './Option'
 
-import Option from './Option';
-
-export default function UserModal({ setModalVisible, navigation, ...props }) {
+export default React.memo(function UserModal({ setModalVisible, navigation, ...props }) {
   return (
-    <Modal animationType="fade" transparent={true} {...props}>
+    <Modal
+      animationType="fade"
+      transparent={true}
+      {...props}
+    >
       <BlurView tint="dark" intensity={100} style={StyleSheet.absoluteFill}>
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
@@ -35,7 +38,7 @@ export default function UserModal({ setModalVisible, navigation, ...props }) {
       </BlurView>
     </Modal>
   );
-}
+})
 
 const styles = StyleSheet.create({
   modalText: {

@@ -16,7 +16,7 @@ import Tag from '../../components/Tag';
 
 const ItemScreen = ({ route }) => {
   const iconSize = wsize(26);
-  const { img, title, price, info, author } = route.params;
+  const { image, brand, title, info } = route.params;
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <ScrollView style={styles.container}>
@@ -24,19 +24,19 @@ const ItemScreen = ({ route }) => {
           <View style={styles.postImageContainer}>
             <Image
               source={{
-                uri: img,
+                uri: image,
               }}
               style={styles.postImage}
             />
           </View>
           <View style={styles.postInfoContainer}>
             <Text style={styles.postTitle}>{title}</Text>
-            <Text style={styles.postBrand}>CDPR</Text>
-            <Text style={styles.postPrice}>{price}</Text>
-            <Text style={styles.postDescription}>{info}</Text>
+            <Text style={styles.postBrand}>{brand}</Text>
+            <Text style={styles.postPrice}>{info.price}</Text>
+            <Text style={styles.postDescription}>{info.description}</Text>
             <View style={{ flexDirection: 'row' }}>
               <Text style={styles.postPublisher}>added by</Text>
-              <TextButton style={styles.postPublisherLink}>{author}</TextButton>
+              <TextButton style={styles.postPublisherLink}>{info.userName}</TextButton>
             </View>
             <View style={styles.postActions}>
               <TouchableOpacity>

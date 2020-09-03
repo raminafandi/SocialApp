@@ -16,6 +16,7 @@ import { Entypo, Feather, AntDesign } from '@expo/vector-icons';
 import Button from '../../components/Button';
 import Tag from '../../components/Tag';
 import firebase from '../../services/firebase/index';
+import * as itemAPI from '../../services/api/item';
 import LoadingScreen from '../OtherScreens/LoadingScreen'
 
 const AddItemScreen = ({ route, navigation }) => {
@@ -30,38 +31,15 @@ const AddItemScreen = ({ route, navigation }) => {
 
   const saveHandler = async () => {
     setImageLoading(true);
-    const response = await fetch(img);
-    const blob = await response.blob();
-    const ref =
-      firebase
-        .storage()
-        .ref('itemImages/')
-        .child(img.split('/').pop());
-    ref.put(blob).then(() => {
-      console.log('Image uploaded to the bucket!');
-      return ref.getDownloadURL()
-    })
-    .then((url) => {
-      return db.collection('items').add({
-        name: name,
-        brand: brand,
-        image: url,
-        info: {
-          description: description,
-          price: price,
-          userId: firebase.auth().currentUser.uid,
-        },
-        tags: [],
-        url: ''
-      });
-    })
-    .then(() => {
-      setImageLoading(false);
-      Alert.alert('Completed!', 'Item has successfully added')
-      navigation.navigate('AddPhoto');
-    })
+    itemAPI.addItem({img, name, brand, description, price})
+      .then(() => {
+        setImageLoading(false);
+        Alert.alert('Completed!', 'Item has successfully added')
+        navigation.navigate('AddPhoto');
+      })
+      .catch(err => console.log(err))
   }
-  if(imageLoading){
+  if (imageLoading) {
     return (
       <LoadingScreen />
     )
