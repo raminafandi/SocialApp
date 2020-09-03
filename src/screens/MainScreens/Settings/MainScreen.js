@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext } from 'react';
 import {
   View,
   Text,
@@ -20,8 +20,11 @@ import {
   Ionicons,
 } from '@expo/vector-icons';
 import Option from '../../../components/Option';
+import TextButton from '../../../components/TextButton';
+import { AuthContext } from '../../../services/context/AuthContext';
 
 const MainScreen = ({ navigation }) => {
+  const authContext = useContext(AuthContext);
   const iconSize = 30;
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -69,6 +72,14 @@ const MainScreen = ({ navigation }) => {
             style={styles.iconStyle}
           />
         </Option>
+        <View style={styles.logins}>
+          <Text style={styles.loginsText}>Logins</Text>
+        </View>
+        <TextButton
+          textStyle={{ fontSize: wsize(18), paddingLeft: wsize(21) }}
+          onPress={authContext.logout}>
+          Log Out
+        </TextButton>
       </ScrollView>
     </SafeAreaView>
   );
@@ -78,9 +89,20 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingTop: hsize(24),
+    backgroundColor: 'white',
   },
   iconStyle: {
     marginRight: wsize(24),
+  },
+  logins: {
+    padding: 4,
+    borderBottomWidth: 1,
+    borderColor: '#DADBDA',
+  },
+  loginsText: {
+    fontSize: wsize(18),
+    paddingLeft: wsize(21),
+    fontWeight: 'bold',
   },
 });
 export default MainScreen;

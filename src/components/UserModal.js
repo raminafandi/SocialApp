@@ -8,13 +8,7 @@ import Option from './Option';
 
 export default function UserModal({ setModalVisible, navigation, ...props }) {
   return (
-    <Modal
-      animationType="fade"
-      transparent={true}
-      {...props}
-      onRequestClose={() => {
-        Alert.alert('Modal has been closed.');
-      }}>
+    <Modal animationType="fade" transparent={true} {...props}>
       <BlurView tint="dark" intensity={100} style={StyleSheet.absoluteFill}>
         <View style={styles.centeredView}>
           <View style={styles.modalView}>

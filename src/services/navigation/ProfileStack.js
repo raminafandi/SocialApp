@@ -11,8 +11,6 @@ import NotificationsScreen from '../../screens/MainScreens/Settings/Notification
 import PrivacyScreen from '../../screens/MainScreens/Settings/PrivacyScreen';
 import SecurityScreen from '../../screens/MainScreens/Settings/SecurityScreen';
 
-import { Button } from 'react-native';
-
 const ProfileStack = createStackNavigator();
 export default function ProfileStackScreen() {
   return (
