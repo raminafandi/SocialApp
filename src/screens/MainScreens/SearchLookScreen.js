@@ -32,7 +32,7 @@ const SearchLookScreen = ({ navigation }) => {
           <TouchableOpacity
             style={styles.tabNormal}
             onPress={() => {
-              navigation.navigate('PhotoCarousel');
+              navigation.navigate('AddLook');
             }}>
             <Text style={styles.tabText}>men</Text>
           </TouchableOpacity>

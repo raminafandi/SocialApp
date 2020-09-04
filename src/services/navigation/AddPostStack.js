@@ -7,6 +7,7 @@ import AddItemScreen from '../../screens/MainScreens/AddItemScreen';
 import SearchLookScreen from '../../screens/MainScreens/SearchLookScreen';
 import PhotoGrid from '../../screens/MainScreens/PhotoGrid';
 import PhotoCarousel from '../../screens/MainScreens/PhotoCarousel';
+import AddLookScreen from '../../screens/MainScreens/AddLookScreen';
 import AlbumScreen from '../../screens/MainScreens/AlbumScreen';
 const AddPostStack = createStackNavigator();
 
@@ -15,8 +16,8 @@ export default function ProfileStackScreen() {
     <AddPostStack.Navigator
       screenOptions={{
         headerStyle: {
-          backgroundColor: "#F9FAF9"
-        }
+          backgroundColor: '#F9FAF9',
+        },
       }}>
       <AddPostStack.Screen
         name="AddPost"
@@ -31,6 +32,7 @@ export default function ProfileStackScreen() {
       <AddPostStack.Screen name="PhotoGrid" component={PhotoGrid} />
       <AddPostStack.Screen name="PhotoCarousel" component={PhotoCarousel} />
       <AddPostStack.Screen name="Album" component={AlbumScreen} />
+      <AddPostStack.Screen name="AddLook" component={AddLookScreen} />
     </AddPostStack.Navigator>
   );
 }
