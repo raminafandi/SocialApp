@@ -5,7 +5,7 @@ import Carousel, { Pagination } from 'react-native-snap-carousel';
 
 import data from '../../data/mock.json';
 
-export default function PhotoCarousel({}) {
+export default React.memo(function PhotoCarousel({}) {
   const [slider1ActiveSlide, setSlider1ActiveSlide] = useState();
   return (
     <View style={styles.container}>
@@ -32,7 +32,7 @@ export default function PhotoCarousel({}) {
       />
     </View>
   );
-}
+})
 const styles = StyleSheet.create({
   container: {
     justifyContent: 'center',
