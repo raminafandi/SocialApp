@@ -7,8 +7,8 @@ import AddItemScreen from '../../screens/MainScreens/AddItemScreen';
 import SearchLookScreen from '../../screens/MainScreens/SearchLookScreen';
 import PhotoGrid from '../../screens/MainScreens/PhotoGrid';
 import PhotoCarousel from '../../screens/MainScreens/PhotoCarousel';
-import AddLookScreen from '../../screens/MainScreens/AddLookScreen';
 import AlbumScreen from '../../screens/MainScreens/AlbumScreen';
+import AddLookScreen from '../../screens/MainScreens/AddLookScreen';
 const AddPostStack = createStackNavigator();
 
 export default function ProfileStackScreen() {

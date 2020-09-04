@@ -15,7 +15,6 @@ import Button from '../../components/Button';
 import LoadingScreen from '../OtherScreens/LoadingScreen';
 import { AuthContext } from '../../services/context/AuthContext';
 import { FlatList } from 'react-native-gesture-handler';
-import UserModal from '../../components/UserModal';
 import * as userAPI from '../../services/api/user';
 import * as itemAPI from '../../services/api/item';
 const tabs = {
@@ -99,7 +98,7 @@ const BookmarsTab = ({ navigation }) => {
     />
   );
 };
-const ProfileScreen = ({ navigation }) => {
+const OtherProfileScreen = ({ navigation }) => {
   const authContext = useContext(AuthContext);
   const [modalVisible, setModalVisible] = useState(false);
   const { user, logout } = authContext;
@@ -151,6 +150,9 @@ const ProfileScreen = ({ navigation }) => {
             </View>
           </View>
           <View style={styles.followersContainerRight}>
+            <TouchableOpacity style={styles.followersLittleButton}>
+              <Text style={styles.lbuttonText}>chat</Text>
+            </TouchableOpacity>
             <TouchableOpacity
               style={styles.followersLittleButton}
               onPress={() => {
@@ -161,12 +163,9 @@ const ProfileScreen = ({ navigation }) => {
           </View>
         </View>
         <Button
-          title="edit info"
-          onPress={() => {
-            navigation.navigate('EditProfile', { userExtraInfo });
-          }}
+          title="sub"
           style={{
-            backgroundColor: '#D8D8D8',
+            backgroundColor: '#0148FF',
             marginTop: wsize(20),
             width: wsize(327),
           }}
@@ -191,24 +190,11 @@ const ProfileScreen = ({ navigation }) => {
             color={currentTab === items ? 'blue' : 'black'}
           />
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => setCurrentTab(bookmarks)}>
-          <Feather
-            name="bookmark"
-            size={30}
-            color={currentTab === bookmarks ? 'blue' : 'black'}
-          />
-        </TouchableOpacity>
       </View>
       <View>
         {currentTab === looks && <LooksTab navigation={navigation} />}
         {currentTab === items && <ItemsTab navigation={navigation} />}
-        {currentTab === bookmarks && <BookmarsTab navigation={navigation} />}
       </View>
-      <UserModal
-        setModalVisible={setModalVisible}
-        visible={modalVisible}
-        navigation={navigation}
-      />
     </SafeAreaView>
   );
 };
@@ -302,4 +288,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ProfileScreen;
+export default OtherProfileScreen;

@@ -17,7 +17,7 @@ import Button from '../../components/Button';
 import Tag from '../../components/Tag';
 import firebase from '../../services/firebase/index';
 import * as itemAPI from '../../services/api/item';
-import LoadingScreen from '../OtherScreens/LoadingScreen'
+import LoadingScreen from '../OtherScreens/LoadingScreen';
 
 const AddItemScreen = ({ route, navigation }) => {
   const iconSize = wsize(26);
@@ -31,18 +31,17 @@ const AddItemScreen = ({ route, navigation }) => {
 
   const saveHandler = async () => {
     setImageLoading(true);
-    itemAPI.addItem({img, name, brand, description, price})
+    itemAPI
+      .addItem({ img, name, brand, description, price })
       .then(() => {
         setImageLoading(false);
-        Alert.alert('Completed!', 'Item has successfully added')
+        Alert.alert('Completed!', 'Item has successfully added');
         navigation.navigate('AddPhoto');
       })
-      .catch(err => console.log(err))
-  }
+      .catch((err) => console.log(err));
+  };
   if (imageLoading) {
-    return (
-      <LoadingScreen />
-    )
+    return <LoadingScreen />;
   }
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -51,11 +50,11 @@ const AddItemScreen = ({ route, navigation }) => {
           <View style={styles.postImageContainer}>
             <Image
               onError={() => {
-                Alert.alert('Error', 'No image has found')
-                navigation.goBack()
+                Alert.alert('Error', 'No image has found');
+                navigation.goBack();
               }}
               source={{
-                uri: img
+                uri: img,
               }}
               resizeMode="contain"
               style={styles.postImage}
