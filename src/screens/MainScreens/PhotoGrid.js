@@ -78,7 +78,7 @@ export default function () {
     );
   }
 
-  const RenderThree = ({ images, countFrom, clickEventListener}) => {
+  const RenderThree = ({ images, countFrom, clickEventListener }) => {
     const overlay =
       !countFrom ||
         countFrom > 5 ||
@@ -164,7 +164,7 @@ export default function () {
       {imagesToShow.length >= 2 &&
         imagesToShow.length != 4 &&
         <RenderTwo clickEventListener={clickEventListener} countFrom={countFrom} images={images} />}
-      {imagesToShow.length >= 4 && <RenderThree clickEventListener={clickEventListener} countFrom={countFrom} images={images}/>}
+      {imagesToShow.length >= 4 && <RenderThree clickEventListener={clickEventListener} countFrom={countFrom} images={images} />}
     </View>
   );
 }

@@ -18,7 +18,6 @@ const ItemScreen = ({ route }) => {
   const iconSize = wsize(26);
   const { image, brand, title, info } = route.params;
   return (
-    <SafeAreaView style={{ flex: 1 }}>
       <ScrollView style={styles.container}>
         <View style={styles.postContainer}>
           <View style={styles.postImageContainer}>
@@ -57,14 +56,12 @@ const ItemScreen = ({ route }) => {
           </View>
         </View>
       </ScrollView>
-    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    paddingTop: 30,
+    paddingTop: hsize(30),
   },
   postContainer: {
     justifyContent: 'center',

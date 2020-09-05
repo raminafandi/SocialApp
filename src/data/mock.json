@@ -1,34 +1,57 @@
-[
-  {
-    "id": 1,
-    "price": "$510",
-    "author": "raminog",
-    "img": "https://kirbiecravings.com/wp-content/uploads/2019/09/easy-french-fries-1.jpg",
-    "title": "French Kiss",
-    "info": " Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut dapibus est a quam tristique, sed rutrum nunc posuere. Donec in mauris lorem. Cras vitae venenatis."
-  },
-  {
-    "id": 2,
-    "title": "Vegan Trendly",
-    "price": "$50",
-    "author": "amdog",
-    "img": "https://images.pexels.com/photos/208537/pexels-photo-208537.jpeg",
-    "info": " Lorem ipsum dolor sit amet, consectetur adipiscing elit."
-  },
-  {
-    "id": 3,
-    "title": "Steak Night",
-    "price": "$501",
-    "author": "aganeymar",
-    "img": "https://images.pexels.com/photos/1251208/pexels-photo-1251208.jpeg",
-    "info": " Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut dapibus est a quam tristique, sed rutrum nunc posuere. Donec in mauris lorem. Cras vitae venenatis."
-  },
-  {
-    "id": 4,
-    "title": "Soft & Crispy",
-    "price": "$5012",
-    "author": "emrisog",
-    "img": "https://images.pexels.com/photos/2762942/pexels-photo-2762942.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
-    "info": " Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut dapibus est a quam tristique, sed rutrum nunc posuere. Donec in mauris lorem. Cras vitae venenatis."
-  }
+[{
+        "id": "1",
+        "price": "$510",
+        "author": "raminog",
+        "img": "https://kirbiecravings.com/wp-content/uploads/2019/09/easy-french-fries-1.jpg",
+        "title": "French Kiss",
+        "info": " Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut dapibus est a quam tristique, sed rutrum nunc posuere. Donec in mauris lorem. Cras vitae venenatis."
+    },
+    {
+        "id": "2",
+        "title": "Vegan Trendly",
+        "price": "$50",
+        "author": "amdog",
+        "img": "https://images.pexels.com/photos/208537/pexels-photo-208537.jpeg",
+        "info": " Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+    },
+    {
+        "id": "3",
+        "title": "Steak Night",
+        "price": "$501",
+        "author": "aganeymar",
+        "img": "https://images.pexels.com/photos/1251208/pexels-photo-1251208.jpeg",
+        "info": " Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut dapibus est a quam tristique, sed rutrum nunc posuere. Donec in mauris lorem. Cras vitae venenatis."
+    },
+    {
+        "id": "4",
+        "title": "Soft & Crispy",
+        "price": "$5012",
+        "author": "emrisog",
+        "img": "https://images.pexels.com/photos/2762942/pexels-photo-2762942.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
+        "info": " Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut dapibus est a quam tristique, sed rutrum nunc posuere. Donec in mauris lorem. Cras vitae venenatis."
+    },
+    {
+        "id": "5",
+        "title": "Soft & Crispy",
+        "price": "$5012",
+        "author": "emrisog",
+        "img": "https://images.pexels.com/photos/2762942/pexels-photo-2762942.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
+        "info": " Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut dapibus est a quam tristique, sed rutrum nunc posuere. Donec in mauris lorem. Cras vitae venenatis."
+    },
+    {
+        "id": "6",
+        "title": "Soft & Crispy",
+        "price": "$5012",
+        "author": "emrisog",
+        "img": "https://images.pexels.com/photos/2762942/pexels-photo-2762942.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
+        "info": " Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut dapibus est a quam tristique, sed rutrum nunc posuere. Donec in mauris lorem. Cras vitae venenatis."
+    },
+    {
+        "id": "7",
+        "title": "Soft & Crispy",
+        "price": "$5012",
+        "author": "emrisog",
+        "img": "https://images.pexels.com/photos/2762942/pexels-photo-2762942.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
+        "info": " Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut dapibus est a quam tristique, sed rutrum nunc posuere. Donec in mauris lorem. Cras vitae venenatis."
+    }
 ]

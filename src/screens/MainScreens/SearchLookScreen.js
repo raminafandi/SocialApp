@@ -17,51 +17,55 @@ import Search from '../../components/Search';
 import { window, wsize, hsize } from '../../entities/constants';
 const SearchLookScreen = ({ navigation }) => {
   const [search, setSearch] = useState('');
+  const [loading, setLoading] = useState(false)
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <View style={styles.container}>
-        <Search setSearch={setSearch} />
-        <View style={styles.tabContainer}>
-          <TouchableOpacity
-            style={styles.tabNormal}
-            onPress={() => {
-              navigation.navigate('PhotoGrid');
-            }}>
-            <Text style={styles.tabText}>unisex</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.tabNormal}
-            onPress={() => {
-              navigation.navigate('AddLook');
-            }}>
-            <Text style={styles.tabText}>men</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.tabFocused}
-            onPress={() => {
-              navigation.navigate('Album');
-            }}>
-            <Text style={styles.tabTextFocused}>women</Text>
-          </TouchableOpacity>
-        </View>
-        <FlatList
-          numColumns={2}
-          data={data}
-          renderItem={({ item }) => (
-            <TouchableOpacity>
-              <LookCategory data={item} />
-            </TouchableOpacity>
-          )}
-        />
+    <View style={styles.container}>
+      <Search setSearch={setSearch} />
+      <View style={styles.tabContainer}>
+        <TouchableOpacity
+          style={styles.tabNormal}
+          onPress={() => {
+            navigation.navigate('PhotoGrid');
+          }}>
+          <Text style={styles.tabText}>unisex</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.tabNormal}
+          onPress={() => {
+            navigation.navigate('AddLook');
+          }}>
+          <Text style={styles.tabText}>men</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.tabFocused}
+        >
+          <Text style={styles.tabTextFocused}>women</Text>
+        </TouchableOpacity>
       </View>
-    </SafeAreaView>
+      <FlatList
+        numColumns={2}
+        data={data}
+        onRefresh={() => {
+          setLoading(true);
+          setTimeout(() => setLoading(false), 1000)
+        }}
+        refreshing={loading}
+        renderItem={({ item }) => (
+          <TouchableOpacity onPress={() => {
+            navigation.navigate('Album');
+          }}>
+            <LookCategory data={item} />
+          </TouchableOpacity>
+        )}
+      />
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 30,
+    paddingTop: hsize(30),
     backgroundColor: 'white',
   },
 

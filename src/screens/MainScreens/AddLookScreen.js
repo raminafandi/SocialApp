@@ -17,13 +17,15 @@ import Button from '../../components/Button';
 import Tag from '../../components/Tag';
 import PhotoGrid from './PhotoGrid';
 const AddLookScreen = ({ route, navigation }) => {
+  const [text, setText] = useState('');
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <ScrollView style={styles.container}>
         <TextInput
           placeholder="Say something meaningful..."
-          onChangeText={(text) => setEmail(text)}
+          onChangeText={(text) => setText(text)}
           style={styles.input}
+          maxLength={200}
         />
         <View style={styles.photoGrid}>
           <PhotoGrid />
@@ -65,7 +67,7 @@ const styles = StyleSheet.create({
     height: hsize(56),
     justifyContent: 'center',
     marginBottom: hsize(14),
-    paddingStart: wsize(17),
+    paddingHorizontal: wsize(17),
   },
   photoGrid: {
     width: wsize(338),

@@ -17,7 +17,6 @@ import { window, wsize, hsize } from '../../entities/constants';
 const SearchLookScreen = ({ navigation }) => {
   const [search, setSearch] = useState('');
   return (
-    <SafeAreaView style={{ flex: 1 }}>
       <View style={styles.container}>
         <Search setSearch={setSearch} />
         <FlatList
@@ -31,14 +30,13 @@ const SearchLookScreen = ({ navigation }) => {
           )}
         />
       </View>
-    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 30,
+    paddingTop: hsize(30),
     backgroundColor: 'white',
   },
   list: {

@@ -16,8 +16,9 @@ import LoadingScreen from '../OtherScreens/LoadingScreen';
 import { AuthContext } from '../../services/context/AuthContext';
 import { FlatList } from 'react-native-gesture-handler';
 import UserModal from '../../components/UserModal';
-import * as userAPI from '../../services/api/user';
-import * as itemAPI from '../../services/api/item';
+import * as userAPI from '../../services/api/user'
+import * as itemAPI from '../../services/api/item'
+import data from '../../data/mock.json'
 const tabs = {
   items: 'items',
   looks: 'looks',
@@ -65,6 +66,14 @@ const ItemsTab = React.memo(function ({ navigation }) {
     <FlatList
       numColumns={3}
       data={data}
+      onRefresh={() => {
+        setLoading(true);
+        fetchData().then(res => {
+          setData(res)
+          setLoading(false)
+        })
+      }}
+      refreshing={loading}
       renderItem={({ item }) => (
         <TouchableOpacity
           onPress={() => {
@@ -84,18 +93,18 @@ const BookmarsTab = ({ navigation }) => {
   return (
     <FlatList
       numColumns={3}
-      // data={data}
-      // renderItem={({ item }) => (
-      //   <TouchableOpacity
-      //     onPress={() => {
-      //       navigation.navigate('Item', item);
-      //     }}>
-      //     <Image
-      //       style={{ width: wsize(124), height: wsize(123) }}
-      //       source={{ uri: item.img }}
-      //     />
-      //   </TouchableOpacity>
-      // )}
+    // data={data}
+    // renderItem={({ item }) => (
+    //   <TouchableOpacity
+    //     onPress={() => {
+    //       navigation.navigate('Item', item);
+    //     }}>
+    //     <Image
+    //       style={{ width: wsize(124), height: wsize(123) }}
+    //       source={{ uri: item.img }}
+    //     />
+    //   </TouchableOpacity>
+    // )}
     />
   );
 };
@@ -215,7 +224,7 @@ const ProfileScreen = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    // flex: 1,
     paddingTop: hsize(44),
   },
   profileInitialContainer: {
