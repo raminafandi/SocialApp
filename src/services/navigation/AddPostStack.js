@@ -6,6 +6,7 @@ import AddPhotoScreen from '../../screens/MainScreens/AddPhotoScreen';
 import AddItemScreen from '../../screens/MainScreens/AddItemScreen';
 import SearchLookScreen from '../../screens/MainScreens/SearchLookScreen';
 import PhotoGrid from '../../screens/MainScreens/PhotoGrid';
+import ItemScreen from '../../screens/MainScreens/ItemScreen'
 import PhotoCarousel from '../../screens/MainScreens/PhotoCarousel';
 import AlbumScreen from '../../screens/MainScreens/AlbumScreen';
 import AddLookScreen from '../../screens/MainScreens/AddLookScreen';
@@ -32,6 +33,7 @@ export default function ProfileStackScreen() {
       <AddPostStack.Screen name="PhotoGrid" component={PhotoGrid} />
       <AddPostStack.Screen name="PhotoCarousel" component={PhotoCarousel} />
       <AddPostStack.Screen name="Album" component={AlbumScreen} />
+      <AddPostStack.Screen name="Item" component={ItemScreen} />
       <AddPostStack.Screen name="AddLook" component={AddLookScreen} />
     </AddPostStack.Navigator>
   );

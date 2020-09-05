@@ -1,14 +1,16 @@
 import React from 'react';
-import { View, StyleSheet, Image } from 'react-native';
+import { View, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import { hsize, wsize } from '../entities/constants';
 import Tag from './Tag';
 
-export default function LookCategory({ data }) {
+export default function LookCategory({ data, id, ...props }) {
   return (
-    <View style={styles.container}>
-      <Image style={styles.img} source={{ uri: data.img }} />
-      <Tag title={data.title} />
-    </View>
+    <TouchableOpacity {...props}>
+      <View style={styles.container}>
+        <Image style={styles.img} source={{ uri: data.image }} />
+        <Tag title={data.title} />
+      </View>
+    </TouchableOpacity>
   );
 }
 

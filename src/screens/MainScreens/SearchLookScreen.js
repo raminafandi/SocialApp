@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
@@ -13,11 +13,26 @@ import {
 import data from '../../data/mock.json';
 import LookCategory from '../../components/LookCategory';
 import Search from '../../components/Search';
-
+import * as albumsAPI from '../../services/api/album'
+import LoadingScreen from '../OtherScreens/LoadingScreen'
 import { window, wsize, hsize } from '../../entities/constants';
-const SearchLookScreen = ({ navigation }) => {
+export default React.memo(({ navigation }) => {
   const [search, setSearch] = useState('');
   const [loading, setLoading] = useState(false)
+  const [albums, setAlbums] = useState(null);
+  useEffect(() => {
+    const data = [];
+    setLoading(true)
+    albumsAPI.getAlbums().then(querySnapshot => {
+      querySnapshot.forEach((doc) => {
+        data.push({ id: doc.id, data: doc.data() });
+      })
+      setAlbums(data)
+      setLoading(false)
+    })
+  }, [])
+  if (loading)
+    return <LoadingScreen />
   return (
     <View style={styles.container}>
       <Search setSearch={setSearch} />
@@ -44,23 +59,24 @@ const SearchLookScreen = ({ navigation }) => {
       </View>
       <FlatList
         numColumns={2}
-        data={data}
+        data={albums}
         onRefresh={() => {
           setLoading(true);
           setTimeout(() => setLoading(false), 1000)
         }}
+        keyExtractor={album => album.index}
         refreshing={loading}
-        renderItem={({ item }) => (
-          <TouchableOpacity onPress={() => {
-            navigation.navigate('Album');
-          }}>
-            <LookCategory data={item} />
-          </TouchableOpacity>
-        )}
+        renderItem={({ item }) => {
+          return (
+            <LookCategory data={item.data} id={item.id} onPress={() => {
+              navigation.navigate('Album', { id: item.id });
+            }} />
+          )
+        }}
       />
     </View>
   );
-};
+})
 
 const styles = StyleSheet.create({
   container: {
@@ -105,4 +121,3 @@ const styles = StyleSheet.create({
     fontSize: wsize(15),
   },
 });
-export default SearchLookScreen;

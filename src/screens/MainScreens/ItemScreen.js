@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   Text,
@@ -13,51 +13,61 @@ import { window, wsize, hsize } from '../../entities/constants';
 import { Entypo, Feather, AntDesign } from '@expo/vector-icons';
 import TextButton from '../../components/TextButton';
 import Tag from '../../components/Tag';
-
-const ItemScreen = ({ route }) => {
+import { getItemById } from '../../services/api/item'
+import LoadingScreen from '../OtherScreens/LoadingScreen';
+export default React.memo(({ route }) => {
   const iconSize = wsize(26);
-  const { image, brand, title, info } = route.params;
+  const [item, setItem] = useState(null)
+  useEffect(() => {
+    const { image, brand, title, info, fetchId } = route.params;
+    if (fetchId)
+      getItemById(fetchId).then(doc => setItem(doc.data()))
+    else
+      setItem({ image, brand, title, info })
+  }, [])
+  if (!item)
+    return (<LoadingScreen />)
   return (
-      <ScrollView style={styles.container}>
-        <View style={styles.postContainer}>
-          <View style={styles.postImageContainer}>
-            <Image
-              source={{
-                uri: image,
-              }}
-              style={styles.postImage}
-            />
+    <ScrollView style={styles.container}>
+      <View style={styles.postContainer}>
+        <View style={styles.postImageContainer}>
+          <Image
+            source={{
+              uri: item.image,
+            }}
+            style={styles.postImage}
+          />
+        </View>
+        <View style={styles.postInfoContainer}>
+          <Text style={styles.postTitle}>{item.title}</Text>
+          <Text style={styles.postBrand}>{item.brand}</Text>
+          <Text style={styles.postPrice}>{item.info.price}</Text>
+          <Text style={styles.postDescription}>{item.info.description}</Text>
+          <View style={{ flexDirection: 'row' }}>
+            <Text style={styles.postPublisher}>added by</Text>
+            <TextButton style={styles.postPublisherLink}>{item.info.userName}</TextButton>
           </View>
-          <View style={styles.postInfoContainer}>
-            <Text style={styles.postTitle}>{title}</Text>
-            <Text style={styles.postBrand}>{brand}</Text>
-            <Text style={styles.postPrice}>{info.price}</Text>
-            <Text style={styles.postDescription}>{info.description}</Text>
-            <View style={{ flexDirection: 'row' }}>
-              <Text style={styles.postPublisher}>added by</Text>
-              <TextButton style={styles.postPublisherLink}>{info.userName}</TextButton>
-            </View>
-            <View style={styles.postActions}>
-              <TouchableOpacity>
-                <AntDesign name="infocirlce" size={iconSize} color="black" />
-              </TouchableOpacity>
-              <TouchableOpacity>
-                <Entypo name="link" size={iconSize} color="black" />
-              </TouchableOpacity>
-              <TouchableOpacity>
-                <Feather name="bookmark" size={iconSize} color="black" />
-              </TouchableOpacity>
-            </View>
-            <View style={{ flexDirection: 'row' }}>
-              <Tag title="Sunglasses" />
-              <Tag title="Gold" />
-              <Tag title="ASOS" />
-            </View>
+          <View style={styles.postActions}>
+            <TouchableOpacity>
+              <AntDesign name="infocirlce" size={iconSize} color="black" />
+            </TouchableOpacity>
+            <TouchableOpacity>
+              <Entypo name="link" size={iconSize} color="black" />
+            </TouchableOpacity>
+            <TouchableOpacity>
+              <Feather name="bookmark" size={iconSize} color="black" />
+            </TouchableOpacity>
+          </View>
+          <View style={{ flexDirection: 'row' }}>
+            <Tag title="Sunglasses" />
+            <Tag title="Gold" />
+            <Tag title="ASOS" />
           </View>
         </View>
-      </ScrollView>
+      </View>
+    </ScrollView>
   );
-};
+});
 
 const styles = StyleSheet.create({
   container: {
@@ -109,4 +119,3 @@ const styles = StyleSheet.create({
     paddingVertical: hsize(13),
   },
 });
-export default ItemScreen;

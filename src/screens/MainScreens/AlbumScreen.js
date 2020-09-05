@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
@@ -10,28 +10,42 @@ import {
   FlatList,
 } from 'react-native';
 
-import data from '../../data/mock.json';
 import Search from '../../components/Search';
-
+import * as albumsAPI from '../../services/api/album'
 import { window, wsize, hsize } from '../../entities/constants';
-const SearchLookScreen = ({ navigation }) => {
+import LoadingScreen from '../OtherScreens/LoadingScreen';
+export default React.memo(({ navigation, route }) => {
+  const [items, setItems] = useState([]);
   const [search, setSearch] = useState('');
+  const [loading, setLoading] = useState(false)
+  const { id } = route.params
+  useEffect(() => {
+    setLoading(true)
+    albumsAPI.getItemsOfAlbum(id).then(doc => {
+      setItems(doc.data().items)
+      setLoading(false)
+    })
+  }, [])
+  if (loading)
+    return (<LoadingScreen />)
   return (
-      <View style={styles.container}>
-        <Search setSearch={setSearch} />
-        <FlatList
-          numColumns={3}
-          data={data}
-          style={styles.list}
-          renderItem={({ item }) => (
-            <TouchableOpacity>
-              <Image source={{ uri: item.img }} style={styles.img} />
+    <View style={styles.container}>
+      <Search setSearch={setSearch} />
+      <FlatList
+        numColumns={3}
+        data={items}
+        style={styles.list}
+        renderItem={({ item }) => {
+          return (
+            <TouchableOpacity onPress={() => navigation.navigate('Item', { fetchId: item.id })}>
+              <Image source={{ uri: item.image }} style={styles.img} />
             </TouchableOpacity>
-          )}
-        />
-      </View>
+          )
+        }}
+      />
+    </View>
   );
-};
+})
 
 const styles = StyleSheet.create({
   container: {
@@ -50,4 +64,3 @@ const styles = StyleSheet.create({
     borderColor: 'white',
   },
 });
-export default SearchLookScreen;

@@ -35,4 +35,9 @@ const addItem = async ({ img, name,  brand, description, price}) => {
         })
 }
 
-export { getUserItems, addItem }
+
+const getItemById = (id) => {
+   return db.collection('items').doc(id).get();
+} 
+
+export { getUserItems, addItem, getItemById}
