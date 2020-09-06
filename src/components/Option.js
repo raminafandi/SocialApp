@@ -4,21 +4,36 @@ import { window, wsize, hsize } from '../entities/constants';
 
 export default function ({
   title,
+  setModalVisible,
   navigation,
   navigateTo,
   children,
   ...props
 }) {
-  return (
-    <TouchableOpacity
-      style={styles.modalOption}
-      onPress={() => {
-        navigation.navigate(navigateTo);
-      }}>
-      {children}
-      <Text style={styles.modalOptionText}>{title}</Text>
-    </TouchableOpacity>
-  );
+  if (setModalVisible) {
+    return (
+      <TouchableOpacity
+        style={styles.modalOption}
+        onPress={() => {
+          navigation.navigate(navigateTo);
+          setModalVisible(false);
+        }}>
+        {children}
+        <Text style={styles.modalOptionText}>{title}</Text>
+      </TouchableOpacity>
+    );
+  } else {
+    return (
+      <TouchableOpacity
+        style={styles.modalOption}
+        onPress={() => {
+          navigation.navigate(navigateTo);
+        }}>
+        {children}
+        <Text style={styles.modalOptionText}>{title}</Text>
+      </TouchableOpacity>
+    );
+  }
 }
 
 const styles = StyleSheet.create({
