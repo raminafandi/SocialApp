@@ -15,24 +15,24 @@ import {
 /*this is a react native version of this code https://github.com/Expertizo/react-fb-image-grid*/
 
 
-export default function () {
+export default React.memo(function ({images, clickEventListener}) {
   const [countFrom, setCountFrom] = useState(5);
   const [conditionalRender, setConditionalRender] = useState(false);
-  const [images, setImages] = useState([
-    'https://bootdey.com/img/Content/avatar/avatar1.png',
-    'https://bootdey.com/img/Content/avatar/avatar6.png',
-    'https://bootdey.com/img/Content/avatar/avatar8.png',
-    'https://bootdey.com/img/Content/avatar/avatar7.png',
-    'https://bootdey.com/img/Content/avatar/avatar5.png',
-    'https://bootdey.com/img/Content/avatar/avatar6.png',
-    'https://bootdey.com/img/Content/avatar/avatar4.png',
-    'https://bootdey.com/img/Content/avatar/avatar1.png',
-    'https://bootdey.com/img/Content/avatar/avatar2.png',
-    'https://bootdey.com/img/Content/avatar/avatar3.png',
-  ])
-  const clickEventListener = () => {
-    Alert.alert('Alert', 'image clicked');
-  };
+  // const [images, setImages] = useState([
+  //   'https://bootdey.com/img/Content/avatar/avatar1.png',
+  //   'https://bootdey.com/img/Content/avatar/avatar6.png',
+  //   'https://bootdey.com/img/Content/avatar/avatar8.png',
+  //   'https://bootdey.com/img/Content/avatar/avatar7.png',
+  //   'https://bootdey.com/img/Content/avatar/avatar5.png',
+  //   'https://bootdey.com/img/Content/avatar/avatar6.png',
+  //   'https://bootdey.com/img/Content/avatar/avatar4.png',
+  //   'https://bootdey.com/img/Content/avatar/avatar1.png',
+  //   'https://bootdey.com/img/Content/avatar/avatar2.png',
+  //   'https://bootdey.com/img/Content/avatar/avatar3.png',
+  // ])
+  // const clickEventListener = () => {
+  //   Alert.alert('Alert', 'image clicked');
+  // };
 
   const RenderOne = ({ images, clickEventListener }) => {
     return (
@@ -167,7 +167,7 @@ export default function () {
       {imagesToShow.length >= 4 && <RenderThree clickEventListener={clickEventListener} countFrom={countFrom} images={images} />}
     </View>
   );
-}
+})
 
 const styles = StyleSheet.create({
   container: {

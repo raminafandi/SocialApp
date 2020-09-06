@@ -35,17 +35,15 @@ const EditProfileScreen = ({ route, navigation }) => {
   const iconSize = wsize(28);
   const submitHandler = () => {
     setLoading(true)
-    updateUserInfo(user, {name, photoURL, userName, status, city, link, description, email, phone, gender}).then(()=> {
+    updateUserInfo(user, { name, photoURL, userName, status, city, link, description, email, phone, gender }).then(() => {
       setLoading(false)
       navigation.navigate('Profile')
     });
   }
   navigation.setOptions({
-    headerRight: () => {
-      return (<Button title="Save" onPress={submitHandler} />)
-    }
+    headerRight: () => (<Button title="Save" onPress={submitHandler} />)
   })
-  if(loading){
+  if (loading) {
     return (<LoadingScreen />)
   }
   return (

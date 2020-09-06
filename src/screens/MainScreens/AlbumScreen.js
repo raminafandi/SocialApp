@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef, useLayoutEffect } from 'react';
 import {
   View,
   Text,
@@ -18,7 +18,9 @@ export default React.memo(({ navigation, route }) => {
   const [items, setItems] = useState([]);
   const [search, setSearch] = useState('');
   const [loading, setLoading] = useState(false)
-  const { id } = route.params
+  const [selectedItems, setSelectedItems] = useState([]);
+  const firstUpdate = useRef(true);
+  const { id, clearSelectedItems } = route.params
   useEffect(() => {
     setLoading(true)
     albumsAPI.getItemsOfAlbum(id).then(doc => {
@@ -26,23 +28,44 @@ export default React.memo(({ navigation, route }) => {
       setLoading(false)
     })
   }, [])
-  if (loading)
-    return (<LoadingScreen />)
+  useEffect(() => {
+    const { clearSelectedItems } = route.params
+    if (clearSelectedItems) {
+      setSelectedItems([])
+      firstUpdate.current = true
+    }
+  }, [route.params])
+  useLayoutEffect(() => {
+    if (firstUpdate.current) {
+      firstUpdate.current = false;
+      return;
+    }
+    navigation.navigate('AddLook', { selectedItems: selectedItems });
+  }, [selectedItems]);
+
   return (
     <View style={styles.container}>
       <Search setSearch={setSearch} />
-      <FlatList
-        numColumns={3}
-        data={items}
-        style={styles.list}
-        renderItem={({ item }) => {
-          return (
-            <TouchableOpacity onPress={() => navigation.navigate('Item', { fetchId: item.id })}>
-              <Image source={{ uri: item.image }} style={styles.img} />
-            </TouchableOpacity>
-          )
-        }}
-      />
+      {loading ? <LoadingScreen /> :
+        <FlatList
+          numColumns={3}
+          data={items}
+          style={styles.list}
+          renderItem={({ item }) => {
+            return (
+              // <TouchableOpacity onPress={() => navigation.navigate('Item', { fetchId: item.id })}>
+              //   <Image source={{ uri: item.image }} style={styles.img} />
+              // </TouchableOpacity>
+              <TouchableOpacity onPress={() => {
+                setSelectedItems([item, ...selectedItems]);
+              }
+              }>
+                <Image source={{ uri: item.image }} style={styles.img} />
+              </TouchableOpacity>
+            )
+          }}
+        />
+      }
     </View>
   );
 })
