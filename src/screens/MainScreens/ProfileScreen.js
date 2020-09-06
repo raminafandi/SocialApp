@@ -29,18 +29,18 @@ const LooksTab = ({ navigation }) => {
   return (
     <FlatList
       numColumns={3}
-      // data={data}
-      // renderItem={({ item }) => (
-      //   <TouchableOpacity
-      //     onPress={() => {
-      //       navigation.navigate('Item', item);
-      //     }}>
-      //     <Image
-      //       style={{ width: wsize(124), height: wsize(123) }}
-      //       source={{ uri: item.img }}
-      //     />
-      //   </TouchableOpacity>
-      // )}
+    // data={data}
+    // renderItem={({ item }) => (
+    //   <TouchableOpacity
+    //     onPress={() => {
+    //       navigation.navigate('Item', item);
+    //     }}>
+    //     <Image
+    //       style={{ width: wsize(124), height: wsize(123) }}
+    //       source={{ uri: item.img }}
+    //     />
+    //   </TouchableOpacity>
+    // )}
     />
   );
 };
@@ -119,7 +119,7 @@ const ProfileScreen = ({ navigation }) => {
   useEffect(() => {
     userAPI.getUserInfo(user).then((doc) => setUserExstraInfo(doc.data()));
   }, [isFocused]);
-  if (!userExtraInfo) return <LoadingScreen />;
+  if (!userExtraInfo) return <LoadingScreen fullscreen />;
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.profileInitialContainer}>

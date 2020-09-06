@@ -18,21 +18,23 @@ import LoadingScreen from '../OtherScreens/LoadingScreen'
 import { window, wsize, hsize } from '../../entities/constants';
 export default React.memo(({ navigation }) => {
   const [search, setSearch] = useState('');
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
+  const [miniLoading, setMiniLoading] = useState(false);
   const [albums, setAlbums] = useState(null);
-  useEffect(() => {
+  const fetchData = () => albumsAPI.getAlbums().then(querySnapshot => {
     const data = [];
+    querySnapshot.forEach((doc) => {
+      data.push({ id: doc.id, data: doc.data() });
+    })
+    return data;
+  })
+  useEffect(() => {
     setLoading(true)
-    albumsAPI.getAlbums().then(querySnapshot => {
-      querySnapshot.forEach((doc) => {
-        data.push({ id: doc.id, data: doc.data() });
-      })
+    fetchData().then(data => {
       setAlbums(data)
       setLoading(false)
     })
   }, [])
-  if (loading)
-    return <LoadingScreen />
   return (
     <View style={styles.container}>
       <Search setSearch={setSearch} />
@@ -57,15 +59,18 @@ export default React.memo(({ navigation }) => {
           <Text style={styles.tabTextFocused}>women</Text>
         </TouchableOpacity>
       </View>
-      <FlatList
+      {loading ? <LoadingScreen /> : <FlatList
         numColumns={2}
         data={albums}
         onRefresh={() => {
-          setLoading(true);
-          setTimeout(() => setLoading(false), 1000)
+          setMiniLoading(true)
+          fetchData().then(data => {
+            setAlbums(data);
+            setMiniLoading(false);
+          })
         }}
         keyExtractor={album => album.index}
-        refreshing={loading}
+        refreshing={miniLoading}
         renderItem={({ item }) => {
           return (
             <LookCategory data={item.data} id={item.id} onPress={() => {
@@ -73,9 +78,9 @@ export default React.memo(({ navigation }) => {
             }} />
           )
         }}
-      />
+      />}
     </View>
-  );
+  )
 })
 
 const styles = StyleSheet.create({
