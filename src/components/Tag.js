@@ -1,6 +1,6 @@
 import React from 'react';
 import { TouchableOpacity, Text, StyleSheet } from 'react-native';
-import { wsize } from '../entities/constants';
+import { wsize, hsize } from '../entities/constants';
 
 export default function Tag({ title, style, titleStyle, ...props }) {
   return (
@@ -16,6 +16,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     paddingHorizontal: wsize(5),
     marginLeft: wsize(4),
+    marginBottom: hsize(9),
   },
   tagText: {
     color: '#FFFFFF',

@@ -26,6 +26,11 @@ const AddItemScreen = ({ route, navigation }) => {
   const [price, setPrice] = useState('');
   const [description, setDescription] = useState('');
   const [imageLoading, setImageLoading] = useState(false);
+  const [tag, setTag] = useState('');
+  const [tags, setTags] = useState([]);
+  const renderingTags = tags.map((item, index) => {
+    return <Tag title={item} key={index} />;
+  });
   const db = firebase.firestore();
   const { img } = route.params;
 
@@ -64,7 +69,7 @@ const AddItemScreen = ({ route, navigation }) => {
             <TextInput
               placeholder="Name of Item"
               onChangeText={(text) => setName(text)}
-              style={styles.textInput}
+              style={styles.textInputBold}
             />
             <TextInput
               placeholder="Brand of Item"
@@ -83,6 +88,29 @@ const AddItemScreen = ({ route, navigation }) => {
               style={styles.textInput}
             />
           </View>
+          <View style={styles.inputContainer}>
+            <TextInput
+              placeholder="Add Tags..."
+              value={tag}
+              onChangeText={(text) => {
+                setTag(text);
+              }}
+              maxLength={30}
+              style={styles.tagsInput}
+            />
+            <TouchableOpacity
+              style={styles.enterButton}
+              onPress={() => {
+                if (tag !== '') {
+                  setTags([...tags, tag]);
+                  setTag('');
+                }
+              }}>
+              <AntDesign name="right" size={24} color="black" />
+            </TouchableOpacity>
+          </View>
+
+          <View style={styles.tagsContainer}>{renderingTags}</View>
           <Button
             title="Save"
             style={{ backgroundColor: 'red' }}
@@ -104,23 +132,69 @@ const styles = StyleSheet.create({
   },
   postImageContainer: {
     alignItems: 'center',
+    marginBottom: hsize(54),
   },
   postImage: {
     width: wsize(304),
     height: hsize(235),
   },
-
-  textInput: {
-    fontSize: wsize(22),
+  textInputBold: {
+    fontSize: 22,
     borderBottomColor: 'grey',
     alignSelf: 'center',
-    borderBottomWidth: 1,
+    // borderBottomWidth: 1,
     borderRadius: 5,
-    width: wsize(293),
-    height: hsize(56),
+    // width: wsize(293),
+    fontWeight: 'bold',
+    height: hsize(33),
     justifyContent: 'center',
     marginBottom: hsize(14),
     paddingStart: wsize(17),
+  },
+  textInput: {
+    fontSize: 20,
+    borderBottomColor: 'grey',
+    alignSelf: 'center',
+    borderRadius: 5,
+    height: hsize(33),
+    justifyContent: 'center',
+    marginBottom: hsize(14),
+    paddingStart: wsize(17),
+  },
+  inputContainer: {
+    alignSelf: 'center',
+    borderWidth: 1,
+    borderColor: '#DADBDA',
+    paddingHorizontal: wsize(10),
+    height: hsize(33),
+    borderRadius: wsize(5),
+    justifyContent: 'space-between',
+    overflow: 'hidden',
+    paddingStart: wsize(17),
+    flexDirection: 'row',
+  },
+  tagsInput: {
+    fontSize: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
+    alignContent: 'center',
+  },
+  enterButton: {
+    borderLeftWidth: 1,
+    borderLeftColor: '#DADBDA',
+    height: hsize(33),
+    width: wsize(18),
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  tagsContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    width: wsize(260),
+    justifyContent: 'center',
+    alignItems: 'center',
+    alignSelf: 'center',
+    marginTop: hsize(25),
   },
 });
 export default AddItemScreen;
