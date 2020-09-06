@@ -13,20 +13,18 @@ import { window, wsize, hsize } from '../../entities/constants';
 import { Entypo, Feather, AntDesign } from '@expo/vector-icons';
 import TextButton from '../../components/TextButton';
 import Tag from '../../components/Tag';
-import { getItemById } from '../../services/api/item'
+import { getItemById } from '../../services/api/item';
 import LoadingScreen from '../OtherScreens/LoadingScreen';
 export default React.memo(({ route }) => {
   const iconSize = wsize(26);
-  const [item, setItem] = useState(null)
+  const [item, setItem] = useState(null);
+  const [display, setDisplay] = useState('none');
   useEffect(() => {
     const { image, brand, title, info, fetchId } = route.params;
-    if (fetchId)
-      getItemById(fetchId).then(doc => setItem(doc.data()))
-    else
-      setItem({ image, brand, title, info })
-  }, [])
-  if (!item)
-    return (<LoadingScreen />)
+    if (fetchId) getItemById(fetchId).then((doc) => setItem(doc.data()));
+    else setItem({ image, brand, title, info });
+  }, []);
+  if (!item) return <LoadingScreen />;
   return (
     <ScrollView style={styles.container}>
       <View style={styles.postContainer}>
@@ -41,14 +39,25 @@ export default React.memo(({ route }) => {
         <View style={styles.postInfoContainer}>
           <Text style={styles.postTitle}>{item.title}</Text>
           <Text style={styles.postBrand}>{item.brand}</Text>
-          <Text style={styles.postPrice}>{item.info.price}</Text>
-          <Text style={styles.postDescription}>{item.info.description}</Text>
-          <View style={{ flexDirection: 'row' }}>
-            <Text style={styles.postPublisher}>added by</Text>
-            <TextButton style={styles.postPublisherLink}>{item.info.userName}</TextButton>
+          <View style={[styles.toggleableContainer, { display: display }]}>
+            <Text style={styles.postPrice}>{item.info.price}</Text>
+            <Text style={styles.postDescription}>{item.info.description}</Text>
+            <View style={{ flexDirection: 'row' }}>
+              <Text style={styles.postPublisher}>added by</Text>
+              <TextButton style={styles.postPublisherLink}>
+                {item.info.userName}
+              </TextButton>
+            </View>
           </View>
           <View style={styles.postActions}>
-            <TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                if (display === 'none') {
+                  setDisplay('flex');
+                } else {
+                  setDisplay('none');
+                }
+              }}>
               <AntDesign name="infocirlce" size={iconSize} color="black" />
             </TouchableOpacity>
             <TouchableOpacity>
@@ -94,6 +103,10 @@ const styles = StyleSheet.create({
   },
   postBrand: {
     fontSize: wsize(22),
+  },
+  toggleableContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   postPrice: {
     fontSize: wsize(22),
