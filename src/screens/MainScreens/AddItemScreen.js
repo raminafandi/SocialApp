@@ -18,6 +18,7 @@ import Tag from '../../components/Tag';
 import firebase from '../../services/firebase/index';
 import * as itemAPI from '../../services/api/item';
 import LoadingScreen from '../OtherScreens/LoadingScreen';
+import { RadioButton } from 'react-native-paper';
 
 const AddItemScreen = ({ route, navigation }) => {
   const iconSize = wsize(26);
@@ -28,6 +29,8 @@ const AddItemScreen = ({ route, navigation }) => {
   const [imageLoading, setImageLoading] = useState(false);
   const [tag, setTag] = useState('');
   const [tags, setTags] = useState([]);
+  const [value, setValue] = React.useState('men');
+
   const renderingTags = tags.map((item, index) => {
     return <Tag title={item} key={index} />;
   });
@@ -87,6 +90,20 @@ const AddItemScreen = ({ route, navigation }) => {
               onChangeText={(text) => setDescription(text)}
               style={styles.textInput}
             />
+          </View>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}>
+            <RadioButton.Group
+              onValueChange={(value) => setValue(value)}
+              value={value}>
+              <RadioButton.Item label="Men" value="men" />
+              <RadioButton.Item label="Women" value="women" />
+              <RadioButton.Item label="Unisex" value="unisex" />
+            </RadioButton.Group>
           </View>
           <View style={styles.inputContainer}>
             <TextInput
