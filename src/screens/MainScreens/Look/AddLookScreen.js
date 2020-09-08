@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext, memo } from 'react';
 import {
   View,
   Text,
@@ -10,25 +10,35 @@ import {
   SafeAreaView,
   Button as ButtonReact,
 } from 'react-native';
-import Button from '../../components/Button';
-import { window, wsize, hsize } from '../../entities/constants';
-import Input from '../../components/Input';
-import Tag from '../../components/Tag';
-import { HeaderBackButton } from '@react-navigation/stack';
-import PhotoGrid from './PhotoGrid';
-export default React.memo(({ route, navigation }) => {
-  const [text, setText] = useState('');
-  const { selectedItems } = route.params;
-  const submitHandler = () => {
+import Button from '../../../components/Button';
+import { window, wsize, hsize } from '../../../entities/constants';
+import Input from '../../../components/Input';
+import Tag from '../../../components/Tag';
+import BackButton from './BackButton'
+import PhotoGrid from '../PhotoGrid';
+import { ItemContext } from '../../../services/context/ItemContext';
 
+const RenderedPhotoGrid = memo(({ selectedItems, clickEventListener, ...props }) => {
+  return (
+    <PhotoGrid images={selectedItems.map(item => item.image)} clickEventListener={clickEventListener} {...props} />
+  )
+});
+
+
+export default memo(({ route, navigation }) => {
+  const [text, setText] = useState('');
+  const itemContext = useContext(ItemContext);
+  const clearSelectedItems = itemContext.clearSelectedItems;
+  const selectedItems = itemContext.selectedItems;
+  // const { selectedItems } = route.params;
+  const submitHandler = () => {
   }
   navigation.setOptions({
     headerLeft: (props) => (
-      <HeaderBackButton
+      <BackButton
         {...props}
-        onPress={() => {
-          navigation.navigate('Album', { clearSelectedItems: true })
-        }}
+        onPress={clearSelectedItems}
+        navigation={navigation}
       />
     ),
     headerRight: () => (
@@ -46,7 +56,7 @@ export default React.memo(({ route, navigation }) => {
           maxLength={200}
         />
         <View style={styles.photoGrid}>
-          <PhotoGrid images={selectedItems.map(item => item.image)} clickEventListener={() => console.log('click')} />
+          {<RenderedPhotoGrid selectedItems={selectedItems} clickEventListener={() => console.log('clicked')} />}
         </View>
         <View style={styles.tags}>
           <Tag title="Sunglasses" />
