@@ -1,22 +1,12 @@
 import firebase from '../firebase/index'
 const db = firebase.firestore();
-
+import { uploadImage } from './image'
 const getUserItems = () => {
     return db.collection('items').where("info.userId", "==", firebase.auth().currentUser.uid).get()
 }
 
-const addItem = async ({ img, name,  brand, description, price}) => {
-    const response = await fetch(img);
-    const blob = await response.blob();
-    const ref =
-        firebase
-            .storage()
-            .ref('itemImages/')
-            .child(img.split('/').pop());
-    return ref.put(blob).then(() => {
-        console.log('Image uploaded to the bucket!');
-        return ref.getDownloadURL()
-    })
+const addItem = async ({ img, name, brand, description, price }) => {
+    uploadImage(img, 'itemImages/')
         .then((url) => {
             const currentUser = firebase.auth().currentUser;
             return db.collection('items').add({
@@ -37,7 +27,7 @@ const addItem = async ({ img, name,  brand, description, price}) => {
 
 
 const getItemById = (id) => {
-   return db.collection('items').doc(id).get();
-} 
+    return db.collection('items').doc(id).get();
+}
 
-export { getUserItems, addItem, getItemById}
+export { getUserItems, addItem, getItemById }

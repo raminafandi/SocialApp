@@ -34,7 +34,6 @@ const AddItemScreen = ({ route, navigation }) => {
   const renderingTags = tags.map((item, index) => {
     return <Tag title={item} key={index} />;
   });
-  const db = firebase.firestore();
   const { img } = route.params;
 
   const saveHandler = async () => {

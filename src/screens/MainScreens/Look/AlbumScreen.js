@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useLayoutEffect } from 'react';
+import React, { useState, useEffect, useRef, useLayoutEffect, useContext } from 'react';
 import {
   View,
   Text,
@@ -10,39 +10,40 @@ import {
   FlatList,
 } from 'react-native';
 
-import Search from '../../components/Search';
-import * as albumsAPI from '../../services/api/album'
-import { window, wsize, hsize } from '../../entities/constants';
-import LoadingScreen from '../OtherScreens/LoadingScreen';
+import Search from '../../../components/Search';
+import * as albumsAPI from '../../../services/api/album'
+import { window, wsize, hsize } from '../../../entities/constants';
+import LoadingScreen from '../../OtherScreens/LoadingScreen';
+import { ItemContext } from '../../../services/context/ItemContext'
 export default React.memo(({ navigation, route }) => {
   const [items, setItems] = useState([]);
   const [search, setSearch] = useState('');
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(true)
   const [selectedItems, setSelectedItems] = useState([]);
-  const firstUpdate = useRef(true);
-  const { id, clearSelectedItems } = route.params
+  const itemContext = useContext(ItemContext);
+  // const firstUpdate = useRef(true);
+  const { id } = route.params
   useEffect(() => {
-    setLoading(true)
+    // setLoading(true)
     albumsAPI.getItemsOfAlbum(id).then(doc => {
       setItems(doc.data().items)
       setLoading(false)
     })
   }, [])
-  useEffect(() => {
-    const { clearSelectedItems } = route.params
-    if (clearSelectedItems) {
-      setSelectedItems([])
-      firstUpdate.current = true
-    }
-  }, [route.params])
-  useLayoutEffect(() => {
-    if (firstUpdate.current) {
-      firstUpdate.current = false;
-      return;
-    }
-    navigation.navigate('AddLook', { selectedItems: selectedItems });
-  }, [selectedItems]);
-
+  // useEffect(() => {
+  //   const { clearSelectedItems } = route.params
+  //   if (clearSelectedItems) {
+  //     setSelectedItems([])
+  //     firstUpdate.current = true
+  //   }
+  // }, [route.params])
+  // useLayoutEffect(() => {
+  //   if (firstUpdate.current) {
+  //     firstUpdate.current = false;
+  //     return;
+  //   }
+  //   navigation.navigate('AddLook', { selectedItems: selectedItems });
+  // }, [selectedItems]);
   return (
     <View style={styles.container}>
       <Search setSearch={setSearch} />
@@ -57,9 +58,9 @@ export default React.memo(({ navigation, route }) => {
               //   <Image source={{ uri: item.image }} style={styles.img} />
               // </TouchableOpacity>
               <TouchableOpacity onPress={() => {
-                setSelectedItems([item, ...selectedItems]);
-              }
-              }>
+                itemContext.selectItem(item)
+                navigation.navigate('AddLook')
+                }}>
                 <Image source={{ uri: item.image }} style={styles.img} />
               </TouchableOpacity>
             )

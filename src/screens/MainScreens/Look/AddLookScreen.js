@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext, memo } from 'react';
 import {
   View,
   Text,
@@ -9,37 +9,59 @@ import {
   ScrollView,
   SafeAreaView,
   Button as ButtonReact,
+  Alert
 } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 
-import Button from '../../components/Button';
-import { window, wsize, hsize } from '../../entities/constants';
-import Input from '../../components/Input';
-import Tag from '../../components/Tag';
+import Button from '../../../components/Button';
+import { window, wsize, hsize } from '../../../entities/constants';
+import Tag from '../../../components/Tag';
 import { HeaderBackButton } from '@react-navigation/stack';
-import PhotoGrid from './PhotoGrid';
-export default React.memo(({ route, navigation }) => {
+import PhotoGrid from '../PhotoGrid';
+import BackButton from './BackButton'
+import { ItemContext } from '../../../services/context/ItemContext'
+import * as ImagePicker from 'expo-image-picker';
+import { addLook } from '../../../services/api/look'
+
+const RenderedPhotoGrid = memo(({ selectedItems, clickEventListener, ...props }) => {
+  return (
+    <PhotoGrid images={selectedItems.map(item => item.image)} clickEventListener={clickEventListener} {...props} />
+  )
+});
+
+
+export default memo(({ route, navigation }) => {
   const [tag, setTag] = useState('');
   const [tags, setTags] = useState([]);
+  const [text, setText] = useState('');
+  const [coverImage, setCoverImage] = useState('')
+  const itemContext = useContext(ItemContext);
+  const clearSelectedItems = itemContext.clearSelectedItems;
+  const selectedItems = itemContext.selectedItems;
   const renderingTags = tags.map((item, index) => {
     return <Tag title={item} key={index} />;
   });
-  const [text, setText] = useState('');
-  const { selectedItems } = route.params;
-  const submitHandler = () => {};
+  const submitHandler = () => {
+    addLook({ images: selectedItems, description: text, tags: tags, coverImage: coverImage }).then(() => Alert.alert('Completed!', 'Look has successfully added'));
+  }
+  const galeryHandler = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync();
+    if (!result.cancelled) {
+      setCoverImage(result.uri);
+    }
+  };
   navigation.setOptions({
     headerLeft: (props) => (
-      <HeaderBackButton
+      <BackButton
         {...props}
-        onPress={() => {
-          navigation.navigate('Album', { clearSelectedItems: true });
-        }}
+        onPress={clearSelectedItems}
+        navigation={navigation}
       />
     ),
     headerRight: () => <ButtonReact title="Publish" onPress={submitHandler} />,
   });
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <View>
       <ScrollView style={styles.container}>
         <TextInput
           placeholder="Say something meaningful..."
@@ -49,10 +71,7 @@ export default React.memo(({ route, navigation }) => {
           maxLength={200}
         />
         <View style={styles.photoGrid}>
-          <PhotoGrid
-            images={selectedItems.map((item) => item.image)}
-            clickEventListener={() => console.log('click')}
-          />
+          {<RenderedPhotoGrid selectedItems={selectedItems} clickEventListener={() => console.log('clicked')} />}
         </View>
         <View style={styles.inputContainer}>
           <TextInput
@@ -88,16 +107,20 @@ export default React.memo(({ route, navigation }) => {
             title="add cover"
             style={[styles.buttonStyle, { backgroundColor: '#0148FF' }]}
             titleStyle={[styles.buttonTitleStyle]}
+            onPress={galeryHandler}
           />
         </View>
+        <View style={{ alignSelf: 'center', marginTop: hsize(20),marginBottom: hsize(50) }}>
+          {coverImage ? <Image source={{ uri: coverImage }} resizeMode="contain" style={{ width: wsize(338), height: hsize(200) }} /> : null}
+        </View>
       </ScrollView>
-    </SafeAreaView>
+    </View>
   );
 });
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    // flex: 1,
     paddingTop: hsize(24),
   },
   input: {

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import {
   View,
   Text,
@@ -10,17 +10,19 @@ import {
   FlatList,
 } from 'react-native';
 
-import data from '../../data/mock.json';
-import LookCategory from '../../components/LookCategory';
-import Search from '../../components/Search';
-import * as albumsAPI from '../../services/api/album'
-import LoadingScreen from '../OtherScreens/LoadingScreen'
-import { window, wsize, hsize } from '../../entities/constants';
+import LookCategory from '../../../components/LookCategory';
+import Search from '../../../components/Search';
+import * as albumsAPI from '../../../services/api/album'
+import LoadingScreen from '../../OtherScreens/LoadingScreen'
+import BackButton from './BackButton'
+import { window, wsize, hsize } from '../../../entities/constants';
+import { ItemContext } from '../../../services/context/ItemContext'
 export default React.memo(({ navigation }) => {
   const [search, setSearch] = useState('');
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [miniLoading, setMiniLoading] = useState(false);
   const [albums, setAlbums] = useState(null);
+  const itemContext = useContext(ItemContext);
   const fetchData = () => albumsAPI.getAlbums().then(querySnapshot => {
     const data = [];
     querySnapshot.forEach((doc) => {
@@ -28,8 +30,17 @@ export default React.memo(({ navigation }) => {
     })
     return data;
   })
+  navigation.setOptions({
+    headerLeft: (props) => (
+      <BackButton
+        {...props}
+        onPress={itemContext.clearSelectedItems}
+        navigation={navigation}
+      />
+    ),
+  })
   useEffect(() => {
-    setLoading(true)
+    // setLoading(true)
     fetchData().then(data => {
       setAlbums(data)
       setLoading(false)
