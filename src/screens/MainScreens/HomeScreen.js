@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import {
   View,
   Text,
@@ -9,13 +9,13 @@ import {
   FlatList,
   SafeAreaView,
 } from 'react-native';
-import data from '../../data/mock.json';
-
-import Tag from '../../components/Tag';
-import Comment from '../../components/Comment';
-
 import { window, wsize, hsize } from '../../entities/constants';
 import { Entypo, Feather, AntDesign } from '@expo/vector-icons';
+import LoadingScreen from '../OtherScreens/LoadingScreen';
+import PhotoCarousel from '../../components/PhotoCarousel';
+import Tag from '../../components/Tag';
+import Comment from '../../components/Comment';
+import * as lookApi from '../../services/api/look';
 
 const Post = ({ item }) => {
   const iconSize = wsize(28);
@@ -25,27 +25,20 @@ const Post = ({ item }) => {
         <TouchableOpacity style={styles.postHeaderFirst}>
           <Image
             source={{
-              uri: item.img,
+              uri: item.author.photo,
             }}
             style={styles.postHeaderIcon}
           />
-          <Text style={styles.postHeaderProfileName}>{item.title}</Text>
+          <Text style={styles.postHeaderProfileName}>
+            {item.author.userName}
+          </Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.postHeaderSecond}>
-          <Entypo
-            name="dots-three-horizontal"
-            size={wsize(24)}
-            color="black"
-          />
+          <Entypo name="dots-three-horizontal" size={wsize(24)} color="black" />
         </TouchableOpacity>
       </View>
       <View style={styles.postImageContainer}>
-        <Image
-          source={{
-            uri: item.img,
-          }}
-          style={styles.postImage}
-        />
+        <PhotoCarousel data={item.images} />
       </View>
       <View style={styles.postActionsContainer}>
         <View style={styles.postActionsLeft}>
@@ -84,40 +77,58 @@ const Post = ({ item }) => {
         </TouchableOpacity>
       </View>
       <View style={styles.likesContainer}>
-        <Text style={styles.likesText}>
-          Liked by nee and 115 321 others
-         </Text>
+        <Text style={styles.likesText}>Liked by nee and 115 321 others</Text>
       </View>
       <View style={styles.postInfoContainer}>
-        <Text style={styles.profileName}>sjohansson</Text>
-        <Tag title="bucket hat" />
-        <Tag title="white sneakers" />
-        <Tag title="effortless" />
-        <Tag title="sik sok" />
-        <Comment
+        <Text style={styles.profileName}>{item.author.userName}</Text>
+        {item.tags.map((tag, index) => {
+          return <Tag title={tag} key={index} />;
+        })}
+        {/* <Comment
           profileName="sassyfairy"
           comment="This is me hahahaha! I need to get a white hat like that tho"
-        />
+        /> */}
       </View>
     </View>
-  )
-}
-
-const HomeScreen = ({ }) => {
-
-  return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <View style={styles.container}>
-        <FlatList
-          data={data}
-          renderItem={({ item }) => (
-            <Post item={item} />
-          )}
-        />
-      </View>
-    </SafeAreaView>
   );
 };
+
+const HomeScreen = React.memo(function ({}) {
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const fetchData = () => {
+    return lookApi.getLooksForHomeScreen().then((querySnapshot) => {
+      const allData = [];
+      querySnapshot.forEach((doc) => {
+        allData.push({ key: doc.id, ...doc.data() });
+      });
+      return allData;
+    });
+  };
+  useEffect(() => {
+    fetchData().then((allData) => {
+      setData(allData);
+      setLoading(false);
+    });
+  }, []);
+  if (loading) {
+    return <LoadingScreen />;
+  }
+  return (
+    <FlatList
+      data={data}
+      onRefresh={() => {
+        setLoading(true);
+        fetchData().then((res) => {
+          setData(res);
+          setLoading(false);
+        });
+      }}
+      refreshing={loading}
+      renderItem={({ item }) => <Post item={item} />}
+    />
+  );
+});
 
 const styles = StyleSheet.create({
   container: {
@@ -153,9 +164,9 @@ const styles = StyleSheet.create({
     borderRadius: wsize(17),
   },
   postImageContainer: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginBottom: hsize(41),
+    // justifyContent: 'center',
+    // alignItems: 'center',
+    // marginBottom: hsize(41),
   },
   postImage: {
     width: wsize(349),

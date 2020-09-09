@@ -16,9 +16,8 @@ import LoadingScreen from '../OtherScreens/LoadingScreen';
 import { AuthContext } from '../../services/context/AuthContext';
 import { FlatList } from 'react-native-gesture-handler';
 import UserModal from '../../components/UserModal';
-import * as userAPI from '../../services/api/user'
-import * as itemAPI from '../../services/api/item'
-import data from '../../data/mock.json'
+import * as userAPI from '../../services/api/user';
+import * as itemAPI from '../../services/api/item';
 const tabs = {
   items: 'items',
   looks: 'looks',
@@ -29,18 +28,18 @@ const LooksTab = ({ navigation }) => {
   return (
     <FlatList
       numColumns={3}
-    // data={data}
-    // renderItem={({ item }) => (
-    //   <TouchableOpacity
-    //     onPress={() => {
-    //       navigation.navigate('Item', item);
-    //     }}>
-    //     <Image
-    //       style={{ width: wsize(124), height: wsize(123) }}
-    //       source={{ uri: item.img }}
-    //     />
-    //   </TouchableOpacity>
-    // )}
+      // data={data}
+      // renderItem={({ item }) => (
+      //   <TouchableOpacity
+      //     onPress={() => {
+      //       navigation.navigate('Item', item);
+      //     }}>
+      //     <Image
+      //       style={{ width: wsize(124), height: wsize(123) }}
+      //       source={{ uri: item.img }}
+      //     />
+      //   </TouchableOpacity>
+      // )}
     />
   );
 };
@@ -68,10 +67,10 @@ const ItemsTab = React.memo(function ({ navigation }) {
       data={data}
       onRefresh={() => {
         setLoading(true);
-        fetchData().then(res => {
-          setData(res)
-          setLoading(false)
-        })
+        fetchData().then((res) => {
+          setData(res);
+          setLoading(false);
+        });
       }}
       refreshing={loading}
       renderItem={({ item }) => (
@@ -93,18 +92,18 @@ const BookmarsTab = ({ navigation }) => {
   return (
     <FlatList
       numColumns={3}
-    // data={data}
-    // renderItem={({ item }) => (
-    //   <TouchableOpacity
-    //     onPress={() => {
-    //       navigation.navigate('Item', item);
-    //     }}>
-    //     <Image
-    //       style={{ width: wsize(124), height: wsize(123) }}
-    //       source={{ uri: item.img }}
-    //     />
-    //   </TouchableOpacity>
-    // )}
+      // data={data}
+      // renderItem={({ item }) => (
+      //   <TouchableOpacity
+      //     onPress={() => {
+      //       navigation.navigate('Item', item);
+      //     }}>
+      //     <Image
+      //       style={{ width: wsize(124), height: wsize(123) }}
+      //       source={{ uri: item.img }}
+      //     />
+      //   </TouchableOpacity>
+      // )}
     />
   );
 };
