@@ -12,7 +12,7 @@ export default React.memo(function PhotoCarousel({ data }) {
         sliderWidth={window.width}
         itemWidth={window.width}
         renderItem={({ item }) => (
-          <Image source={{ uri: item.image }} style={styles.img} />
+          <Image source={{ uri: item }} style={styles.img} />
         )}
         onSnapToItem={(index) => {
           setSlider1ActiveSlide(index);
@@ -22,7 +22,7 @@ export default React.memo(function PhotoCarousel({ data }) {
         dotsLength={data.length}
         activeDotIndex={slider1ActiveSlide}
         containerStyle={styles.paginationContainer}
-        dotColor={'red'}
+        dotColor={'#52BDEB'}
         dotStyle={styles.paginationDot}
         inactiveDotColor={'black'}
         inactiveDotOpacity={0.4}
@@ -35,7 +35,6 @@ const styles = StyleSheet.create({
   container: {
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: hsize(41),
   },
   img: {
     width: window.width,

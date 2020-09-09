@@ -13,11 +13,25 @@ import { window, wsize, hsize } from '../../entities/constants';
 import { Entypo, Feather, AntDesign } from '@expo/vector-icons';
 import LoadingScreen from '../OtherScreens/LoadingScreen';
 import PhotoCarousel from '../../components/PhotoCarousel';
+import PhotoGrid from '../../components/PhotoGrid';
 import Tag from '../../components/Tag';
 import Comment from '../../components/Comment';
 import * as lookApi from '../../services/api/look';
 
 const Post = ({ item }) => {
+  let imagesArr = [];
+  if (item.coverImage !== '') {
+    imagesArr.push(item.coverImage);
+  }
+  item.images.map((image) => {
+    imagesArr.push(image.image);
+  });
+  let carouselOrGrid = null;
+  if (item.coverImage !== '') {
+    carouselOrGrid = <PhotoCarousel data={imagesArr} />;
+  } else {
+    carouselOrGrid = <PhotoGrid images={imagesArr} />;
+  }
   const iconSize = wsize(28);
   return (
     <View style={styles.postContainer}>
@@ -37,9 +51,7 @@ const Post = ({ item }) => {
           <Entypo name="dots-three-horizontal" size={wsize(24)} color="black" />
         </TouchableOpacity>
       </View>
-      <View style={styles.postImageContainer}>
-        <PhotoCarousel data={item.images} />
-      </View>
+      <View style={styles.postImageContainer}>{carouselOrGrid}</View>
       <View style={styles.postActionsContainer}>
         <View style={styles.postActionsLeft}>
           <TouchableOpacity>
