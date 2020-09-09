@@ -29,7 +29,7 @@ const AddItemScreen = ({ route, navigation }) => {
   const [imageLoading, setImageLoading] = useState(false);
   const [tag, setTag] = useState('');
   const [tags, setTags] = useState([]);
-  const [value, setValue] = React.useState('men');
+  const [gender, setGender] = useState('men');
 
   const renderingTags = tags.map((item, index) => {
     return <Tag title={item} key={index} />;
@@ -39,7 +39,7 @@ const AddItemScreen = ({ route, navigation }) => {
   const saveHandler = async () => {
     setImageLoading(true);
     itemAPI
-      .addItem({ img, name, brand, description, price })
+      .addItem({ img, name, brand, description, price, tags, gender })
       .then(() => {
         setImageLoading(false);
         Alert.alert('Completed!', 'Item has successfully added');
@@ -51,7 +51,7 @@ const AddItemScreen = ({ route, navigation }) => {
     return <LoadingScreen />;
   }
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <View style={{flex: 1}}>
       <ScrollView style={styles.container}>
         <View style={styles.postContainer}>
           <View style={styles.postImageContainer}>
@@ -71,7 +71,7 @@ const AddItemScreen = ({ route, navigation }) => {
             <TextInput
               placeholder="Name of Item"
               onChangeText={(text) => setName(text)}
-              style={styles.textInputBold}
+              style={[styles.textInput, styles.textInputBold]}
             />
             <TextInput
               placeholder="Brand of Item"
@@ -97,8 +97,8 @@ const AddItemScreen = ({ route, navigation }) => {
               alignItems: 'center',
             }}>
             <RadioButton.Group
-              onValueChange={(value) => setValue(value)}
-              value={value}>
+              onValueChange={value => setGender(value)}
+              value={gender}>
               <RadioButton.Item label="Men" value="men" />
               <RadioButton.Item label="Women" value="women" />
               <RadioButton.Item label="Unisex" value="unisex" />
@@ -117,7 +117,7 @@ const AddItemScreen = ({ route, navigation }) => {
             <TouchableOpacity
               style={styles.enterButton}
               onPress={() => {
-                if (tag !== '') {
+                if (tag) {
                   setTags([...tags, tag]);
                   setTag('');
                 }
@@ -134,13 +134,13 @@ const AddItemScreen = ({ route, navigation }) => {
           />
         </View>
       </ScrollView>
-    </SafeAreaView>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    // flex: 1,
     paddingTop: hsize(24),
   },
   postContainer: {
@@ -156,19 +156,11 @@ const styles = StyleSheet.create({
   },
   textInputBold: {
     fontSize: 22,
-    borderBottomColor: 'grey',
-    alignSelf: 'center',
-    // borderBottomWidth: 1,
-    borderRadius: 5,
-    // width: wsize(293),
     fontWeight: 'bold',
-    height: hsize(33),
-    justifyContent: 'center',
-    marginBottom: hsize(14),
-    paddingStart: wsize(17),
   },
   textInput: {
     fontSize: 20,
+    textAlign: 'center',
     borderBottomColor: 'grey',
     alignSelf: 'center',
     borderRadius: 5,
