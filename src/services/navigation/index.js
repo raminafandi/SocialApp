@@ -3,14 +3,24 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { MaterialIcons, AntDesign, Ionicons } from '@expo/vector-icons';
 import HomeScreen from '../../screens/MainScreens/HomeScreen';
+import ItemScreen from '../../screens/MainScreens/ItemScreen';
 import LoadingScreen from '../../screens/OtherScreens/LoadingScreen';
 import { AuthContext, AuthProvider } from '../context/AuthContext';
 
 import ProfileStackScreen from './ProfileStack';
 import AuthFlow from './AuthStack';
 import AddPostStack from './AddPostStack';
+import { createStackNavigator } from '@react-navigation/stack';
 
 const Tab = createBottomTabNavigator();
+const HomeStack = createStackNavigator();
+const HomeStackScreen = () => (
+  <HomeStack.Navigator>
+    <HomeStack.Screen name="Home" component={HomeScreen} />
+    <HomeStack.Screen name="Item" component={ItemScreen} />
+  </HomeStack.Navigator>
+)
+
 
 const TabNav = () => (
   <Tab.Navigator
@@ -19,7 +29,7 @@ const TabNav = () => (
     }}>
     <Tab.Screen
       name="Home"
-      component={HomeScreen}
+      component={HomeStackScreen}
       options={{
         tabBarIcon: ({ focused, size }) => (
           <AntDesign

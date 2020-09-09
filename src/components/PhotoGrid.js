@@ -15,25 +15,9 @@ import {
 /*this is a react native version of this code https://github.com/Expertizo/react-fb-image-grid*/
 
 
-export default React.memo(function ({images, clickEventListener}) {
+export default React.memo(function ({ images: propImages, items, clickEventListener }) {
   const [countFrom, setCountFrom] = useState(5);
-  const [conditionalRender, setConditionalRender] = useState(false);
-  // const [images, setImages] = useState([
-  //   'https://bootdey.com/img/Content/avatar/avatar1.png',
-  //   'https://bootdey.com/img/Content/avatar/avatar6.png',
-  //   'https://bootdey.com/img/Content/avatar/avatar8.png',
-  //   'https://bootdey.com/img/Content/avatar/avatar7.png',
-  //   'https://bootdey.com/img/Content/avatar/avatar5.png',
-  //   'https://bootdey.com/img/Content/avatar/avatar6.png',
-  //   'https://bootdey.com/img/Content/avatar/avatar4.png',
-  //   'https://bootdey.com/img/Content/avatar/avatar1.png',
-  //   'https://bootdey.com/img/Content/avatar/avatar2.png',
-  //   'https://bootdey.com/img/Content/avatar/avatar3.png',
-  // ])
-  // const clickEventListener = () => {
-  //   Alert.alert('Alert', 'image clicked');
-  // };
-
+  const images = items ? items.map(item => item.image) : propImages
   const RenderOne = ({ images, clickEventListener }) => {
     return (
       <View style={styles.row}>
@@ -57,7 +41,7 @@ export default React.memo(function ({images, clickEventListener}) {
         <TouchableOpacity
           style={[styles.imageContent, styles.imageContent2]}
           onPress={() => {
-            clickEventListener();
+            items && clickEventListener(conditionalRender ? items[1] : items[0]);
           }}>
           <Image
             style={styles.image}
@@ -67,7 +51,7 @@ export default React.memo(function ({images, clickEventListener}) {
         <TouchableOpacity
           style={[styles.imageContent, styles.imageContent2]}
           onPress={() => {
-            clickEventListener();
+            items && clickEventListener(conditionalRender ? items[2] : items[1]);
           }}>
           <Image
             style={styles.image}
@@ -93,7 +77,7 @@ export default React.memo(function ({images, clickEventListener}) {
         <TouchableOpacity
           style={[styles.imageContent, styles.imageContent3]}
           onPress={() => {
-            clickEventListener();
+            items && clickEventListener(conditionalRender ? items[1] : items[2]);
           }}>
           <Image
             style={styles.image}
@@ -103,7 +87,7 @@ export default React.memo(function ({images, clickEventListener}) {
         <TouchableOpacity
           style={[styles.imageContent, styles.imageContent3]}
           onPress={() => {
-            clickEventListener();
+            items && clickEventListener(conditionalRender ? items[2] : items[3]);
           }}>
           <Image
             style={styles.image}

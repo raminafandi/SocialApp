@@ -18,20 +18,12 @@ import Tag from '../../components/Tag';
 import Comment from '../../components/Comment';
 import * as lookApi from '../../services/api/look';
 
-const Post = ({ item }) => {
-  let imagesArr = [];
-  if (item.coverImage !== '') {
-    imagesArr.push(item.coverImage);
-  }
-  item.images.map((image) => {
-    imagesArr.push(image.image);
-  });
-  let carouselOrGrid = null;
-  if (item.coverImage !== '') {
-    carouselOrGrid = <PhotoCarousel data={imagesArr} />;
-  } else {
-    carouselOrGrid = <PhotoGrid images={imagesArr} />;
-  }
+const Post = ({ look, navigation }) => {
+  const carouselOrGrid = look.coverImage ? <PhotoCarousel data={[look.coverImage, ...look.images.map(item => item.image)]} /> : <PhotoGrid items={look.images}
+    clickEventListener={(item) => {
+      navigation.navigate('Item', { fetchId: item.id })
+    }}
+  />;
   const iconSize = wsize(28);
   return (
     <View style={styles.postContainer}>
@@ -39,12 +31,12 @@ const Post = ({ item }) => {
         <TouchableOpacity style={styles.postHeaderFirst}>
           <Image
             source={{
-              uri: item.author.photo,
+              uri: look.author.photo,
             }}
             style={styles.postHeaderIcon}
           />
           <Text style={styles.postHeaderProfileName}>
-            {item.author.userName}
+            {look.author.userName}
           </Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.postHeaderSecond}>
@@ -92,8 +84,8 @@ const Post = ({ item }) => {
         <Text style={styles.likesText}>Liked by nee and 115 321 others</Text>
       </View>
       <View style={styles.postInfoContainer}>
-        <Text style={styles.profileName}>{item.author.userName}</Text>
-        {item.tags.map((tag, index) => {
+        <Text style={styles.profileName}>{look.author.userName}</Text>
+        {look.tags.map((tag, index) => {
           return <Tag title={tag} key={index} />;
         })}
         {/* <Comment
@@ -105,7 +97,7 @@ const Post = ({ item }) => {
   );
 };
 
-const HomeScreen = React.memo(function ({}) {
+const HomeScreen = React.memo(function ({ navigation }) {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const fetchData = () => {
@@ -124,7 +116,7 @@ const HomeScreen = React.memo(function ({}) {
     });
   }, []);
   if (loading) {
-    return <LoadingScreen />;
+    return <LoadingScreen fullscreen />;
   }
   return (
     <FlatList
@@ -137,7 +129,7 @@ const HomeScreen = React.memo(function ({}) {
         });
       }}
       refreshing={loading}
-      renderItem={({ item }) => <Post item={item} />}
+      renderItem={({ item }) => <Post look={item} navigation={navigation} />}
     />
   );
 });
