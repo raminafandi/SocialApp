@@ -68,9 +68,7 @@ export default React.memo(({ route }) => {
             </TouchableOpacity>
           </View>
           <View style={{ flexDirection: 'row' }}>
-            <Tag title="Sunglasses" />
-            <Tag title="Gold" />
-            <Tag title="ASOS" />
+            {item.tags.map((tag, index) => (<Tag title={tag} key={index} />))}
           </View>
         </View>
       </View>
