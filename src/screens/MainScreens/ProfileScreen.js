@@ -28,35 +28,39 @@ const LooksTab = ({ navigation }) => {
   return (
     <FlatList
       numColumns={3}
-      // data={data}
-      // renderItem={({ item }) => (
-      //   <TouchableOpacity
-      //     onPress={() => {
-      //       navigation.navigate('Item', item);
-      //     }}>
-      //     <Image
-      //       style={{ width: wsize(124), height: wsize(123) }}
-      //       source={{ uri: item.img }}
-      //     />
-      //   </TouchableOpacity>
-      // )}
+    // data={data}
+    // renderItem={({ item }) => (
+    //   <TouchableOpacity
+    //     onPress={() => {
+    //       navigation.navigate('Item', item);
+    //     }}>
+    //     <Image
+    //       style={{ width: wsize(124), height: wsize(123) }}
+    //       source={{ uri: item.img }}
+    //     />
+    //   </TouchableOpacity>
+    // )}
     />
   );
 };
 
 const ItemsTab = React.memo(function ({ navigation }) {
   const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(false);
-  useEffect(() => {
-    setLoading(true);
-    itemAPI.getUserItems().then((querySnapshot) => {
+  const [loading, setLoading] = useState(true);
+  const fetchData = () => {
+    return itemAPI.getUserItems().then((querySnapshot) => {
       const allData = [];
       querySnapshot.forEach((doc) => {
         allData.push({ key: doc.id, ...doc.data() });
       });
+      return allData;
+    });
+  }
+  useEffect(() => {
+    fetchData().then(allData => {
       setData(allData);
       setLoading(false);
-    });
+    })
   }, []);
   if (loading) {
     return <LoadingScreen />;
@@ -92,18 +96,18 @@ const BookmarsTab = ({ navigation }) => {
   return (
     <FlatList
       numColumns={3}
-      // data={data}
-      // renderItem={({ item }) => (
-      //   <TouchableOpacity
-      //     onPress={() => {
-      //       navigation.navigate('Item', item);
-      //     }}>
-      //     <Image
-      //       style={{ width: wsize(124), height: wsize(123) }}
-      //       source={{ uri: item.img }}
-      //     />
-      //   </TouchableOpacity>
-      // )}
+    // data={data}
+    // renderItem={({ item }) => (
+    //   <TouchableOpacity
+    //     onPress={() => {
+    //       navigation.navigate('Item', item);
+    //     }}>
+    //     <Image
+    //       style={{ width: wsize(124), height: wsize(123) }}
+    //       source={{ uri: item.img }}
+    //     />
+    //   </TouchableOpacity>
+    // )}
     />
   );
 };

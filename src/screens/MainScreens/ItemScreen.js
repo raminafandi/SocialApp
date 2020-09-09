@@ -20,9 +20,9 @@ export default React.memo(({ route }) => {
   const [item, setItem] = useState(null);
   const [display, setDisplay] = useState('none');
   useEffect(() => {
-    const { image, brand, title, info, fetchId } = route.params;
+    const { image, brand, title, info, tags, fetchId } = route.params;
     if (fetchId) getItemById(fetchId).then((doc) => setItem(doc.data()));
-    else setItem({ image, brand, title, info });
+    else setItem({ image, brand, title, info, tags });
   }, []);
   if (!item) return <LoadingScreen />;
   return (
