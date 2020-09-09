@@ -25,25 +25,6 @@ const addLook = ({ images, description, tags, coverImage }) => {
     )
 }
 
-  return uploadImage(coverImage).then((coverImageUrl) => {
-    return db
-      .collection('packs')
-      .add({
-        images: images,
-        description: description,
-        tags: tags,
-        coverImage: coverImageUrl,
-        author: {
-          id: currentUser.uid,
-          userName: currentUser.displayName,
-          photo: currentUser.photoURL,
-        },
-        date: date,
-      })
-      .catch(console.error);
-  });
-};
-
 const getLooksForHomeScreen = () => {
   return db.collection('packs').get();
 };
