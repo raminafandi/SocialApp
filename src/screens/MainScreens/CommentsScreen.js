@@ -39,6 +39,7 @@ const CommentsScreen = ({ navigation }) => {
           />
           <TextInput
             placeholder="Add a comment..."
+            value={comment}
             onChangeText={(text) => setComment(text)}
             style={styles.textInput}
           />

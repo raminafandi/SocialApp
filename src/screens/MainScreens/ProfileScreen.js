@@ -25,11 +25,11 @@ const tabs = {
   bookmarks: 'bookmarks',
 };
 
-const LooksTab = ({ navigation }) => {
+const LooksTab = ({ navigation, user }) => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const fetchData = () => {
-    return lookAPI.getUserLooks().then((querySnapshot) => {
+    return lookAPI.getUserLooks(user.uid).then((querySnapshot) => {
       const allData = [];
       querySnapshot.forEach((doc) => {
         allData.push({ key: doc.id, ...doc.data() });
@@ -58,14 +58,14 @@ const LooksTab = ({ navigation }) => {
         });
       }}
       refreshing={loading}
-      renderItem={({ look }) => (
+      renderItem={({ item }) => (
         <TouchableOpacity
           onPress={() => {
-            navigation.navigate('Look', look);
+            navigation.navigate('Look', item);
           }}>
           <Image
             style={{ width: wsize(124), height: wsize(123) }}
-            // source={{ uri: look.images[0].image }}
+            source={{ uri: item.images[0].image }}
           />
         </TouchableOpacity>
       )}
@@ -125,18 +125,18 @@ const BookmarsTab = ({ navigation }) => {
   return (
     <FlatList
       numColumns={3}
-      // data={data}
-      // renderItem={({ item }) => (
-      //   <TouchableOpacity
-      //     onPress={() => {
-      //       navigation.navigate('Item', item);
-      //     }}>
-      //     <Image
-      //       style={{ width: wsize(124), height: wsize(123) }}
-      //       source={{ uri: item.img }}
-      //     />
-      //   </TouchableOpacity>
-      // )}
+    // data={data}
+    // renderItem={({ item }) => (
+    //   <TouchableOpacity
+    //     onPress={() => {
+    //       navigation.navigate('Item', item);
+    //     }}>
+    //     <Image
+    //       style={{ width: wsize(124), height: wsize(123) }}
+    //       source={{ uri: item.img }}
+    //     />
+    //   </TouchableOpacity>
+    // )}
     />
   );
 };
@@ -241,7 +241,7 @@ const ProfileScreen = ({ navigation }) => {
         </TouchableOpacity>
       </View>
       <View>
-        {currentTab === looks && <LooksTab navigation={navigation} />}
+        {currentTab === looks && <LooksTab navigation={navigation} user={user} />}
         {currentTab === items && <ItemsTab navigation={navigation} user={user} />}
         {currentTab === bookmarks && <BookmarsTab navigation={navigation} />}
       </View>

@@ -41,10 +41,10 @@ const addLook = ({ images, description, tags, coverImage }) => {
   );
 };
 
-const getUserLooks = () => {
+const getUserLooks = (userId) => {
   return db
     .collection('packs')
-    .where('author.id', '==', firebase.auth().currentUser.uid)
+    .where('author.id', '==', userId)
     .get();
 };
 
