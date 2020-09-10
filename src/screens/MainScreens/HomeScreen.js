@@ -16,22 +16,48 @@ import PhotoCarousel from '../../components/PhotoCarousel';
 import PhotoGrid from '../../components/PhotoGrid';
 import Tag from '../../components/Tag';
 import Comment from '../../components/Comment';
+import firebase from '../../services/firebase/index';
 import * as lookApi from '../../services/api/look';
+const iconSize = wsize(28);
 
+const HeartButton = React.memo(({ look }) => {
+  const [liked, setLiked] = useState(false);
+  const currentUser = firebase.auth().currentUser;
+  const likeHandler = () => {
+    lookApi.likeLook(look.id).then(() => setLiked(true));
+  };
+  const dislikeHandler = () => {
+    lookApi.dislikeLook(look.id).then(() => setLiked(false));
+  };
+  useEffect(() => {
+    if (look.likes.find((like) => like === currentUser.uid)) setLiked(true);
+  }, []);
+  return (
+    <TouchableOpacity
+      onPress={() => {
+        liked ? dislikeHandler() : likeHandler();
+      }}>
+      <AntDesign
+        name={liked ? 'heart' : 'hearto'}
+        size={iconSize}
+        color={liked ? 'red' : 'black'}
+        style={styles.postActionIcon}
+      />
+    </TouchableOpacity>
+  );
+});
 const Post = ({ look, navigation }) => {
+  const clickEventListener = (item) => {
+    navigation.navigate('Item', { fetchId: item.id });
+  };
   const carouselOrGrid = look.coverImage ? (
     <PhotoCarousel
-      data={[look.coverImage, ...look.images.map((item) => item.image)]}
+      data={[{ image: look.coverImage }, ...look.images]}
+      clickEventListener={clickEventListener}
     />
   ) : (
-    <PhotoGrid
-      items={look.images}
-      clickEventListener={(item) => {
-        navigation.navigate('Item', { fetchId: item.id });
-      }}
-    />
+    <PhotoGrid items={look.images} clickEventListener={clickEventListener} />
   );
-  const iconSize = wsize(28);
   return (
     <View style={styles.postContainer}>
       <View style={styles.postHeaderContainer}>
@@ -53,14 +79,7 @@ const Post = ({ look, navigation }) => {
       <View style={styles.postImageContainer}>{carouselOrGrid}</View>
       <View style={styles.postActionsContainer}>
         <View style={styles.postActionsLeft}>
-          <TouchableOpacity>
-            <AntDesign
-              name="hearto"
-              size={iconSize}
-              color="black"
-              style={styles.postActionIcon}
-            />
-          </TouchableOpacity>
+          <HeartButton look={look} />
           <TouchableOpacity>
             <Feather
               name="message-circle"
@@ -111,7 +130,7 @@ const HomeScreen = React.memo(function ({ navigation }) {
     return lookApi.getLooksForHomeScreen().then((querySnapshot) => {
       const allData = [];
       querySnapshot.forEach((doc) => {
-        allData.push({ key: doc.id, ...doc.data() });
+        allData.push({ id: doc.id, ...doc.data() });
       });
       return allData;
     });
