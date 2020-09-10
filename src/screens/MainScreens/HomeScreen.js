@@ -8,6 +8,7 @@ import {
   ScrollView,
   FlatList,
   SafeAreaView,
+  TextInput,
 } from 'react-native';
 import { window, wsize, hsize } from '../../entities/constants';
 import { Entypo, Feather, AntDesign } from '@expo/vector-icons';
@@ -16,6 +17,8 @@ import PhotoCarousel from '../../components/PhotoCarousel';
 import PhotoGrid from '../../components/PhotoGrid';
 import Tag from '../../components/Tag';
 import Comment from '../../components/Comment';
+import TextButton from '../../components/TextButton';
+
 import firebase from '../../services/firebase/index';
 import * as lookApi from '../../services/api/look';
 const iconSize = wsize(28);
@@ -47,19 +50,26 @@ const HeartButton = React.memo(({ look }) => {
   );
 });
 const Post = ({ look, navigation }) => {
-  const clickEventListener = item => {
-    navigation.navigate('Item', { fetchId: item.id })
-  }
+  const clickEventListener = (item) => {
+    navigation.navigate('Item', { fetchId: item.id });
+  };
   const profileClickHandler = () => {
-    navigation.navigate('OtherProfile', { user: look.author })
-  }
-  const carouselOrGrid = look.coverImage ? <PhotoCarousel data={[{ image: look.coverImage }, ...look.images]} clickEventListener={clickEventListener} /> : <PhotoGrid items={look.images}
-    clickEventListener={clickEventListener}
-  />;
+    navigation.navigate('OtherProfile', { user: look.author });
+  };
+  const carouselOrGrid = look.coverImage ? (
+    <PhotoCarousel
+      data={[{ image: look.coverImage }, ...look.images]}
+      clickEventListener={clickEventListener}
+    />
+  ) : (
+    <PhotoGrid items={look.images} clickEventListener={clickEventListener} />
+  );
   return (
     <View style={styles.postContainer}>
       <View style={styles.postHeaderContainer}>
-        <TouchableOpacity style={styles.postHeaderFirst} onPress={profileClickHandler}>
+        <TouchableOpacity
+          style={styles.postHeaderFirst}
+          onPress={profileClickHandler}>
           <Image
             source={{
               uri: look.author.photo,
@@ -73,6 +83,9 @@ const Post = ({ look, navigation }) => {
         <TouchableOpacity style={styles.postHeaderSecond}>
           <Entypo name="dots-three-horizontal" size={wsize(24)} color="black" />
         </TouchableOpacity>
+      </View>
+      <View style={styles.postDescription}>
+        <Text>{look.description}</Text>
       </View>
       <View style={styles.postImageContainer}>{carouselOrGrid}</View>
       <View style={styles.postActionsContainer}>
@@ -114,10 +127,27 @@ const Post = ({ look, navigation }) => {
         {look.tags.map((tag, index) => {
           return <Tag title={tag} key={index} />;
         })}
-        {/* <Comment
-          profileName="sassyfairy"
-          comment="This is me hahahaha! I need to get a white hat like that tho"
-        /> */}
+      </View>
+      <TouchableOpacity
+        style={styles.viewComments}
+        onPress={() => {
+          navigation.navigate('Comments');
+        }}>
+        <Text>View all comments</Text>
+      </TouchableOpacity>
+      <View style={styles.bottomContainer}>
+        <Image
+          source={{
+            uri: 'https://i.imgur.com/YHk0msx.jpg',
+          }}
+          style={styles.postHeaderIcon}
+        />
+        <TextInput
+          placeholder="Add a comment..."
+          onChangeText={(text) => setComment(text)}
+          style={styles.textInput}
+        />
+        <TextButton>Post</TextButton>
       </View>
     </View>
   );
@@ -195,6 +225,10 @@ const styles = StyleSheet.create({
     height: wsize(34),
     borderRadius: wsize(17),
   },
+  postDescription: {
+    width: '100%',
+    padding: hsize(4),
+  },
   postImageContainer: {
     // justifyContent: 'center',
     // alignItems: 'center',
@@ -229,6 +263,21 @@ const styles = StyleSheet.create({
   profileName: {
     color: '#0148FF',
     fontWeight: 'bold',
+  },
+  viewComments: {
+    marginLeft: wsize(2),
+  },
+  bottomContainer: {
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    flexDirection: 'row',
+    height: hsize(50),
+    width: '100%',
+    paddingHorizontal: wsize(2),
+    paddingVertical: hsize(10),
+  },
+  textInput: {
+    width: wsize(250),
   },
 });
 export default HomeScreen;

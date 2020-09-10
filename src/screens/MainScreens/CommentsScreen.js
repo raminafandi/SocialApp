@@ -11,10 +11,10 @@ import {
   Alert,
 } from 'react-native';
 
-import { window, wsize, hsize } from '../../../entities/constants';
+import { window, wsize, hsize } from '../../entities/constants';
 import { FontAwesome5, MaterialIcons, AntDesign } from '@expo/vector-icons';
-import Comment from '../../../components/Comment';
-import TextButton from '../../../components/TextButton';
+import Comment from '../../components/Comment';
+import TextButton from '../../components/TextButton';
 const CommentsScreen = ({ navigation }) => {
   const [comment, setComment] = useState('');
   return (
