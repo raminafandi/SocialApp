@@ -24,7 +24,7 @@ export default React.memo(({ route }) => {
     if (fetchId) getItemById(fetchId).then((doc) => setItem(doc.data()));
     else setItem({ image, brand, title, info, tags });
   }, []);
-  if (!item) return <LoadingScreen />;
+  if (!item) return <LoadingScreen fullscreen/>;
   return (
     <ScrollView style={styles.container}>
       <View style={styles.postContainer}>

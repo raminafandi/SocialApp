@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, FlatList, Image } from 'react-native';
 import { window, wsize, hsize } from '../entities/constants';
 import Carousel, { Pagination } from 'react-native-snap-carousel';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
-export default React.memo(function PhotoCarousel({ data }) {
+export default React.memo(function PhotoCarousel({ data , clickEventListener}) {
   const [slider1ActiveSlide, setSlider1ActiveSlide] = useState();
   return (
     <View style={styles.container}>
@@ -11,9 +12,12 @@ export default React.memo(function PhotoCarousel({ data }) {
         data={data}
         sliderWidth={window.width}
         itemWidth={window.width}
-        renderItem={({ item }) => (
-          <Image source={{ uri: item }} style={styles.img} />
-        )}
+        renderItem={({ item, index }) => {
+          return (
+          <TouchableOpacity onPress={() => {index !== 0 && clickEventListener(item)}}>
+            <Image source={{ uri: item.image }} style={styles.img} />
+          </TouchableOpacity>
+        )}}
         onSnapToItem={(index) => {
           setSlider1ActiveSlide(index);
         }}
