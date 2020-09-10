@@ -66,8 +66,8 @@ const logoutUser = () => {
         });
 }
 
-const getUserInfo = async (user) => {
-    return await db.collection('users').doc(user.uid).get()
+const getUserInfo = async (userId) => {
+    return await db.collection('users').doc(userId).get()
 }
 
 const updateUserInfo = async (user, { name, photoURL, userName, status, city, link, description, email, phone, gender }) => {

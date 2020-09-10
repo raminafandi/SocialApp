@@ -1,10 +1,10 @@
 import firebase from '../firebase/index';
 const db = firebase.firestore();
 import { uploadImage } from './image';
-const getUserItems = () => {
+const getUserItems = (userId) => {
   return db
     .collection('items')
-    .where('info.userId', '==', firebase.auth().currentUser.uid)
+    .where('info.userId', '==', userId)
     .get();
 };
 

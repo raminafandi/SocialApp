@@ -47,21 +47,19 @@ const HeartButton = React.memo(({ look }) => {
   );
 });
 const Post = ({ look, navigation }) => {
-  const clickEventListener = (item) => {
-    navigation.navigate('Item', { fetchId: item.id });
-  };
-  const carouselOrGrid = look.coverImage ? (
-    <PhotoCarousel
-      data={[{ image: look.coverImage }, ...look.images]}
-      clickEventListener={clickEventListener}
-    />
-  ) : (
-    <PhotoGrid items={look.images} clickEventListener={clickEventListener} />
-  );
+  const clickEventListener = item => {
+    navigation.navigate('Item', { fetchId: item.id })
+  }
+  const profileClickHandler = () => {
+    navigation.navigate('OtherProfile', { user: look.author })
+  }
+  const carouselOrGrid = look.coverImage ? <PhotoCarousel data={[{ image: look.coverImage }, ...look.images]} clickEventListener={clickEventListener} /> : <PhotoGrid items={look.images}
+    clickEventListener={clickEventListener}
+  />;
   return (
     <View style={styles.postContainer}>
       <View style={styles.postHeaderContainer}>
-        <TouchableOpacity style={styles.postHeaderFirst}>
+        <TouchableOpacity style={styles.postHeaderFirst} onPress={profileClickHandler}>
           <Image
             source={{
               uri: look.author.photo,
@@ -110,7 +108,9 @@ const Post = ({ look, navigation }) => {
         <Text style={styles.likesText}>Liked by nee and 115 321 others</Text>
       </View>
       <View style={styles.postInfoContainer}>
-        <Text style={styles.profileName}>{look.author.userName}</Text>
+        <TouchableOpacity onPress={profileClickHandler}>
+          <Text style={styles.profileName}>{look.author.userName}</Text>
+        </TouchableOpacity>
         {look.tags.map((tag, index) => {
           return <Tag title={tag} key={index} />;
         })}
@@ -145,18 +145,20 @@ const HomeScreen = React.memo(function ({ navigation }) {
     return <LoadingScreen fullscreen />;
   }
   return (
-    <FlatList
-      data={data}
-      onRefresh={() => {
-        setLoading(true);
-        fetchData().then((res) => {
-          setData(res);
-          setLoading(false);
-        });
-      }}
-      refreshing={loading}
-      renderItem={({ item }) => <Post look={item} navigation={navigation} />}
-    />
+    <View>
+      <FlatList
+        data={data}
+        onRefresh={() => {
+          setLoading(true);
+          fetchData().then((res) => {
+            setData(res);
+            setLoading(false);
+          });
+        }}
+        refreshing={loading}
+        renderItem={({ item }) => <Post look={item} navigation={navigation} />}
+      />
+    </View>
   );
 });
 

@@ -102,10 +102,14 @@ const styles = StyleSheet.create({
     borderRadius: 6,
   },
   iconStyle: {
-    marginLeft: wsize(15)
+    marginLeft: wsize(15),
+    marginRight: wsize(20)
   },
   titleStyle: {
-    color: '#313131'
+    color: '#313131',
+    // fontFamily: 'Rubik',
+    fontWeight: "500",
+    fontSize: wsize(15)
   }
 });
 

@@ -73,11 +73,11 @@ const LooksTab = ({ navigation }) => {
   );
 };
 
-const ItemsTab = React.memo(function ({ navigation }) {
+const ItemsTab = React.memo(function ({ navigation, user }) {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const fetchData = () => {
-    return itemAPI.getUserItems().then((querySnapshot) => {
+    return itemAPI.getUserItems(user.uid).then((querySnapshot) => {
       const allData = [];
       querySnapshot.forEach((doc) => {
         allData.push({ key: doc.id, ...doc.data() });
@@ -149,7 +149,7 @@ const ProfileScreen = ({ navigation }) => {
   const [currentTab, setCurrentTab] = useState(looks);
   const isFocused = useIsFocused();
   useEffect(() => {
-    userAPI.getUserInfo(user).then((doc) => setUserExstraInfo(doc.data()));
+    userAPI.getUserInfo(user.uid).then((doc) => setUserExstraInfo(doc.data()));
   }, [isFocused]);
   if (!userExtraInfo) return <LoadingScreen fullscreen />;
   return (
@@ -242,7 +242,7 @@ const ProfileScreen = ({ navigation }) => {
       </View>
       <View>
         {currentTab === looks && <LooksTab navigation={navigation} />}
-        {currentTab === items && <ItemsTab navigation={navigation} />}
+        {currentTab === items && <ItemsTab navigation={navigation} user={user} />}
         {currentTab === bookmarks && <BookmarsTab navigation={navigation} />}
       </View>
       <UserModal

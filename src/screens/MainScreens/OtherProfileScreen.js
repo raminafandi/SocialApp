@@ -13,7 +13,6 @@ import { Feather } from '@expo/vector-icons';
 import { useIsFocused } from '@react-navigation/native';
 import Button from '../../components/Button';
 import LoadingScreen from '../OtherScreens/LoadingScreen';
-import { AuthContext } from '../../services/context/AuthContext';
 import { FlatList } from 'react-native-gesture-handler';
 import * as userAPI from '../../services/api/user';
 import * as itemAPI from '../../services/api/item';
@@ -23,32 +22,32 @@ const tabs = {
   bookmarks: 'bookmarks',
 };
 
-const LooksTab = ({ navigation }) => {
+const LooksTab = React.memo(({ navigation }) => {
   return (
     <FlatList
       numColumns={3}
-      // data={data}
-      // renderItem={({ item }) => (
-      //   <TouchableOpacity
-      //     onPress={() => {
-      //       navigation.navigate('Item', item);
-      //     }}>
-      //     <Image
-      //       style={{ width: wsize(124), height: wsize(123) }}
-      //       source={{ uri: item.img }}
-      //     />
-      //   </TouchableOpacity>
-      // )}
+    // data={data}
+    // renderItem={({ item }) => (
+    //   <TouchableOpacity
+    //     onPress={() => {
+    //       navigation.navigate('Item', item);
+    //     }}>
+    //     <Image
+    //       style={{ width: wsize(124), height: wsize(123) }}
+    //       source={{ uri: item.img }}
+    //     />
+    //   </TouchableOpacity>
+    // )}
     />
   );
-};
+});
 
-const ItemsTab = React.memo(function ({ navigation }) {
+const ItemsTab = React.memo(({ navigation, user }) => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   useEffect(() => {
     setLoading(true);
-    itemAPI.getUserItems().then((querySnapshot) => {
+    itemAPI.getUserItems(user.id).then((querySnapshot) => {
       const allData = [];
       querySnapshot.forEach((doc) => {
         allData.push({ key: doc.id, ...doc.data() });
@@ -79,48 +78,32 @@ const ItemsTab = React.memo(function ({ navigation }) {
   );
 });
 
-const BookmarsTab = ({ navigation }) => {
-  return (
-    <FlatList
-      numColumns={3}
-      // data={data}
-      // renderItem={({ item }) => (
-      //   <TouchableOpacity
-      //     onPress={() => {
-      //       navigation.navigate('Item', item);
-      //     }}>
-      //     <Image
-      //       style={{ width: wsize(124), height: wsize(123) }}
-      //       source={{ uri: item.img }}
-      //     />
-      //   </TouchableOpacity>
-      // )}
-    />
-  );
-};
-const OtherProfileScreen = ({ navigation }) => {
-  const authContext = useContext(AuthContext);
+const OtherProfileScreen = ({ navigation, route }) => {
   const [modalVisible, setModalVisible] = useState(false);
-  const { user, logout } = authContext;
+  const { user } = route.params;
   const { bookmarks, items, looks } = tabs;
   const [userExtraInfo, setUserExstraInfo] = useState(null);
   const [currentTab, setCurrentTab] = useState(looks);
+  const [isPrivate, setIsPrivate] = useState(false)
   const isFocused = useIsFocused();
   useEffect(() => {
-    userAPI.getUserInfo(user).then((doc) => setUserExstraInfo(doc.data()));
+    userAPI.getUserInfo(user.id).then((doc) => {
+      setUserExstraInfo(doc.data())
+      doc.data().private && setIsPrivate(true);
+    });
   }, [isFocused]);
-  if (!userExtraInfo) return <LoadingScreen />;
+  if (!userExtraInfo) return <LoadingScreen fullscreen />;
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.profileInitialContainer}>
         <Image
           style={styles.profilePhoto}
           source={{
-            uri: user.photoURL,
+            uri: user.photo,
           }}
         />
         <View style={styles.profileNameContainer}>
-          <Text style={styles.profileName}>{user.displayName}</Text>
+          <Text style={styles.profileName}>{user.userName}</Text>
           <Text style={styles.profileType}>{userExtraInfo.status}</Text>
         </View>
       </View>
@@ -170,7 +153,7 @@ const OtherProfileScreen = ({ navigation }) => {
             width: wsize(327),
           }}
           titleStyle={{
-            color: '#444444',
+            color: '#fff',
             fontSize: wsize(21),
           }}
         />
@@ -192,8 +175,9 @@ const OtherProfileScreen = ({ navigation }) => {
         </TouchableOpacity>
       </View>
       <View>
-        {currentTab === looks && <LooksTab navigation={navigation} />}
-        {currentTab === items && <ItemsTab navigation={navigation} />}
+        {isPrivate ? <Text>Private</Text> :
+          currentTab === looks ? <LooksTab navigation={navigation} user={user} /> : <ItemsTab navigation={navigation} user={user} />
+        }
       </View>
     </SafeAreaView>
   );
