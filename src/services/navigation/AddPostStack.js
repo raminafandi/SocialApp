@@ -8,6 +8,7 @@ import SearchLookScreen from '../../screens/MainScreens/Look/SearchLookScreen';
 import ItemScreen from '../../screens/MainScreens/ItemScreen';
 import AlbumScreen from '../../screens/MainScreens/Look/AlbumScreen';
 import AddLookScreen from '../../screens/MainScreens/Look/AddLookScreen';
+import LookScreen from '../../screens/MainScreens/Look/LookScreen';
 import { ItemProvider, ItemContext } from '../context/ItemContext';
 import { useNavigation } from '@react-navigation/native';
 const AddPostStack = createStackNavigator();
@@ -41,6 +42,7 @@ export default function ProfileStackScreen() {
             <AddPostStack.Screen name="Album" component={AlbumScreen} />
             <AddPostStack.Screen name="AddLook" component={AddLookScreen} />
             <AddPostStack.Screen name="Item" component={ItemScreen} />
+            <AddPostStack.Screen name="Look" component={LookScreen} />
           </AddPostStack.Navigator>
         )}
       </ItemContext.Consumer>

@@ -9,6 +9,8 @@ import HelpScreen from '../../screens/MainScreens/Settings/HelpScreen';
 import AboutScreen from '../../screens/MainScreens/Settings/AboutScreen';
 import NotificationsScreen from '../../screens/MainScreens/Settings/NotificationsScreen';
 import PrivacyScreen from '../../screens/MainScreens/Settings/PrivacyScreen';
+import LookScreen from '../../screens/MainScreens/Look/LookScreen';
+
 import SecurityScreen from '../../screens/MainScreens/Settings/SecurityScreen';
 
 const ProfileStack = createStackNavigator();
@@ -38,6 +40,7 @@ export default function ProfileStackScreen() {
       <ProfileStack.Screen name="Security" component={SecurityScreen} />
       <ProfileStack.Screen name="Help" component={HelpScreen} />
       <ProfileStack.Screen name="About" component={AboutScreen} />
+      <ProfileStack.Screen name="Look" component={LookScreen} />
     </ProfileStack.Navigator>
   );
 }

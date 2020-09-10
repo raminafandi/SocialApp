@@ -15,7 +15,7 @@ import { window, wsize, hsize } from '../../../entities/constants';
 import { FontAwesome5, MaterialIcons, AntDesign } from '@expo/vector-icons';
 import Comment from '../../../components/Comment';
 import TextButton from '../../../components/TextButton';
-const AboutScreen = ({ navigation }) => {
+const CommentsScreen = ({ navigation }) => {
   const [comment, setComment] = useState('');
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -77,4 +77,4 @@ const styles = StyleSheet.create({
     width: wsize(250),
   },
 });
-export default AboutScreen;
+export default CommentsScreen;

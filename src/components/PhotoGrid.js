@@ -14,10 +14,13 @@ import {
 
 /*this is a react native version of this code https://github.com/Expertizo/react-fb-image-grid*/
 
-
-export default React.memo(function ({ images: propImages, items, clickEventListener }) {
+export default React.memo(function ({
+  images: propImages,
+  items,
+  clickEventListener,
+}) {
   const [countFrom, setCountFrom] = useState(5);
-  const images = items ? items.map(item => item.image) : propImages
+  const images = items ? items.map((item) => item.image) : propImages;
   const RenderOne = ({ images, clickEventListener }) => {
     return (
       <View style={styles.row}>
@@ -28,8 +31,7 @@ export default React.memo(function ({ images: propImages, items, clickEventListe
         </TouchableOpacity>
       </View>
     );
-  }
-
+  };
 
   const RenderTwo = ({ images, countFrom, clickEventListener }) => {
     const conditionalRender =
@@ -41,7 +43,8 @@ export default React.memo(function ({ images: propImages, items, clickEventListe
         <TouchableOpacity
           style={[styles.imageContent, styles.imageContent2]}
           onPress={() => {
-            items && clickEventListener(conditionalRender ? items[1] : items[0]);
+            items &&
+              clickEventListener(conditionalRender ? items[1] : items[0]);
           }}>
           <Image
             style={styles.image}
@@ -51,7 +54,8 @@ export default React.memo(function ({ images: propImages, items, clickEventListe
         <TouchableOpacity
           style={[styles.imageContent, styles.imageContent2]}
           onPress={() => {
-            items && clickEventListener(conditionalRender ? items[2] : items[1]);
+            items &&
+              clickEventListener(conditionalRender ? items[2] : items[1]);
           }}>
           <Image
             style={styles.image}
@@ -60,15 +64,28 @@ export default React.memo(function ({ images: propImages, items, clickEventListe
         </TouchableOpacity>
       </View>
     );
-  }
+  };
 
   const RenderThree = ({ images, countFrom, clickEventListener }) => {
     const overlay =
       !countFrom ||
-        countFrom > 5 ||
-        (images.length > countFrom && [4, 5].includes(+countFrom))
-        ? <RenderCountOverlay more images={images} countFrom={countFrom} clickEventListener={clickEventListener} conditionalRender={conditionalRender} />
-        : <RenderCountOverlay images={images} countFrom={countFrom} clickEventListener={clickEventListener} conditionalRender={conditionalRender} />;
+      countFrom > 5 ||
+      (images.length > countFrom && [4, 5].includes(+countFrom)) ? (
+        <RenderCountOverlay
+          more
+          images={images}
+          countFrom={countFrom}
+          clickEventListener={clickEventListener}
+          conditionalRender={conditionalRender}
+        />
+      ) : (
+        <RenderCountOverlay
+          images={images}
+          countFrom={countFrom}
+          clickEventListener={clickEventListener}
+          conditionalRender={conditionalRender}
+        />
+      );
     const conditionalRender =
       images.length == 4 || (images.length > +countFrom && +countFrom == 4);
 
@@ -77,7 +94,8 @@ export default React.memo(function ({ images: propImages, items, clickEventListe
         <TouchableOpacity
           style={[styles.imageContent, styles.imageContent3]}
           onPress={() => {
-            items && clickEventListener(conditionalRender ? items[1] : items[2]);
+            items &&
+              clickEventListener(conditionalRender ? items[1] : items[2]);
           }}>
           <Image
             style={styles.image}
@@ -87,7 +105,8 @@ export default React.memo(function ({ images: propImages, items, clickEventListe
         <TouchableOpacity
           style={[styles.imageContent, styles.imageContent3]}
           onPress={() => {
-            items && clickEventListener(conditionalRender ? items[2] : items[3]);
+            items &&
+              clickEventListener(conditionalRender ? items[2] : items[3]);
           }}>
           <Image
             style={styles.image}
@@ -97,7 +116,7 @@ export default React.memo(function ({ images: propImages, items, clickEventListe
         {overlay}
       </View>
     );
-  }
+  };
 
   const RenderOverlay = ({ images, clickEventListener }) => {
     return (
@@ -112,9 +131,14 @@ export default React.memo(function ({ images: propImages, items, clickEventListe
         />
       </TouchableOpacity>
     );
-  }
+  };
 
-  const RenderCountOverlay = ({ more, images, countFrom, clickEventListener }) => {
+  const RenderCountOverlay = ({
+    more,
+    images,
+    countFrom,
+    clickEventListener,
+  }) => {
     const extra = images.length - (countFrom && countFrom > 5 ? 5 : countFrom);
     const conditionalRender =
       images.length == 4 || (images.length > +countFrom && +countFrom == 4);
@@ -135,7 +159,7 @@ export default React.memo(function ({ images: propImages, items, clickEventListe
         </View>
       </TouchableOpacity>
     );
-  }
+  };
   const imagesToShow = [...images];
 
   if (countFrom && images.length > countFrom) {
@@ -144,14 +168,26 @@ export default React.memo(function ({ images: propImages, items, clickEventListe
 
   return (
     <View style={styles.container}>
-      {[1, 3, 4].includes(imagesToShow.length) && <RenderOne clickEventListener={clickEventListener} images={images} />}
-      {imagesToShow.length >= 2 &&
-        imagesToShow.length != 4 &&
-        <RenderTwo clickEventListener={clickEventListener} countFrom={countFrom} images={images} />}
-      {imagesToShow.length >= 4 && <RenderThree clickEventListener={clickEventListener} countFrom={countFrom} images={images} />}
+      {[1, 3, 4].includes(imagesToShow.length) && (
+        <RenderOne clickEventListener={clickEventListener} images={images} />
+      )}
+      {imagesToShow.length >= 2 && imagesToShow.length != 4 && (
+        <RenderTwo
+          clickEventListener={clickEventListener}
+          countFrom={countFrom}
+          images={images}
+        />
+      )}
+      {imagesToShow.length >= 4 && (
+        <RenderThree
+          clickEventListener={clickEventListener}
+          countFrom={countFrom}
+          images={images}
+        />
+      )}
     </View>
   );
-})
+});
 
 const styles = StyleSheet.create({
   container: {

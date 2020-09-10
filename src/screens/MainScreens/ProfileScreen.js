@@ -17,6 +17,7 @@ import { AuthContext } from '../../services/context/AuthContext';
 import { FlatList } from 'react-native-gesture-handler';
 import UserModal from '../../components/UserModal';
 import * as userAPI from '../../services/api/user';
+import * as lookAPI from '../../services/api/look';
 import * as itemAPI from '../../services/api/item';
 const tabs = {
   items: 'items',
@@ -25,21 +26,49 @@ const tabs = {
 };
 
 const LooksTab = ({ navigation }) => {
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const fetchData = () => {
+    return lookAPI.getUserLooks().then((querySnapshot) => {
+      const allData = [];
+      querySnapshot.forEach((doc) => {
+        allData.push({ key: doc.id, ...doc.data() });
+      });
+      return allData;
+    });
+  };
+  useEffect(() => {
+    fetchData().then((allData) => {
+      setData(allData);
+      setLoading(false);
+    });
+  }, []);
+  if (loading) {
+    return <LoadingScreen />;
+  }
   return (
     <FlatList
       numColumns={3}
-    // data={data}
-    // renderItem={({ item }) => (
-    //   <TouchableOpacity
-    //     onPress={() => {
-    //       navigation.navigate('Item', item);
-    //     }}>
-    //     <Image
-    //       style={{ width: wsize(124), height: wsize(123) }}
-    //       source={{ uri: item.img }}
-    //     />
-    //   </TouchableOpacity>
-    // )}
+      data={data}
+      onRefresh={() => {
+        setLoading(true);
+        fetchData().then((res) => {
+          setData(res);
+          setLoading(false);
+        });
+      }}
+      refreshing={loading}
+      renderItem={({ look }) => (
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate('Look', look);
+          }}>
+          <Image
+            style={{ width: wsize(124), height: wsize(123) }}
+            // source={{ uri: look.images[0].image }}
+          />
+        </TouchableOpacity>
+      )}
     />
   );
 };
@@ -55,12 +84,12 @@ const ItemsTab = React.memo(function ({ navigation }) {
       });
       return allData;
     });
-  }
+  };
   useEffect(() => {
-    fetchData().then(allData => {
+    fetchData().then((allData) => {
       setData(allData);
       setLoading(false);
-    })
+    });
   }, []);
   if (loading) {
     return <LoadingScreen />;
@@ -96,18 +125,18 @@ const BookmarsTab = ({ navigation }) => {
   return (
     <FlatList
       numColumns={3}
-    // data={data}
-    // renderItem={({ item }) => (
-    //   <TouchableOpacity
-    //     onPress={() => {
-    //       navigation.navigate('Item', item);
-    //     }}>
-    //     <Image
-    //       style={{ width: wsize(124), height: wsize(123) }}
-    //       source={{ uri: item.img }}
-    //     />
-    //   </TouchableOpacity>
-    // )}
+      // data={data}
+      // renderItem={({ item }) => (
+      //   <TouchableOpacity
+      //     onPress={() => {
+      //       navigation.navigate('Item', item);
+      //     }}>
+      //     <Image
+      //       style={{ width: wsize(124), height: wsize(123) }}
+      //       source={{ uri: item.img }}
+      //     />
+      //   </TouchableOpacity>
+      // )}
     />
   );
 };

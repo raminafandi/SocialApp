@@ -19,11 +19,18 @@ import Comment from '../../components/Comment';
 import * as lookApi from '../../services/api/look';
 
 const Post = ({ look, navigation }) => {
-  const carouselOrGrid = look.coverImage ? <PhotoCarousel data={[look.coverImage, ...look.images.map(item => item.image)]} /> : <PhotoGrid items={look.images}
-    clickEventListener={(item) => {
-      navigation.navigate('Item', { fetchId: item.id })
-    }}
-  />;
+  const carouselOrGrid = look.coverImage ? (
+    <PhotoCarousel
+      data={[look.coverImage, ...look.images.map((item) => item.image)]}
+    />
+  ) : (
+    <PhotoGrid
+      items={look.images}
+      clickEventListener={(item) => {
+        navigation.navigate('Item', { fetchId: item.id });
+      }}
+    />
+  );
   const iconSize = wsize(28);
   return (
     <View style={styles.postContainer}>
