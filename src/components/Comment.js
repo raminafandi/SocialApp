@@ -1,40 +1,75 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import { wsize, hsize } from '../entities/constants';
 import { Entypo, Feather, AntDesign } from '@expo/vector-icons';
+import firebase from '../services/firebase/index'
+import { likeComment, dislikeComment } from '../services/api/comment'
+const iconSize = wsize(20);
+const HeartButton = React.memo(({ commentId, likes, updateLikes, ...props }) => {
+  const currentUser = firebase.auth().currentUser;
+  const [liked, setLiked] = useState(false);
+  const likeHandler = () => {
+    setLiked(true)
+    updateLikes(1);
+    likeComment(commentId);
+  };
+  const dislikeHandler = () => {
+    setLiked(false)
+    updateLikes(-1);
+    dislikeComment(commentId);
+  };
+  useEffect(() => {
+    if (likes?.find((like) => like === currentUser.uid)) setLiked(true);
+  }, []);
+  return (
+    <TouchableOpacity
+      onPress={() => {
+        liked ? dislikeHandler() : likeHandler();
+      }}
+      {...props}
+    >
+      <AntDesign
+        name={liked ? 'heart' : 'hearto'}
+        size={iconSize}
+        color={liked ? 'red' : 'black'}
+        style={styles.postActionIcon}
+      />
+    </TouchableOpacity>
+  );
+});
 
-export default function Comment({ style, profileName, comment }) {
+export default function Comment({ style, id, author,comment, likes, navigation }) {
+  const [numOfLikes, setNumOfLikes] = useState(likes.length);
+  const profileHandler = () => {
+    navigation.navigate('OtherProfile', { user: author });
+  }
   return (
     <View style={[styles.commentContainer, style]}>
-      <Image
-        source={{
-          uri: 'https://i.imgur.com/YHk0msx.jpg',
-        }}
-        style={styles.postHeaderIcon}
-      />
+      <TouchableOpacity onPress={profileHandler}>
+        <Image
+          source={{
+            uri: author.photo,
+          }}
+          style={styles.postHeaderIcon}
+        />
+      </TouchableOpacity>
       <View>
         <View style={styles.commentInside}>
-          <Text style={styles.profileName}>{profileName}</Text>
+          <TouchableOpacity onPress={profileHandler}>
+            <Text style={styles.profileName}>{author.userName}</Text>
+          </TouchableOpacity>
           <Text style={styles.commentText}>{comment}</Text>
         </View>
         <View style={styles.commentInside}>
-          <Text style={styles.bottomCommentSectionText}>1h</Text>
-          <Text style={styles.bottomCommentSectionText}>5 likes</Text>
-          <Text style={styles.bottomCommentSectionText}>Reply</Text>
+          {/* <Text style={styles.bottomCommentSectionText}>1h</Text> */}
+          <Text style={styles.bottomCommentSectionText}>{numOfLikes} likes</Text>
+          {/* <Text style={styles.bottomCommentSectionText}>Reply</Text> */}
         </View>
       </View>
 
-      <TouchableOpacity
-        style={{
-          justifyContent: 'center',
-        }}>
-        <AntDesign
-          name="hearto"
-          size={20}
-          color="black"
-          style={styles.likeIcon}
-        />
-      </TouchableOpacity>
+      <HeartButton style={{
+        justifyContent: 'center',
+      }} commentId={id} likes={likes} updateLikes={(val) => setNumOfLikes(numOfLikes + val)} />
     </View>
   );
 }

@@ -84,7 +84,6 @@ export default memo(({ route, navigation }) => {
           {
             <RenderedPhotoGrid
               selectedItems={selectedItems}
-              clickEventListener={() => console.log('clicked')}
             />
           }
         </View>

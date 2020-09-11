@@ -21,7 +21,7 @@ export default React.memo(function ({
 }) {
   const [countFrom, setCountFrom] = useState(5);
   const images = items ? items.map((item) => item.image) : propImages;
-  const RenderOne = ({ images, clickEventListener }) => {
+  const RenderOne = React.memo(({ images, clickEventListener }) => {
     return (
       <View style={styles.row}>
         <TouchableOpacity
@@ -31,9 +31,9 @@ export default React.memo(function ({
         </TouchableOpacity>
       </View>
     );
-  };
+  });
 
-  const RenderTwo = ({ images, countFrom, clickEventListener }) => {
+  const RenderTwo = React.memo(({ images, countFrom, clickEventListener }) => {
     const conditionalRender =
       [3, 4].includes(images.length) ||
       (images.length > +countFrom && [3, 4].includes(+countFrom));
@@ -64,9 +64,9 @@ export default React.memo(function ({
         </TouchableOpacity>
       </View>
     );
-  };
+  });
 
-  const RenderThree = ({ images, countFrom, clickEventListener }) => {
+  const RenderThree = React.memo(({ images, countFrom, clickEventListener }) => {
     const overlay =
       !countFrom ||
       countFrom > 5 ||
@@ -116,9 +116,9 @@ export default React.memo(function ({
         {overlay}
       </View>
     );
-  };
+  });
 
-  const RenderOverlay = ({ images, clickEventListener }) => {
+  const RenderOverlay = React.memo(({ images, clickEventListener }) => {
     return (
       <TouchableOpacity
         style={[styles.imageContent, styles.imageContent3]}
@@ -131,9 +131,9 @@ export default React.memo(function ({
         />
       </TouchableOpacity>
     );
-  };
+  });
 
-  const RenderCountOverlay = ({
+  const RenderCountOverlay = React.memo(({
     more,
     images,
     countFrom,
@@ -159,13 +159,12 @@ export default React.memo(function ({
         </View>
       </TouchableOpacity>
     );
-  };
+  });
   const imagesToShow = [...images];
 
   if (countFrom && images.length > countFrom) {
     imagesToShow.length = countFrom;
   }
-
   return (
     <View style={styles.container}>
       {[1, 3, 4].includes(imagesToShow.length) && (

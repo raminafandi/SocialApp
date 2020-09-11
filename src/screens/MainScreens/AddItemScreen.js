@@ -48,7 +48,7 @@ const AddItemScreen = ({ route, navigation }) => {
       .catch((err) => console.log(err));
   };
   if (imageLoading) {
-    return <LoadingScreen />;
+    return <LoadingScreen fullscreen/>;
   }
   return (
     <View style={{flex: 1}}>
