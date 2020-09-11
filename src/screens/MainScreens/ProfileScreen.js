@@ -27,7 +27,7 @@ const tabs = {
   bookmarks: 'bookmarks',
 };
 
-const LooksTab = ({ navigation, user }) => {
+const LooksTab = React.memo(({ navigation, user }) => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const fetchData = () => {
@@ -84,7 +84,7 @@ const LooksTab = ({ navigation, user }) => {
       )}
     />
   );
-};
+});
 
 const ItemsTab = React.memo(function ({ navigation, user }) {
   const [data, setData] = useState([]);
@@ -134,7 +134,7 @@ const ItemsTab = React.memo(function ({ navigation, user }) {
   );
 });
 
-const BookmarsTab = ({ navigation }) => {
+const BookmarsTab = React.memo(({ navigation }) => {
   return (
     <FlatList
       numColumns={3}
@@ -152,7 +152,7 @@ const BookmarsTab = ({ navigation }) => {
       // )}
     />
   );
-};
+});
 const ProfileScreen = ({ navigation }) => {
   const authContext = useContext(AuthContext);
   const [modalVisible, setModalVisible] = useState(false);
