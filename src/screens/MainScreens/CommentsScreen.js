@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
@@ -15,35 +15,47 @@ import { window, wsize, hsize } from '../../entities/constants';
 import { FontAwesome5, MaterialIcons, AntDesign } from '@expo/vector-icons';
 import Comment from '../../components/Comment';
 import TextButton from '../../components/TextButton';
-const CommentsScreen = ({ navigation }) => {
-  const [comment, setComment] = useState('');
+import CommentForm from '../../components/CommentForm';
+import LoadingScreen from '../OtherScreens/LoadingScreen'
+import { getComments } from '../../services/api/comment'
+import { addItem } from '../../services/api/item';
+
+const CommentsScreen = ({ navigation, route }) => {
+  const { photoUrl, postId } = route.params;
+  const [comments, setComments] = useState([])
+  const [loading, setLoading] = useState(true)
+  useEffect(() => {
+    getComments(postId).then((querySnapshot) => {
+      const allData = [];
+      querySnapshot.forEach((doc) => {
+        allData.push({ id: doc.id, ...doc.data() });
+      });
+      return allData;
+    }).then(allData => {
+      setComments(allData);
+      setLoading(false);
+    });
+  }, [])
+  if (loading)
+    return <LoadingScreen fullscreen />
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <View style={styles.container}>
         <View>
-          <Comment
-            profileName="neymar"
-            comment="oy bla cirildim alaaa asdgsahdkdahsddsldhaikqwjfnh;oihfqio;fljsabnbflkjnb"
-          />
-          <Comment
-            profileName="neymar"
-            comment="oy bla cirildim alaaa asdgsahdkdahsddsldhaikqwjfnh;oihfqio;fljsabnbflkjnbasdasdasdasdasd"
-          />
+          {comments?.map(({ id, author, body, likes }, index) => (
+            <Comment
+              id={id}
+              key={index}
+              author={author}
+              comment={body}
+              likes={likes}
+              navigation={navigation}
+            />
+
+          ))}
         </View>
-        <View style={styles.bottomContainer}>
-          <Image
-            source={{
-              uri: 'https://i.imgur.com/YHk0msx.jpg',
-            }}
-            style={styles.postHeaderIcon}
-          />
-          <TextInput
-            placeholder="Add a comment..."
-            value={comment}
-            onChangeText={(text) => setComment(text)}
-            style={styles.textInput}
-          />
-          <TextButton>Post</TextButton>
+        <View style={{ width: '95%', alignSelf: 'center' }}>
+          <CommentForm photoUrl={photoUrl} postId={postId} />
         </View>
       </View>
     </SafeAreaView>
@@ -55,27 +67,6 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingTop: hsize(24),
     justifyContent: 'space-between',
-  },
-  postHeaderIcon: {
-    width: wsize(40),
-    height: wsize(40),
-    borderRadius: wsize(20),
-    marginRight: wsize(8),
-    alignSelf: 'center',
-  },
-  bottomContainer: {
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    flexDirection: 'row',
-    borderTopWidth: 1,
-    height: hsize(50),
-    width: '100%',
-    borderColor: '#DADBDA',
-    paddingHorizontal: wsize(10),
-    paddingVertical: hsize(10),
-  },
-  textInput: {
-    width: wsize(250),
   },
 });
 export default CommentsScreen;

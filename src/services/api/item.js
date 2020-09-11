@@ -2,14 +2,14 @@ import firebase from '../firebase/index';
 const db = firebase.firestore();
 import { uploadImage } from './image';
 const getUserItems = (userId) => {
-  return db
-    .collection('items')
-    .where('info.userId', '==', userId)
-    .get();
+    return db
+        .collection('items')
+        .where('info.userId', '==', userId)
+        .get();
 };
 
 const addItem = async ({ img, name, brand, description, price, tags, gender }) => {
-    uploadImage(img, 'itemImages/')
+    return uploadImage(img, 'itemImages/')
         .then((url) => {
             const currentUser = firebase.auth().currentUser;
             let date = new Date();
@@ -39,7 +39,7 @@ const addItem = async ({ img, name, brand, description, price, tags, gender }) =
 
 
 const getItemById = (id) => {
-  return db.collection('items').doc(id).get();
+    return db.collection('items').doc(id).get();
 };
 
 export { getUserItems, addItem, getItemById };

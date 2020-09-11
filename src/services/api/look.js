@@ -4,22 +4,10 @@ const db = firebase.firestore();
 import { uploadImage } from './image';
 import { firestore } from 'firebase';
 import { Alert } from 'react-native';
+import { getDate } from './helper'
 const collectionName = 'packs';
 const addLook = ({ images, description, tags, coverImage }) => {
   const currentUser = firebase.auth().currentUser;
-  let date = new Date();
-  date =
-    date.getUTCFullYear() +
-    '-' +
-    ('00' + (date.getUTCMonth() + 1)).slice(-2) +
-    '-' +
-    ('00' + date.getUTCDate()).slice(-2) +
-    ' ' +
-    ('00' + date.getUTCHours()).slice(-2) +
-    ':' +
-    ('00' + date.getUTCMinutes()).slice(-2) +
-    ':' +
-    ('00' + date.getUTCSeconds()).slice(-2);
   return (coverImage
     ? uploadImage(coverImage)
     : new Promise((res) => res(''))
@@ -34,7 +22,7 @@ const addLook = ({ images, description, tags, coverImage }) => {
         userName: currentUser.displayName,
         photo: currentUser.photoURL,
       },
-      date: date,
+      date: getDate(),
       likes: [],
       comments: [],
     })
