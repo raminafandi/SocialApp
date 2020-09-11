@@ -15,6 +15,8 @@ import Button from '../../components/Button';
 import LoadingScreen from '../OtherScreens/LoadingScreen';
 import { AuthContext } from '../../services/context/AuthContext';
 import { FlatList } from 'react-native-gesture-handler';
+import PhotoCarousel from '../../components/PhotoCarousel';
+import PhotoGrid from '../../components/PhotoGrid';
 import UserModal from '../../components/UserModal';
 import * as userAPI from '../../services/api/user';
 import * as lookAPI from '../../services/api/look';
@@ -46,6 +48,9 @@ const LooksTab = ({ navigation, user }) => {
   if (loading) {
     return <LoadingScreen />;
   }
+  const clickEventListener = (item) => {
+    navigation.navigate('Item', { fetchId: item.id });
+  };
   return (
     <FlatList
       numColumns={3}
@@ -63,10 +68,18 @@ const LooksTab = ({ navigation, user }) => {
           onPress={() => {
             navigation.navigate('Look', item);
           }}>
-          <Image
-            style={{ width: wsize(124), height: wsize(123) }}
-            source={{ uri: item.images[0].image }}
-          />
+          {item.coverImage ? (
+            <Image
+              style={{ width: wsize(123), height: wsize(123) }}
+              source={{ uri: item.coverImage }}
+            />
+          ) : (
+            <PhotoGrid
+              items={item.images}
+              clickEventListener={clickEventListener}
+              gridStyle={{ width: wsize(123), height: wsize(123) }}
+            />
+          )}
         </TouchableOpacity>
       )}
     />
@@ -125,18 +138,18 @@ const BookmarsTab = ({ navigation }) => {
   return (
     <FlatList
       numColumns={3}
-    // data={data}
-    // renderItem={({ item }) => (
-    //   <TouchableOpacity
-    //     onPress={() => {
-    //       navigation.navigate('Item', item);
-    //     }}>
-    //     <Image
-    //       style={{ width: wsize(124), height: wsize(123) }}
-    //       source={{ uri: item.img }}
-    //     />
-    //   </TouchableOpacity>
-    // )}
+      // data={data}
+      // renderItem={({ item }) => (
+      //   <TouchableOpacity
+      //     onPress={() => {
+      //       navigation.navigate('Item', item);
+      //     }}>
+      //     <Image
+      //       style={{ width: wsize(124), height: wsize(123) }}
+      //       source={{ uri: item.img }}
+      //     />
+      //   </TouchableOpacity>
+      // )}
     />
   );
 };
@@ -241,8 +254,12 @@ const ProfileScreen = ({ navigation }) => {
         </TouchableOpacity>
       </View>
       <View>
-        {currentTab === looks && <LooksTab navigation={navigation} user={user} />}
-        {currentTab === items && <ItemsTab navigation={navigation} user={user} />}
+        {currentTab === looks && (
+          <LooksTab navigation={navigation} user={user} />
+        )}
+        {currentTab === items && (
+          <ItemsTab navigation={navigation} user={user} />
+        )}
         {currentTab === bookmarks && <BookmarsTab navigation={navigation} />}
       </View>
       <UserModal

@@ -11,12 +11,14 @@ import {
   ScrollView,
   Alert,
 } from 'react-native';
+import { wsize } from '../entities/constants';
 
 /*this is a react native version of this code https://github.com/Expertizo/react-fb-image-grid*/
 
 export default React.memo(function ({
   images: propImages,
   items,
+  gridStyle,
   clickEventListener,
 }) {
   const [countFrom, setCountFrom] = useState(5);
@@ -167,7 +169,7 @@ export default React.memo(function ({
   }
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, gridStyle]}>
       {[1, 3, 4].includes(imagesToShow.length) && (
         <RenderOne clickEventListener={clickEventListener} images={images} />
       )}
@@ -192,7 +194,6 @@ export default React.memo(function ({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginVertical: 20,
   },
   row: {
     flexDirection: 'row',
