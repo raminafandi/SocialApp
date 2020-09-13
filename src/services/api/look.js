@@ -5,6 +5,7 @@ import { uploadImage } from './image';
 import { firestore } from 'firebase';
 import { Alert } from 'react-native';
 import { getDate } from './helper'
+import { addLookIdToProfile, getUserInfo } from './user'
 const collectionName = 'packs';
 const addLook = ({ images, description, tags, coverImage }) => {
   const currentUser = firebase.auth().currentUser;
@@ -25,15 +26,22 @@ const addLook = ({ images, description, tags, coverImage }) => {
       date: getDate(),
       likes: [],
       comments: [],
-    })
-  );
+    }).then(doc => addLookIdToProfile(doc.id)).catch(console.log)
+  ).catch(console.log);
 };
 
-const getUserLooks = (userId) => {
-  return db
-    .collection('packs')
-    .where('author.id', '==', userId)
-    .get();
+const getLookById = (lookId) =>  db.collection(collectionName).doc(lookId).get().then(doc => ({id: doc.id, ...doc.data()}))
+
+
+const getUserLooks = (userId = firebase.auth().currentUser.uid) => {
+  return getUserInfo(userId).then(doc => {
+    const promises = [];
+    doc.data().looks.forEach(lookId => {
+      promises.push(getLookById(lookId))
+    })
+    return Promise.all(promises)
+  }
+  )
 };
 
 const likeLook = (lookId) => {
@@ -59,7 +67,7 @@ const dislikeLook = (lookId) => {
 };
 
 const getLooksForHomeScreen = () => {
-  return db.collection(collectionName).get();
+  return db.collection(collectionName).get().catch(console.log);
 };
 
 export { addLook, getLooksForHomeScreen, likeLook, getUserLooks, dislikeLook };

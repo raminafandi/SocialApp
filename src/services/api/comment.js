@@ -16,7 +16,7 @@ const addComment = ({ postId, comment }) => {
         },
         date: getDate(),
         likes: [],
-    })
+    }).catch(console.log)
 }
 
 const getComments = (lookId) => {

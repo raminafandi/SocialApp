@@ -10,7 +10,6 @@ import {
 } from 'react-native';
 import { wsize, hsize } from '../../entities/constants';
 import { Feather } from '@expo/vector-icons';
-import { useIsFocused } from '@react-navigation/native';
 import Button from '../../components/Button';
 import LoadingScreen from '../OtherScreens/LoadingScreen';
 import { FlatList } from 'react-native-gesture-handler';
@@ -84,14 +83,33 @@ const OtherProfileScreen = ({ navigation, route }) => {
   const { bookmarks, items, looks } = tabs;
   const [userExtraInfo, setUserExstraInfo] = useState(null);
   const [currentTab, setCurrentTab] = useState(looks);
-  const [isPrivate, setIsPrivate] = useState(false)
-  const isFocused = useIsFocused();
-  useEffect(() => {
+  const [isPrivate, setIsPrivate] = useState(false);
+  const [subscribed, setSubscribed] = useState(false)
+  const isSubscribed = () => {
+    userAPI.getUserInfo().then(doc => doc.data().friends?.find(friend => friend === user.id) && setSubscribed(true))
+  }
+  const fetchData = () => {
     userAPI.getUserInfo(user.id).then((doc) => {
       setUserExstraInfo(doc.data())
       doc.data().private && setIsPrivate(true);
+      isSubscribed
     });
-  }, [isFocused]);
+  }
+  const subscriptionHandler = () => {
+    if (isPrivate) {
+
+    }
+    else {
+      userAPI.subscribeToUser(user.id).then(() => setSubscribed(true))
+    }
+  }
+  const unsubscriptionHandler = () => {
+    userAPI.unsubscribeFromUser(user.id).then(() => setSubscribed(false))
+  }
+  useEffect(() => {
+    fetchData();
+    isSubscribed();
+  }, []);
   if (!userExtraInfo) return <LoadingScreen fullscreen />;
   return (
     <SafeAreaView style={styles.container}>
@@ -123,12 +141,12 @@ const OtherProfileScreen = ({ navigation, route }) => {
           <View style={styles.followersContainerLeft}>
             <View style={styles.followers}>
               <Text style={styles.followersNumbers}>
-                {userExtraInfo.friends}
+                {userExtraInfo.friends.length}
               </Text>
               <Text style={styles.followersText}>friends</Text>
             </View>
             <View style={styles.followers}>
-              <Text style={styles.followersNumbers}>{userExtraInfo.subs}</Text>
+              <Text style={styles.followersNumbers}>{userExtraInfo.subs.length}</Text>
               <Text style={styles.followersText}>subs</Text>
             </View>
           </View>
@@ -146,16 +164,17 @@ const OtherProfileScreen = ({ navigation, route }) => {
           </View>
         </View>
         <Button
-          title="sub"
+          title={subscribed ? "unsub" : "sub"}
           style={{
-            backgroundColor: '#0148FF',
+            backgroundColor: subscribed ? '#D8D8D8' : '#0148FF',
             marginTop: wsize(20),
             width: wsize(327),
           }}
           titleStyle={{
-            color: '#fff',
+            color: subscribed ? '#444' : '#fff',
             fontSize: wsize(21),
           }}
+          onPress={() => { subscribed ? unsubscriptionHandler() : subscriptionHandler() }}
         />
       </View>
       <View style={styles.tabContainer}>
@@ -175,7 +194,7 @@ const OtherProfileScreen = ({ navigation, route }) => {
         </TouchableOpacity>
       </View>
       <View>
-        {isPrivate ? <Text>Private</Text> :
+        {isPrivate && !subscribed ? <Text>Private</Text> :
           currentTab === looks ? <LooksTab navigation={navigation} user={user} /> : <ItemsTab navigation={navigation} user={user} />
         }
       </View>
