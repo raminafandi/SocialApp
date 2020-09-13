@@ -13,36 +13,15 @@ import {
 
 import { window, wsize, hsize } from '../../../entities/constants';
 import { FontAwesome5, MaterialIcons, AntDesign } from '@expo/vector-icons';
-import Comment from '../../../components/Comment';
+import Request from '../../../components/Request';
 import TextButton from '../../../components/TextButton';
 const AboutScreen = ({ navigation }) => {
-  const [comment, setComment] = useState('');
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <View style={styles.container}>
         <View>
-          <Comment
-            profileName="neymar"
-            comment="oy bla cirildim alaaa asdgsahdkdahsddsldhaikqwjfnh;oihfqio;fljsabnbflkjnb"
-          />
-          <Comment
-            profileName="neymar"
-            comment="oy bla cirildim alaaa asdgsahdkdahsddsldhaikqwjfnh;oihfqio;fljsabnbflkjnbasdasdasdasdasd"
-          />
-        </View>
-        <View style={styles.bottomContainer}>
-          <Image
-            source={{
-              uri: 'https://i.imgur.com/YHk0msx.jpg',
-            }}
-            style={styles.postHeaderIcon}
-          />
-          <TextInput
-            placeholder="Add a comment..."
-            onChangeText={(text) => setComment(text)}
-            style={styles.textInput}
-          />
-          <TextButton>Post</TextButton>
+          <Request />
+          <Request />
         </View>
       </View>
     </SafeAreaView>
