@@ -14,7 +14,7 @@ import { useIsFocused } from '@react-navigation/native';
 import Button from '../../components/Button';
 import LoadingScreen from '../OtherScreens/LoadingScreen';
 import { AuthContext } from '../../services/context/AuthContext';
-import { FlatList } from 'react-native-gesture-handler';
+import { FlatList, ScrollView } from 'react-native-gesture-handler';
 import PhotoCarousel from '../../components/PhotoCarousel';
 import PhotoGrid from '../../components/PhotoGrid';
 import UserModal from '../../components/UserModal';
@@ -34,7 +34,7 @@ const LooksTab = React.memo(({ navigation, user }) => {
     return lookAPI.getUserLooks(user.uid).then((querySnapshot) => {
       const allData = [];
       querySnapshot.forEach((doc) => {
-        allData.push({ key: doc.id, ...doc.data() });
+        allData.push({ id: doc.id, ...doc.data() });
       });
       return allData;
     });
@@ -66,7 +66,7 @@ const LooksTab = React.memo(({ navigation, user }) => {
       renderItem={({ item }) => (
         <TouchableOpacity
           onPress={() => {
-            navigation.navigate('Look', item);
+            navigation.navigate('AlternativeLook', item);
           }}>
           {item.coverImage ? (
             <Image
@@ -166,7 +166,7 @@ const ProfileScreen = ({ navigation }) => {
   }, [isFocused]);
   if (!userExtraInfo) return <LoadingScreen fullscreen />;
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <View style={styles.profileInitialContainer}>
         <Image
           style={styles.profilePhoto}
@@ -267,13 +267,13 @@ const ProfileScreen = ({ navigation }) => {
         visible={modalVisible}
         navigation={navigation}
       />
-    </SafeAreaView>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    // flex: 1,
+    flex: 1,
     paddingTop: hsize(44),
   },
   profileInitialContainer: {

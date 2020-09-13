@@ -10,6 +10,7 @@ import AboutScreen from '../../screens/MainScreens/Settings/AboutScreen';
 import NotificationsScreen from '../../screens/MainScreens/Settings/NotificationsScreen';
 import PrivacyScreen from '../../screens/MainScreens/Settings/PrivacyScreen';
 import LookScreen from '../../screens/MainScreens/Look/LookScreen';
+import AlternativeLookScreen from '../../screens/MainScreens/AlternativeLookScreen';
 
 import SecurityScreen from '../../screens/MainScreens/Settings/SecurityScreen';
 
@@ -41,6 +42,10 @@ export default function ProfileStackScreen() {
       <ProfileStack.Screen name="Help" component={HelpScreen} />
       <ProfileStack.Screen name="About" component={AboutScreen} />
       <ProfileStack.Screen name="Look" component={LookScreen} />
+      <ProfileStack.Screen
+        name="AlternativeLook"
+        component={AlternativeLookScreen}
+      />
     </ProfileStack.Navigator>
   );
 }
