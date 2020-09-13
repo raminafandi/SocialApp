@@ -1,0 +1,17 @@
+[debug] [2020-09-11T18:51:24.046Z] ----------------------------------------------------------------------
+[debug] [2020-09-11T18:51:24.049Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\Ramin\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js deploy --only functions
+[debug] [2020-09-11T18:51:24.050Z] CLI Version:   8.10.0
+[debug] [2020-09-11T18:51:24.050Z] Platform:      win32
+[debug] [2020-09-11T18:51:24.050Z] Node Version:  v12.13.1
+[debug] [2020-09-11T18:51:24.052Z] Time:          Fri Sep 11 2020 22:51:24 GMT+0400 (Azerbaijan Standard Time)
+[debug] [2020-09-11T18:51:24.053Z] ----------------------------------------------------------------------
+[debug] [2020-09-11T18:51:24.053Z] 
+[debug] [2020-09-11T18:51:24.066Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2020-09-11T18:51:24.067Z] > authorizing via signed-in user
+[debug] [2020-09-11T18:51:24.067Z] [iam] checking project looks-f90da for permissions ["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get"]
+[debug] [2020-09-11T18:51:24.071Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/looks-f90da:testIamPermissions  
+ {"permissions":["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get"]}
+[debug] [2020-09-11T18:51:25.191Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Fri, 11 Sep 2020 18:51:24 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","server-timing":"gfet4t7; dur=817","alt-svc":"h3-29=\":443\"; ma=2592000,h3-27=\":443\"; ma=2592000,h3-T051=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2020-09-11T18:51:25.196Z] >>> HTTP REQUEST POST https://iam.googleapis.com/v1/projects/looks-f90da/serviceAccounts/looks-f90da@appspot.gserviceaccount.com:testIamPermissions  
+ {"permissions":["iam.serviceAccounts.actAs"]}
+[debug] [2020-09-11T18:51:26.231Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Fri, 11 Sep 2020 18:51:25 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"h3-29=\":443\"; ma=2592000,h3-27=\":443\"; ma=2592000,h3-T051=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
