@@ -45,7 +45,6 @@ const AddItemScreen = ({ route, navigation }) => {
         Alert.alert('Completed!', 'Item has successfully added');
         navigation.navigate('AddPhoto');
       })
-      .catch((err) => console.log(err));
   };
   if (imageLoading) {
     return <LoadingScreen fullscreen/>;

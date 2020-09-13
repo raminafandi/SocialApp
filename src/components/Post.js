@@ -8,7 +8,7 @@ import {
     TextInput,
 } from 'react-native';
 import { window, wsize, hsize } from '../entities/constants';
-import { Entypo, Feather, AntDesign } from '@expo/vector-icons';
+import { Entypo, Feather, AntDesign, FontAwesome } from '@expo/vector-icons';
 import PhotoCarousel from './PhotoCarousel';
 import PhotoGrid from './PhotoGrid';
 import Tag from './Tag';
@@ -16,6 +16,7 @@ import TextButton from './TextButton';
 import firebase from '../services/firebase/index';
 import CommentForm from './CommentForm';
 import * as lookApi from '../services/api/look'
+import { bookmark, unmark } from '../services/api/user'
 
 const iconSize = wsize(28);
 
@@ -50,8 +51,29 @@ const HeartButton = React.memo(({ look, updateLikes }) => {
     );
 });
 
+const BookmarkButton = React.memo(({ look, userInfo }) => {
+    const [marked, setMarked] = useState(false)
+    const bookmarkHandler = () => {
+        marked ? unmark(look.id, { coverImage: look?.coverImage, images: look.images }) : bookmark(look.id, { coverImage: look?.coverImage, images: look.images })
+        setMarked(!marked)
+    }
+    useEffect(() => {
+        if (userInfo.saved?.find(save => save.id === look.id)) setMarked(true)
+    }, [])
+    return (
+        <TouchableOpacity onPress={bookmarkHandler}>
+            <FontAwesome
+                name={marked ? "bookmark" : "bookmark-o"}
+                size={iconSize}
+                color="black"
+                style={styles.postActionIcon}
+            />
+        </TouchableOpacity>
+    )
+})
 
-const Post = React.memo(({ look, navigation }) => {
+
+const Post = React.memo(({ look, navigation, userInfo }) => {
     const currentUser = firebase.auth().currentUser;
     const [numOfLikes, setNumOfLikes] = useState(look.likes.length);
     const clickEventListener = React.useCallback((item) => {
@@ -60,6 +82,7 @@ const Post = React.memo(({ look, navigation }) => {
     const profileClickHandler = () => {
         navigation.navigate('OtherProfile', { user: look.author });
     };
+
     const carouselOrGrid = look.coverImage ? (
         <PhotoCarousel
             data={[{ image: look.coverImage }, ...look.images]}
@@ -94,7 +117,12 @@ const Post = React.memo(({ look, navigation }) => {
             <View style={styles.postImageContainer}>{carouselOrGrid}</View>
             <View style={styles.postActionsContainer}>
                 <View style={styles.postActionsLeft}>
-                    <HeartButton look={look} updateLikes={(val) => setNumOfLikes(numOfLikes + val)} />
+
+                    <HeartButton
+                        look={look}
+                        updateLikes={(val) => setNumOfLikes(numOfLikes + val)}
+                    />
+
                     <TouchableOpacity onPress={() => {
                         navigation.navigate('Comments', { photoUrl: currentUser.photoURL, postId: look.id });
                     }}>
@@ -114,14 +142,18 @@ const Post = React.memo(({ look, navigation }) => {
                         />
                     </TouchableOpacity>
                 </View>
-                <TouchableOpacity>
-                    <Feather
-                        name="bookmark"
-                        size={iconSize}
-                        color="black"
-                        style={styles.postActionIcon}
-                    />
-                </TouchableOpacity>
+
+                <BookmarkButton
+                    look={look}
+                    userInfo={userInfo}
+                />
+
+
+
+
+
+
+
             </View>
             <View style={styles.likesContainer}>
                 <Text style={styles.likesText}>{numOfLikes} likes</Text>

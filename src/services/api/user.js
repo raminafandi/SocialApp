@@ -1,5 +1,8 @@
 import firebase from '../firebase/index'
+import 'firebase/firestore';
+import { firestore } from 'firebase';
 import { Alert } from 'react-native'
+import { getDate } from './helper'
 const db = firebase.firestore();
 const createUser = (email, password, userName, fullName) => {
     return firebase
@@ -21,12 +24,12 @@ const createUser = (email, password, userName, fullName) => {
                     gender: '',
                     additionalInfo: '',
                     private: false,
-                    friends: 0,
-                    subs: 0,
-                    saved: {
-                        items: [],
-                        packs: [],
-                    },
+                    friends: [],
+                    subs: [],
+                    saved: [],
+                    looks: [],
+                    items: [],
+                    date: getDate()
                 });
             console.log('User account created & signed in!');
         })
@@ -56,6 +59,19 @@ const loginUser = (email, password) => {
         });
 }
 
+const addLookIdToProfile = lookId => {
+    const currentUser = firebase.auth().currentUser;
+    return db.collection('users').doc(currentUser.uid).update({
+        looks: firestore.FieldValue.arrayUnion(lookId)
+    })
+}
+
+const addItemIdToProfile = itemId => {
+    const currentUser = firebase.auth().currentUser;
+    return db.collection('users').doc(currentUser.uid).update({
+        items: firestore.FieldValue.arrayUnion(itemId)
+    })
+}
 
 const logoutUser = () => {
     return firebase
@@ -63,20 +79,43 @@ const logoutUser = () => {
         .signOut()
         .then(() => {
             console.log('User signed out!');
-        });
+        }).catch(console.log);
 }
 
-const getUserInfo = async (userId) => {
-    return await db.collection('users').doc(userId).get()
+const getUserInfo = (userId = firebase.auth().currentUser.uid) => {
+    return db.collection('users').doc(userId).get().catch(console.log)
 }
 
+const subscribeToUser = (userId) => {
+    const currentUser = firebase.auth().currentUser;
+    return Promise.all([
+        db.collection('users').doc(userId).update({
+            subs: firestore.FieldValue.arrayUnion(currentUser.uid),
+        }),
+        db.collection('users').doc(currentUser.uid).update({
+            friends: firestore.FieldValue.arrayUnion(userId),
+        })
+    ])
+}
+
+const unsubscribeFromUser = (userId) => {
+    const currentUser = firebase.auth().currentUser;
+    return Promise.all([
+        db.collection('users').doc(userId).update({
+            subs: firestore.FieldValue.arrayRemove(currentUser.uid),
+        }),
+        db.collection('users').doc(currentUser.uid).update({
+            friends: firestore.FieldValue.arrayRemove(userId),
+        })
+    ])
+}
 const updateUserInfo = async (user, { name, photoURL, userName, status, city, link, description, email, phone, gender }) => {
     await user.updateProfile({
         displayName: userName,
         photoURL: photoURL,
         email: email,
         phoneNumber: phone
-    })
+    }).catch(console.log)
     return await db.collection('users').doc(user.uid).set({
         fullName: name,
         status: status,
@@ -84,7 +123,22 @@ const updateUserInfo = async (user, { name, photoURL, userName, status, city, li
         link: link,
         gender: gender,
         additionalInfo: description,
-    }, { merge: true })
+    }, { merge: true }).catch(console.log)
 }
 
-export { createUser, loginUser, logoutUser, getUserInfo, updateUserInfo }
+const bookmark = (id, data) => {
+    const currentUser = firebase.auth().currentUser;
+    return db.collection('users').doc(currentUser.uid).update({
+        saved: firestore.FieldValue.arrayUnion({ id, data })
+    }).catch(console.log)
+}
+
+const unmark = (id, data) => {
+    const currentUser = firebase.auth().currentUser;
+    return db.collection('users').doc(currentUser.uid).update({
+        saved: firestore.FieldValue.arrayRemove({ id, data })
+    }).catch(console.log)
+}
+
+
+export { createUser, loginUser, logoutUser, getUserInfo, updateUserInfo, subscribeToUser, unsubscribeFromUser, bookmark, unmark, addItemIdToProfile, addLookIdToProfile }

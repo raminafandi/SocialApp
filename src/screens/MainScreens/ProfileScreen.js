@@ -27,18 +27,10 @@ const tabs = {
   bookmarks: 'bookmarks',
 };
 
-const LooksTab = React.memo(({ navigation, user }) => {
+const LooksTab = React.memo(({ navigation }) => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
-  const fetchData = () => {
-    return lookAPI.getUserLooks(user.uid).then((querySnapshot) => {
-      const allData = [];
-      querySnapshot.forEach((doc) => {
-        allData.push({ key: doc.id, ...doc.data() });
-      });
-      return allData;
-    });
-  };
+  const fetchData = () => lookAPI.getUserLooks()
   useEffect(() => {
     fetchData().then((allData) => {
       setData(allData);
@@ -74,12 +66,12 @@ const LooksTab = React.memo(({ navigation, user }) => {
               source={{ uri: item.coverImage }}
             />
           ) : (
-            <PhotoGrid
-              items={item.images}
-              clickEventListener={clickEventListener}
-              gridStyle={{ width: wsize(123), height: wsize(123) }}
-            />
-          )}
+              <PhotoGrid
+                items={item.images}
+                clickEventListener={clickEventListener}
+                gridStyle={{ width: wsize(123), height: wsize(123) }}
+              />
+            )}
         </TouchableOpacity>
       )}
     />
@@ -89,15 +81,7 @@ const LooksTab = React.memo(({ navigation, user }) => {
 const ItemsTab = React.memo(function ({ navigation, user }) {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
-  const fetchData = () => {
-    return itemAPI.getUserItems(user.uid).then((querySnapshot) => {
-      const allData = [];
-      querySnapshot.forEach((doc) => {
-        allData.push({ key: doc.id, ...doc.data() });
-      });
-      return allData;
-    });
-  };
+  const fetchData = () => itemAPI.getUserItems()
   useEffect(() => {
     fetchData().then((allData) => {
       setData(allData);
@@ -134,24 +118,31 @@ const ItemsTab = React.memo(function ({ navigation, user }) {
   );
 });
 
-const BookmarsTab = React.memo(({ navigation }) => {
+const BookmarsTab = React.memo(({ navigation, user }) => {
   return (
     <FlatList
       numColumns={3}
-      // data={data}
-      // renderItem={({ item }) => (
-      //   <TouchableOpacity
-      //     onPress={() => {
-      //       navigation.navigate('Item', item);
-      //     }}>
-      //     <Image
-      //       style={{ width: wsize(124), height: wsize(123) }}
-      //       source={{ uri: item.img }}
-      //     />
-      //   </TouchableOpacity>
-      // )}
-    />
-  );
+      data={user.saved}
+      renderItem={({ item }) => {
+        return(
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate('Look', item);
+          }}>
+          {item.data.coverImage ? (
+            <Image
+              style={{ width: wsize(123), height: wsize(123) }}
+              source={{ uri: item.data.coverImage }}
+            />
+          ) : (
+              <PhotoGrid
+                items={item.data.images}
+                clickEventListener={() => {}}
+                gridStyle={{ width: wsize(123), height: wsize(123) }}
+              />
+            )}
+        </TouchableOpacity>)}}
+    />)
 });
 const ProfileScreen = ({ navigation }) => {
   const authContext = useContext(AuthContext);
@@ -195,12 +186,12 @@ const ProfileScreen = ({ navigation }) => {
           <View style={styles.followersContainerLeft}>
             <View style={styles.followers}>
               <Text style={styles.followersNumbers}>
-                {userExtraInfo.friends}
+                {userExtraInfo.friends.length}
               </Text>
               <Text style={styles.followersText}>friends</Text>
             </View>
             <View style={styles.followers}>
-              <Text style={styles.followersNumbers}>{userExtraInfo.subs}</Text>
+              <Text style={styles.followersNumbers}>{userExtraInfo.subs.length}</Text>
               <Text style={styles.followersText}>subs</Text>
             </View>
           </View>
@@ -260,7 +251,7 @@ const ProfileScreen = ({ navigation }) => {
         {currentTab === items && (
           <ItemsTab navigation={navigation} user={user} />
         )}
-        {currentTab === bookmarks && <BookmarsTab navigation={navigation} />}
+        {currentTab === bookmarks && <BookmarsTab navigation={navigation} user={userExtraInfo} />}
       </View>
       <UserModal
         setModalVisible={setModalVisible}
