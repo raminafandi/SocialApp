@@ -44,13 +44,29 @@ const AddItemScreen = ({ route, navigation }) => {
         setImageLoading(false);
         Alert.alert('Completed!', 'Item has successfully added');
         navigation.navigate('AddPhoto');
-      })
+      });
   };
   if (imageLoading) {
-    return <LoadingScreen fullscreen/>;
+    return <LoadingScreen fullscreen />;
   }
+  const checkFields = (name, brand, price, description, gender) => {
+    if (
+      name === '' ||
+      brand === '' ||
+      price === '' ||
+      description === '' ||
+      gender === ''
+    ) {
+      Alert.alert('All Fields should be filled. ', '');
+    } else if (isNaN(price)) {
+      Alert.alert('Price is not a number');
+    } else {
+      saveHandler();
+    }
+  };
+
   return (
-    <View style={{flex: 1}}>
+    <View style={{ flex: 1 }}>
       <ScrollView style={styles.container}>
         <View style={styles.postContainer}>
           <View style={styles.postImageContainer}>
@@ -96,7 +112,7 @@ const AddItemScreen = ({ route, navigation }) => {
               alignItems: 'center',
             }}>
             <RadioButton.Group
-              onValueChange={value => setGender(value)}
+              onValueChange={(value) => setGender(value)}
               value={gender}>
               <RadioButton.Item label="Men" value="men" />
               <RadioButton.Item label="Women" value="women" />
@@ -129,7 +145,7 @@ const AddItemScreen = ({ route, navigation }) => {
           <Button
             title="Save"
             style={{ backgroundColor: 'red' }}
-            onPress={saveHandler}
+            onPress={() => checkFields(name, brand, price, description, gender)}
           />
         </View>
       </ScrollView>

@@ -68,57 +68,59 @@ export default React.memo(function ({
     );
   });
 
-  const RenderThree = React.memo(({ images, countFrom, clickEventListener }) => {
-    const overlay =
-      !countFrom ||
-      countFrom > 5 ||
-      (images.length > countFrom && [4, 5].includes(+countFrom)) ? (
-        <RenderCountOverlay
-          more
-          images={images}
-          countFrom={countFrom}
-          clickEventListener={clickEventListener}
-          conditionalRender={conditionalRender}
-        />
-      ) : (
-        <RenderCountOverlay
-          images={images}
-          countFrom={countFrom}
-          clickEventListener={clickEventListener}
-          conditionalRender={conditionalRender}
-        />
-      );
-    const conditionalRender =
-      images.length == 4 || (images.length > +countFrom && +countFrom == 4);
+  const RenderThree = React.memo(
+    ({ images, countFrom, clickEventListener }) => {
+      const overlay =
+        !countFrom ||
+        countFrom > 5 ||
+        (images.length > countFrom && [4, 5].includes(+countFrom)) ? (
+          <RenderCountOverlay
+            more
+            images={images}
+            countFrom={countFrom}
+            clickEventListener={clickEventListener}
+            conditionalRender={conditionalRender}
+          />
+        ) : (
+          <RenderCountOverlay
+            images={images}
+            countFrom={countFrom}
+            clickEventListener={clickEventListener}
+            conditionalRender={conditionalRender}
+          />
+        );
+      const conditionalRender =
+        images.length == 4 || (images.length > +countFrom && +countFrom == 4);
 
-    return (
-      <View style={styles.row}>
-        <TouchableOpacity
-          style={[styles.imageContent, styles.imageContent3]}
-          onPress={() => {
-            items &&
-              clickEventListener(conditionalRender ? items[1] : items[2]);
-          }}>
-          <Image
-            style={styles.image}
-            source={{ uri: conditionalRender ? images[1] : images[2] }}
-          />
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={[styles.imageContent, styles.imageContent3]}
-          onPress={() => {
-            items &&
-              clickEventListener(conditionalRender ? items[2] : items[3]);
-          }}>
-          <Image
-            style={styles.image}
-            source={{ uri: conditionalRender ? images[2] : images[3] }}
-          />
-        </TouchableOpacity>
-        {overlay}
-      </View>
-    );
-  });
+      return (
+        <View style={styles.row}>
+          <TouchableOpacity
+            style={[styles.imageContent, styles.imageContent3]}
+            onPress={() => {
+              items &&
+                clickEventListener(conditionalRender ? items[1] : items[2]);
+            }}>
+            <Image
+              style={styles.image}
+              source={{ uri: conditionalRender ? images[1] : images[2] }}
+            />
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[styles.imageContent, styles.imageContent3]}
+            onPress={() => {
+              items &&
+                clickEventListener(conditionalRender ? items[2] : items[3]);
+            }}>
+            <Image
+              style={styles.image}
+              source={{ uri: conditionalRender ? images[2] : images[3] }}
+            />
+          </TouchableOpacity>
+          {overlay}
+        </View>
+      );
+    }
+  );
 
   const RenderOverlay = React.memo(({ images, clickEventListener }) => {
     return (
@@ -135,33 +137,31 @@ export default React.memo(function ({
     );
   });
 
-  const RenderCountOverlay = React.memo(({
-    more,
-    images,
-    countFrom,
-    clickEventListener,
-  }) => {
-    const extra = images.length - (countFrom && countFrom > 5 ? 5 : countFrom);
-    const conditionalRender =
-      images.length == 4 || (images.length > +countFrom && +countFrom == 4);
-    return (
-      <TouchableOpacity
-        style={[styles.imageContent, styles.imageContent3]}
-        onPress={() => {
-          clickEventListener();
-        }}>
-        <Image
-          style={styles.image}
-          source={{ uri: conditionalRender ? images[3] : images[4] }}
-        />
-        <View style={styles.overlayContent}>
-          <View>
-            <Text style={styles.count}>+{extra}</Text>
+  const RenderCountOverlay = React.memo(
+    ({ more, images, countFrom, clickEventListener }) => {
+      const extra =
+        images.length - (countFrom && countFrom > 5 ? 5 : countFrom);
+      const conditionalRender =
+        images.length == 4 || (images.length > +countFrom && +countFrom == 4);
+      return (
+        <TouchableOpacity
+          style={[styles.imageContent, styles.imageContent3]}
+          onPress={() => {
+            clickEventListener();
+          }}>
+          <Image
+            style={styles.image}
+            source={{ uri: conditionalRender ? images[3] : images[4] }}
+          />
+          <View style={styles.overlayContent}>
+            <View>
+              <Text style={styles.count}>+{extra}</Text>
+            </View>
           </View>
-        </View>
-      </TouchableOpacity>
-    );
-  });
+        </TouchableOpacity>
+      );
+    }
+  );
   const imagesToShow = [...images];
 
   if (countFrom && images.length > countFrom) {
