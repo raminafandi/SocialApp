@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { YellowBox, Alert } from 'react-native';
 import firebase from '../firebase/index';
-import { createUser, loginUser, logoutUser } from '../api/user'
+import { createUser, loginUser, logoutUser } from '../api/user';
+
 const AuthContext = React.createContext({
   authenticated: false,
-  login: () => { },
-  register: () => { },
-  logout: () => { },
+  login: () => {},
+  register: () => {},
+  logout: () => {},
   user: null,
   loading: false,
 });
@@ -30,7 +31,9 @@ const AuthProvider = ({ children, ...props }) => {
 
   const registerHandler = (email, password, userName, fullName) => {
     setLoading(true);
-    createUser(email, password, userName, fullName).catch(() => setLoading(false));
+    createUser(email, password, userName, fullName).catch(() =>
+      setLoading(false)
+    );
   };
   const loginHandler = (email, password) => {
     setLoading(true);
@@ -39,7 +42,6 @@ const AuthProvider = ({ children, ...props }) => {
   const logoutHandler = () => {
     setLoading(true);
     logoutUser();
-    
   };
   return (
     <AuthContext.Provider
