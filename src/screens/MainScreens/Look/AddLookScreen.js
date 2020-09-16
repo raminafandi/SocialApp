@@ -68,8 +68,23 @@ export default memo(({ route, navigation }) => {
         navigation={navigation}
       />
     ),
-    headerRight: () => <ButtonReact title="Publish" onPress={submitHandler} />,
+    headerRight: () => (
+      <ButtonReact
+        title="Publish"
+        onPress={() => {
+          checkFields(text);
+        }}
+      />
+    ),
   });
+  const checkFields = (text) => {
+    if (text === '') {
+      Alert.alert('All Fields should be filled. ', '');
+    } else {
+      submitHandler();
+      navigation.navigate('Profile');
+    }
+  };
   return (
     <View>
       <ScrollView style={styles.container}>
@@ -81,11 +96,7 @@ export default memo(({ route, navigation }) => {
           maxLength={200}
         />
         <View style={styles.photoGrid}>
-          {
-            <RenderedPhotoGrid
-              selectedItems={selectedItems}
-            />
-          }
+          {<RenderedPhotoGrid selectedItems={selectedItems} />}
         </View>
         <View style={styles.inputContainer}>
           <TextInput

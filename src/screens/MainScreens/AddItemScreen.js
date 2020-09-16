@@ -60,13 +60,7 @@ const AddItemScreen = ({ route, navigation }) => {
     return <LoadingScreen fullscreen />;
   }
   const checkFields = (name, brand, price, description, gender) => {
-    if (
-      name === '' ||
-      brand === '' ||
-      price === '' ||
-      description === '' ||
-      gender === ''
-    ) {
+    if (!name || !brand || !price || !description || !gender) {
       Alert.alert('All Fields should be filled. ', '');
     } else if (isNaN(price)) {
       Alert.alert('Price is not a number');

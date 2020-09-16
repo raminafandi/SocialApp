@@ -16,28 +16,30 @@ import { FontAwesome5, MaterialIcons, AntDesign } from '@expo/vector-icons';
 import Comment from '../../components/Comment';
 import TextButton from '../../components/TextButton';
 import CommentForm from '../../components/CommentForm';
-import LoadingScreen from '../OtherScreens/LoadingScreen'
-import { getComments } from '../../services/api/comment'
+import LoadingScreen from '../OtherScreens/LoadingScreen';
+import { getComments } from '../../services/api/comment';
 import { addItem } from '../../services/api/item';
 
 const CommentsScreen = ({ navigation, route }) => {
   const { photoUrl, postId } = route.params;
-  const [comments, setComments] = useState([])
-  const [loading, setLoading] = useState(true)
+  const [comments, setComments] = useState([]);
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
-    getComments(postId).then((querySnapshot) => {
-      const allData = [];
-      querySnapshot.forEach((doc) => {
-        allData.push({ id: doc.id, ...doc.data() });
+    getComments(postId)
+      .then((querySnapshot) => {
+        const allData = [];
+        querySnapshot.forEach((doc) => {
+          allData.push({ id: doc.id, ...doc.data() });
+        });
+        return allData;
+      })
+      .then((allData) => {
+        setComments(allData);
+        setLoading(false);
       });
-      return allData;
-    }).then(allData => {
-      setComments(allData);
-      setLoading(false);
-    });
-  }, [])
-  if (loading)
-    return <LoadingScreen fullscreen />
+  }, []);
+
+  if (loading) return <LoadingScreen fullscreen />;
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <View style={styles.container}>
@@ -51,7 +53,6 @@ const CommentsScreen = ({ navigation, route }) => {
               likes={likes}
               navigation={navigation}
             />
-
           ))}
         </View>
         <View style={{ width: '95%', alignSelf: 'center' }}>
