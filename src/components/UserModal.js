@@ -48,6 +48,17 @@ export default React.memo(function UserModal({
               style={styles.iconStyle}
             />
           </Option>
+          <Option
+            title="Look Requests"
+            navigation={navigation}
+            navigateTo="FollowRequests">
+            <AntDesign
+              name="adduser"
+              size={29}
+              color="black"
+              style={styles.iconStyle}
+            />
+          </Option>
         </View>
       </BlurView>
     </Modal>

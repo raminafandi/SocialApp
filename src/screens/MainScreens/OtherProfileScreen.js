@@ -25,18 +25,18 @@ const LooksTab = React.memo(({ navigation }) => {
   return (
     <FlatList
       numColumns={3}
-    // data={data}
-    // renderItem={({ item }) => (
-    //   <TouchableOpacity
-    //     onPress={() => {
-    //       navigation.navigate('Item', item);
-    //     }}>
-    //     <Image
-    //       style={{ width: wsize(124), height: wsize(123) }}
-    //       source={{ uri: item.img }}
-    //     />
-    //   </TouchableOpacity>
-    // )}
+      // data={data}
+      // renderItem={({ item }) => (
+      //   <TouchableOpacity
+      //     onPress={() => {
+      //       navigation.navigate('Item', item);
+      //     }}>
+      //     <Image
+      //       style={{ width: wsize(124), height: wsize(123) }}
+      //       source={{ uri: item.img }}
+      //     />
+      //   </TouchableOpacity>
+      // )}
     />
   );
 });
@@ -84,28 +84,33 @@ const OtherProfileScreen = ({ navigation, route }) => {
   const [userExtraInfo, setUserExstraInfo] = useState(null);
   const [currentTab, setCurrentTab] = useState(looks);
   const [isPrivate, setIsPrivate] = useState(false);
-  const [subscribed, setSubscribed] = useState(false)
+  const [subscribed, setSubscribed] = useState(false);
   const isSubscribed = () => {
-    userAPI.getUserInfo().then(doc => doc.data().friends?.find(friend => friend === user.id) && setSubscribed(true))
-  }
+    userAPI
+      .getUserInfo()
+      .then(
+        (doc) =>
+          doc.data().friends?.find((friend) => friend === user.id) &&
+          setSubscribed(true)
+      );
+  };
   const fetchData = () => {
     userAPI.getUserInfo(user.id).then((doc) => {
-      setUserExstraInfo(doc.data())
+      setUserExstraInfo(doc.data());
       doc.data().private && setIsPrivate(true);
-      isSubscribed
+      isSubscribed;
     });
-  }
+  };
   const subscriptionHandler = () => {
     if (isPrivate) {
-
+      userAPI.sendSubscribeRequestToPrivateUser(user.id);
+    } else {
+      userAPI.subscribeToUser(user.id).then(() => setSubscribed(true));
     }
-    else {
-      userAPI.subscribeToUser(user.id).then(() => setSubscribed(true))
-    }
-  }
+  };
   const unsubscriptionHandler = () => {
-    userAPI.unsubscribeFromUser(user.id).then(() => setSubscribed(false))
-  }
+    userAPI.unsubscribeFromUser(user.id).then(() => setSubscribed(false));
+  };
   useEffect(() => {
     fetchData();
     isSubscribed();
@@ -146,7 +151,9 @@ const OtherProfileScreen = ({ navigation, route }) => {
               <Text style={styles.followersText}>friends</Text>
             </View>
             <View style={styles.followers}>
-              <Text style={styles.followersNumbers}>{userExtraInfo.subs.length}</Text>
+              <Text style={styles.followersNumbers}>
+                {userExtraInfo.subs.length}
+              </Text>
               <Text style={styles.followersText}>subs</Text>
             </View>
           </View>
@@ -164,7 +171,7 @@ const OtherProfileScreen = ({ navigation, route }) => {
           </View>
         </View>
         <Button
-          title={subscribed ? "unsub" : "sub"}
+          title={subscribed ? 'unsub' : 'sub'}
           style={{
             backgroundColor: subscribed ? '#D8D8D8' : '#0148FF',
             marginTop: wsize(20),
@@ -174,7 +181,9 @@ const OtherProfileScreen = ({ navigation, route }) => {
             color: subscribed ? '#444' : '#fff',
             fontSize: wsize(21),
           }}
-          onPress={() => { subscribed ? unsubscriptionHandler() : subscriptionHandler() }}
+          onPress={() => {
+            subscribed ? unsubscriptionHandler() : subscriptionHandler();
+          }}
         />
       </View>
       <View style={styles.tabContainer}>
@@ -194,9 +203,13 @@ const OtherProfileScreen = ({ navigation, route }) => {
         </TouchableOpacity>
       </View>
       <View>
-        {isPrivate && !subscribed ? <Text>Private</Text> :
-          currentTab === looks ? <LooksTab navigation={navigation} user={user} /> : <ItemsTab navigation={navigation} user={user} />
-        }
+        {isPrivate && !subscribed ? (
+          <Text>Private</Text>
+        ) : currentTab === looks ? (
+          <LooksTab navigation={navigation} user={user} />
+        ) : (
+          <ItemsTab navigation={navigation} user={user} />
+        )}
       </View>
     </SafeAreaView>
   );

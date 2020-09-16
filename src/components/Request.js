@@ -11,25 +11,41 @@ import { wsize, hsize } from '../entities/constants';
 import { Entypo, Feather, AntDesign } from '@expo/vector-icons';
 import firebase from '../services/firebase/index';
 import { likeComment, dislikeComment } from '../services/api/comment';
+import {
+  getUserInfo,
+  confirmSubRequestForPrivateUser,
+  deleteSubRequestForPrivateUser,
+} from '../services/api/user';
+import LoadingScreen from '../screens/OtherScreens/LoadingScreen';
 
 import Button from './Button';
 export default function Comment({
   style,
-  //   author,
+  // author,
+  userId,
   //   comment,
   navigation,
 }) {
   //   const profileHandler = () => {
   //     navigation.navigate('OtherProfile', { user: author });
   //   };
+  const [loading, setLoading] = useState(true);
+  const [reqUser, setUser] = useState();
+  useEffect(() => {
+    getUserInfo(userId).then((user) => {
+      setLoading(false);
+      setUser(user.data());
+    });
+  }, []);
+  if (loading || !reqUser) return <LoadingScreen fullscreen />;
+
   return (
     <View style={[styles.commentContainer, style]}>
       {/* <TouchableOpacity onPress={profileHandler}> */}
       <TouchableOpacity>
         <Image
           source={{
-            uri:
-              'https://upload.wikimedia.org/wikipedia/commons/c/c2/Rihanna_Fenty_2018.png',
+            uri: reqUser.photoURL,
           }}
           style={styles.postHeaderIcon}
         />
@@ -37,9 +53,9 @@ export default function Comment({
       <View style={{ width: wsize(150) }}>
         {/* <TouchableOpacity onPress={profileHandler}>*/}
         <TouchableOpacity>
-          <Text style={styles.profileName}>riribadgal</Text>
+          <Text style={styles.profileName}>{reqUser.userName}</Text>
         </TouchableOpacity>
-        <Text style={styles.commentText}>Rihanna</Text>
+        <Text style={styles.commentText}>{reqUser.fullName}</Text>
       </View>
       <Button
         title="Confirm"
@@ -48,6 +64,9 @@ export default function Comment({
           height: hsize(40),
           backgroundColor: '#52BDEB',
         }}
+        onPress={() => {
+          confirmSubRequestForPrivateUser(userId);
+        }}
       />
       <Button
         title="Delete"
@@ -55,6 +74,9 @@ export default function Comment({
           width: wsize(70),
           height: hsize(40),
           //   backgroundColor: 'red',
+        }}
+        onPress={() => {
+          deleteSubRequestForPrivateUser(userId);
         }}
       />
     </View>

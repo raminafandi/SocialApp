@@ -36,6 +36,9 @@ const createUser = (email, password, userName, fullName) => {
       });
       db.collection('users').doc(user.uid).set({
         fullName: fullName,
+        userName: userName,
+        photoURL:
+          'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png',
         status: '',
         city: '',
         link: '',
@@ -111,6 +114,62 @@ const logoutUser = () => {
 
 const getUserInfo = (userId = firebase.auth().currentUser.uid) => {
   return db.collection('users').doc(userId).get().catch(console.log);
+};
+
+const sendSubscribeRequestToPrivateUser = (userId) => {
+  const currentUser = firebase.auth().currentUser;
+  return db
+    .collection('users')
+    .doc(userId)
+    .update({
+      subRequests: firestore.FieldValue.arrayUnion(currentUser.uid),
+    });
+};
+
+const getSubRequestForPrivateUser = (
+  userId = firebase.auth().currentUser.uid
+) => {
+  return getUserInfo(userId).then((doc) => {
+    return doc.data().subRequests;
+  });
+};
+
+const confirmSubRequestForPrivateUser = (userId) => {
+  const currentUser = firebase.auth().currentUser;
+  return Promise.all([
+    //delete from subRequests
+    db
+      .collection('users')
+      .doc(currentUser.uid)
+      .update({
+        subRequests: firestore.FieldValue.arrayRemove(userId),
+      }),
+    db
+      .collection('users')
+      .doc(currentUser.uid)
+      .update({
+        subs: firestore.FieldValue.arrayUnion(userId),
+      }),
+    db
+      .collection('users')
+      .doc(userId)
+      .update({
+        friends: firestore.FieldValue.arrayUnion(currentUser.uid),
+      }),
+  ]);
+};
+
+const deleteSubRequestForPrivateUser = (userId) => {
+  const currentUser = firebase.auth().currentUser;
+  return Promise.all([
+    //delete from subRequests
+    db
+      .collection('users')
+      .doc(currentUser.uid)
+      .update({
+        subRequests: firestore.FieldValue.arrayRemove(userId),
+      }),
+  ]);
 };
 
 const subscribeToUser = (userId) => {
@@ -222,4 +281,8 @@ export {
   unmark,
   addItemIdToProfile,
   addLookIdToProfile,
+  sendSubscribeRequestToPrivateUser,
+  getSubRequestForPrivateUser,
+  confirmSubRequestForPrivateUser,
+  deleteSubRequestForPrivateUser,
 };
