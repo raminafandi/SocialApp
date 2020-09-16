@@ -12,8 +12,8 @@ const HomeScreen = React.memo(function ({ navigation }) {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [userInfo, setUserInfo] = useState(null);
-  const [loaded] = useFonts({
-    myfont: require('../../assets/Rubik-Italic-VariableFont_wght.ttf'),
+  const [fontLoaded] = useFonts({
+    myfont: require('../../assets/fonts/Rubik-Italic-VariableFont_wght.ttf'),
   });
   const fetchData = () => {
     return lookApi.getLooksForHomeScreen().then((querySnapshot) => {
@@ -32,7 +32,7 @@ const HomeScreen = React.memo(function ({ navigation }) {
       getUserInfo().then((doc) => setUserInfo(doc.data())),
     ]).then(() => setLoading(false));
   }, []);
-  if (loading || !loaded) {
+  if (loading || !fontLoaded) {
     return <LoadingScreen fullscreen />;
   }
   return (
