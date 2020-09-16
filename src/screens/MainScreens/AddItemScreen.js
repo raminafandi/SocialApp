@@ -71,83 +71,89 @@ const AddItemScreen = ({ route, navigation }) => {
 
   return (
     <KeyboardAvoidingView
-      behavior={Platform.OS == 'ios' ? 'padding' : 'height'}
-      style={{ flex: 1 }}>
+      behavior={Platform.OS === "ios" ? "padding" : null}
+      style={{ flex: 1 }}
+    >
       <ScrollView style={styles.container}>
         <View style={styles.postContainer}>
-          <View style={styles.postImageContainer}>
-            <Image
-              onError={() => {
-                Alert.alert('Error', 'No image has found');
-                navigation.goBack();
-              }}
-              source={{
-                uri: img,
-              }}
-              resizeMode="contain"
-              style={styles.postImage}
-            />
-          </View>
-          <View style={styles.postInfoContainer}>
-            <TextInput
-              placeholder="Name of Item"
-              onChangeText={(text) => setName(text)}
-              style={[styles.textInput, styles.textInputBold]}
-            />
-            <TextInput
-              placeholder="Brand of Item"
-              onChangeText={(text) => setBrand(text)}
-              style={styles.textInput}
-            />
-            <TextInput
-              placeholder="Price of Item"
-              keyboardType="numeric"
-              onChangeText={(text) => setPrice(text)}
-              style={styles.textInput}
-            />
-            <TextInput
-              placeholder="Description of Item"
-              onChangeText={(text) => setDescription(text)}
-              style={styles.textInput}
-            />
-          </View>
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'center',
-              alignItems: 'center',
+        <View style={styles.postImageContainer}>
+          <Image
+            onError={() => {
+              Alert.alert('Error', 'No image has found');
+              navigation.goBack();
+            }}
+            source={{
+              uri: img,
+            }}
+            resizeMode="contain"
+            style={styles.postImage}
+          />
+        </View>
+        <View style={styles.postInfoContainer}>
+          <TextInput
+            placeholder="Name of Item"
+            onChangeText={(text) => setName(text)}
+            style={[styles.textInput, styles.textInputBold]}
+          />
+          <TextInput
+            placeholder="Brand of Item"
+            onChangeText={(text) => setBrand(text)}
+            style={styles.textInput}
+          />
+          <TextInput
+            placeholder="Price of Item"
+            keyboardType="numeric"
+            onChangeText={(text) => setPrice(text)}
+            style={styles.textInput}
+          />
+          <TextInput
+            placeholder="Description of Item"
+            onChangeText={(text) => setDescription(text)}
+            style={styles.textInput}
+          />
+        </View>
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}>
+          <RadioButton.Group
+            onValueChange={(value) => setGender(value)}
+            value={gender}>
+            <RadioButton.Item label="Men" value="men" />
+            <RadioButton.Item label="Women" value="women" />
+            <RadioButton.Item label="Unisex" value="unisex" />
+          </RadioButton.Group>
+        </View>
+        <View style={styles.inputContainer}>
+          <TextInput
+            placeholder="Add Tags..."
+            value={tag}
+            onChangeText={(text) => {
+              setTag(text);
+            }}
+            maxLength={30}
+            style={styles.tagsInput}
+          />
+          <TouchableOpacity
+            style={styles.enterButton}
+            onPress={() => {
+              if (tag) {
+                setTags([...tags, tag]);
+                setTag('');
+              }
             }}>
-            <RadioButton.Group
-              onValueChange={(value) => setGender(value)}
-              value={gender}>
-              <RadioButton.Item label="Men" value="men" />
-              <RadioButton.Item label="Women" value="women" />
-              <RadioButton.Item label="Unisex" value="unisex" />
-            </RadioButton.Group>
-          </View>
-          <View style={styles.inputContainer}>
-            <TextInput
-              placeholder="Add Tags..."
-              value={tag}
-              onChangeText={(text) => {
-                setTag(text);
-              }}
-              maxLength={30}
-              style={styles.tagsInput}
-            />
-            <TouchableOpacity
-              style={styles.enterButton}
-              onPress={() => {
-                if (tag) {
-                  setTags([...tags, tag]);
-                  setTag('');
-                }
-              }}>
-              <AntDesign name="right" size={24} color="black" />
-            </TouchableOpacity>
-          </View>
+            <AntDesign name="right" size={24} color="black" />
+          </TouchableOpacity>
+        </View>
 
-          <View style={styles.tagsContainer}>{renderingTags}</View>
+        <View style={styles.tagsContainer}>{renderingTags}</View>
+        <Button
+          title="Save"
+          style={{ backgroundColor: 'red' }}
+          onPress={() => checkFields(name, brand, price, description, gender)}
+        />
         </View>
       </ScrollView>
     </KeyboardAvoidingView>

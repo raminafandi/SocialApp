@@ -6,7 +6,8 @@ import { useFonts } from 'expo-font';
 
 import * as lookApi from '../../services/api/look';
 import { getUserInfo } from '../../services/api/user';
-import { hsize } from '../../entities/constants';
+import InfiniteScroll from './InfinityScroll';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const HomeScreen = React.memo(function ({ navigation }) {
   const [data, setData] = useState([]);
@@ -36,7 +37,8 @@ const HomeScreen = React.memo(function ({ navigation }) {
     return <LoadingScreen fullscreen />;
   }
   return (
-    <View style={{ flex: 1, backgroundColor: 'white', paddingTop: hsize(20) }}>
+    <SafeAreaView
+      style={{ flex: 1, backgroundColor: 'white', paddingTop: hsize(20) }}>
       <Text style={{ fontFamily: 'myfont' }}></Text>
       <FlatList
         data={data}
@@ -54,7 +56,9 @@ const HomeScreen = React.memo(function ({ navigation }) {
           <Post look={item} navigation={navigation} userInfo={userInfo} />
         )}
       />
-    </View>
+      <InfiniteScroll navigation={navigation} userInfo={userInfo} />
+    </SafeAreaView>
   );
 });
+
 export default HomeScreen;

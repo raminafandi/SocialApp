@@ -30,7 +30,7 @@ const addLook = ({ images, description, tags, coverImage }) => {
   ).catch(console.log);
 };
 
-const getLookById = (lookId) =>  db.collection(collectionName).doc(lookId).get().then(doc => ({id: doc.id, ...doc.data()}))
+const getLookById = (lookId) =>  db.collection(collectionName).doc(lookId).get().then(doc => ({id: doc?.id, ...doc?.data()}))
 
 
 const getUserLooks = (userId = firebase.auth().currentUser.uid) => {
