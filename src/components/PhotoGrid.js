@@ -147,7 +147,8 @@ export default React.memo(function ({
         <TouchableOpacity
           style={[styles.imageContent, styles.imageContent3]}
           onPress={() => {
-            clickEventListener();
+            // clickEventListener();
+            console.log('overlay')
           }}>
           <Image
             style={styles.image}
@@ -155,7 +156,7 @@ export default React.memo(function ({
           />
           <View style={styles.overlayContent}>
             <View>
-              <Text style={styles.count}>+{extra}</Text>
+              <Text style={styles.count}>+{extra+2}</Text>
             </View>
           </View>
         </TouchableOpacity>

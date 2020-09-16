@@ -4,8 +4,9 @@ import LoadingScreen from '../OtherScreens/LoadingScreen';
 import Post from '../../components/Post';
 
 import * as lookApi from '../../services/api/look';
-import { getUserInfo } from '../../services/api/user';
-import { hsize } from '../../entities/constants';
+import { getUserInfo } from '../../services/api/user'
+import InfiniteScroll from './InfinityScroll'
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const HomeScreen = React.memo(function ({ navigation }) {
   const [data, setData] = useState([]);
@@ -32,8 +33,8 @@ const HomeScreen = React.memo(function ({ navigation }) {
     return <LoadingScreen fullscreen />;
   }
   return (
-    <View style={{ flex: 1, backgroundColor: 'white', paddingTop: hsize(20) }}>
-      <FlatList
+    <SafeAreaView>
+      {/* <FlatList
         data={data}
         onRefresh={() => {
           setLoading(true);
@@ -45,11 +46,13 @@ const HomeScreen = React.memo(function ({ navigation }) {
           ]).then(() => setLoading(false));
         }}
         refreshing={loading}
-        renderItem={({ item }) => (
-          <Post look={item} navigation={navigation} userInfo={userInfo} />
-        )}
-      />
-    </View>
+        renderItem={({ item }) => <Post look={item} navigation={navigation} userInfo={userInfo} />}
+      /> */}
+      <InfiniteScroll navigation={navigation} userInfo={userInfo} />
+    </SafeAreaView>
   );
 });
+
+
+
 export default HomeScreen;

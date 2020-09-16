@@ -16,6 +16,7 @@ import { AuthContext } from '../../services/context/AuthContext';
 import { window, wsize, hsize } from '../../entities/constants';
 import TextButton from '../../components/TextButton';
 import { updateUserInfo } from '../../services/api/user';
+import { launchImageLibraryAsync } from 'expo-image-picker'
 const borderCOLOR = '#DADBDA';
 
 const EditProfileScreen = ({ route, navigation }) => {
@@ -55,6 +56,11 @@ const EditProfileScreen = ({ route, navigation }) => {
   navigation.setOptions({
     headerRight: () => <TextButton onPress={submitHandler}>Save</TextButton>,
   });
+  const changeProfile = async () => {
+    const res = await launchImageLibraryAsync();
+    if(!res.cancelled)
+      setPhotoURL(res.uri);
+  }
 
   if (loading) {
     return <LoadingScreen />;
@@ -69,8 +75,8 @@ const EditProfileScreen = ({ route, navigation }) => {
               uri: photoURL,
             }}
           />
-          <TouchableOpacity>
-            <Text>Change profile photo</Text>
+          <TouchableOpacity onPress={changeProfile}>
+            <TextButton>Change profile photo</TextButton>
           </TouchableOpacity>
         </View>
         <View style={styles.aboutPageContainer}>
@@ -149,7 +155,7 @@ const EditProfileScreen = ({ route, navigation }) => {
               onChangeText={(text) => setGender(text)}
             />
           </View>
-          <View style={styles.lineContainer}></View>
+          <View style={styles.lineContainer} />
         </View>
       </ScrollView>
     </SafeAreaView>
