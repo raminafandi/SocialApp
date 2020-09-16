@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { View, FlatList } from 'react-native';
+import { View, FlatList, Text } from 'react-native';
 import LoadingScreen from '../OtherScreens/LoadingScreen';
 import Post from '../../components/Post';
+import { useFonts } from 'expo-font';
 
 import * as lookApi from '../../services/api/look';
 import { getUserInfo } from '../../services/api/user';
@@ -11,6 +12,9 @@ const HomeScreen = React.memo(function ({ navigation }) {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [userInfo, setUserInfo] = useState(null);
+  const [loaded] = useFonts({
+    myfont: require('../../assets/Rubik-Italic-VariableFont_wght.ttf'),
+  });
   const fetchData = () => {
     return lookApi.getLooksForHomeScreen().then((querySnapshot) => {
       const allData = [];
@@ -28,11 +32,12 @@ const HomeScreen = React.memo(function ({ navigation }) {
       getUserInfo().then((doc) => setUserInfo(doc.data())),
     ]).then(() => setLoading(false));
   }, []);
-  if (loading) {
+  if (loading || !loaded) {
     return <LoadingScreen fullscreen />;
   }
   return (
     <View style={{ flex: 1, backgroundColor: 'white', paddingTop: hsize(20) }}>
+      <Text style={{ fontFamily: 'myfont' }}></Text>
       <FlatList
         data={data}
         onRefresh={() => {
