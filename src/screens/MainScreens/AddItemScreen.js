@@ -21,6 +21,7 @@ import firebase from '../../services/firebase/index';
 import * as itemAPI from '../../services/api/item';
 import LoadingScreen from '../OtherScreens/LoadingScreen';
 import { RadioButton } from 'react-native-paper';
+import TextButton from '../../components/TextButton';
 
 const AddItemScreen = ({ route, navigation }) => {
   const iconSize = wsize(26);
@@ -37,7 +38,14 @@ const AddItemScreen = ({ route, navigation }) => {
     return <Tag title={item} key={index} />;
   });
   const { img } = route.params;
-
+  navigation.setOptions({
+    headerRight: () => (
+      <TextButton
+        onPress={() => checkFields(name, brand, price, description, gender)}>
+        Add Item
+      </TextButton>
+    ),
+  });
   const saveHandler = async () => {
     setImageLoading(true);
     itemAPI
@@ -146,11 +154,6 @@ const AddItemScreen = ({ route, navigation }) => {
           </View>
 
           <View style={styles.tagsContainer}>{renderingTags}</View>
-          <Button
-            title="Save"
-            style={{ backgroundColor: 'red' }}
-            onPress={() => checkFields(name, brand, price, description, gender)}
-          />
         </View>
       </ScrollView>
     </KeyboardAvoidingView>

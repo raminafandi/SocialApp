@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useContext } from 'react';
 import {
   TouchableOpacity,
   Text,
@@ -11,13 +11,25 @@ import { wsize, hsize } from '../entities/constants';
 import { BlurView } from 'expo-blur';
 import { Feather, AntDesign } from '@expo/vector-icons';
 import Option from './Option';
-import { TouchableHighlight } from 'react-native-gesture-handler';
-
+import { isPrivateUser } from '../services/api/user';
 export default React.memo(function UserModal({
   setModalVisible,
   navigation,
   ...props
 }) {
+  const requests = (
+    <Option
+      title="Look Requests"
+      navigation={navigation}
+      navigateTo="FollowRequests">
+      <AntDesign
+        name="adduser"
+        size={29}
+        color="black"
+        style={styles.iconStyle}
+      />
+    </Option>
+  );
   return (
     <Modal animationType="fade" transparent={true} {...props}>
       <BlurView tint="dark" intensity={100} style={StyleSheet.absoluteFill}>
@@ -48,17 +60,7 @@ export default React.memo(function UserModal({
               style={styles.iconStyle}
             />
           </Option>
-          <Option
-            title="Look Requests"
-            navigation={navigation}
-            navigateTo="FollowRequests">
-            <AntDesign
-              name="adduser"
-              size={29}
-              color="black"
-              style={styles.iconStyle}
-            />
-          </Option>
+          {requests}
         </View>
       </BlurView>
     </Modal>

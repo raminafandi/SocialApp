@@ -32,7 +32,11 @@ export default function ProfileStackScreen() {
         }}
       />
       <ProfileStack.Screen name="Item" component={ItemScreen} />
-      <ProfileStack.Screen name="EditProfile" component={EditProfileScreen} />
+      <ProfileStack.Screen
+        name="EditProfile"
+        component={EditProfileScreen}
+        options={{ title: 'Edit Profile', headerTitleAlign: 'center' }}
+      />
       <ProfileStack.Screen name="Settings" component={SettingsScreen} />
       <ProfileStack.Screen
         name="Notifications"

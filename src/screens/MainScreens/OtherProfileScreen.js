@@ -218,7 +218,7 @@ const OtherProfileScreen = ({ navigation, route }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: hsize(44),
+    backgroundColor: 'white',
   },
   profileInitialContainer: {
     flexDirection: 'row',

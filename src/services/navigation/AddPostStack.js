@@ -33,14 +33,31 @@ export default function ProfileStackScreen() {
                 headerShown: false,
               }}
             />
-            <AddPostStack.Screen name="AddPhoto" component={AddPhotoScreen} />
-            <AddPostStack.Screen name="AddItem" component={AddItemScreen} />
+            <AddPostStack.Screen
+              name="AddPhoto"
+              component={AddPhotoScreen}
+              options={{ title: '' }}
+            />
+            <AddPostStack.Screen
+              name="AddItem"
+              component={AddItemScreen}
+              options={{ title: '' }}
+            />
             <AddPostStack.Screen
               name="SearchLook"
               component={SearchLookScreen}
+              options={{ title: '' }}
             />
-            <AddPostStack.Screen name="Album" component={AlbumScreen} />
-            <AddPostStack.Screen name="AddLook" component={AddLookScreen} />
+            <AddPostStack.Screen
+              name="Album"
+              component={AlbumScreen}
+              options={{ title: '' }}
+            />
+            <AddPostStack.Screen
+              name="AddLook"
+              component={AddLookScreen}
+              options={{ title: '' }}
+            />
             <AddPostStack.Screen name="Item" component={ItemScreen} />
             <AddPostStack.Screen name="Look" component={LookScreen} />
           </AddPostStack.Navigator>

@@ -21,10 +21,18 @@ const HomeStackScreen = () => (
     <HomeStack.Screen
       name="Home"
       component={HomeScreen}
-      options={{ headerShown: false }}
+      options={{ title: 'looks', headerTitleAlign: 'center' }}
     />
-    <HomeStack.Screen name="Item" component={ItemScreen} />
-    <HomeStack.Screen name="Comments" component={CommentsScreen} />
+    <HomeStack.Screen
+      name="Item"
+      component={ItemScreen}
+      options={{ title: '' }}
+    />
+    <HomeStack.Screen
+      name="Comments"
+      component={CommentsScreen}
+      options={{ title: '' }}
+    />
     <HomeStack.Screen
       name="OtherProfile"
       component={OtherProfileScreen}

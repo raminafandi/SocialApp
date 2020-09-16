@@ -26,9 +26,9 @@ export default function Comment({
   //   comment,
   navigation,
 }) {
-  //   const profileHandler = () => {
-  //     navigation.navigate('OtherProfile', { user: author });
-  //   };
+  const profileHandler = () => {
+    navigation.navigate('OtherProfile', { user: userId });
+  };
   const [loading, setLoading] = useState(true);
   const [reqUser, setUser] = useState();
   useEffect(() => {
@@ -41,8 +41,7 @@ export default function Comment({
 
   return (
     <View style={[styles.commentContainer, style]}>
-      {/* <TouchableOpacity onPress={profileHandler}> */}
-      <TouchableOpacity>
+      <TouchableOpacity onPress={profileHandler}>
         <Image
           source={{
             uri: reqUser.photoURL,
@@ -51,8 +50,7 @@ export default function Comment({
         />
       </TouchableOpacity>
       <View style={{ width: wsize(150) }}>
-        {/* <TouchableOpacity onPress={profileHandler}>*/}
-        <TouchableOpacity>
+        <TouchableOpacity onPress={profileHandler}>
           <Text style={styles.profileName}>{reqUser.userName}</Text>
         </TouchableOpacity>
         <Text style={styles.commentText}>{reqUser.fullName}</Text>

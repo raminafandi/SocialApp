@@ -8,13 +8,14 @@ import {
   ScrollView,
   SafeAreaView,
   TextInput,
-  Button
+  Button,
 } from 'react-native';
 
-import LoadingScreen from '../OtherScreens/LoadingScreen'
+import LoadingScreen from '../OtherScreens/LoadingScreen';
 import { AuthContext } from '../../services/context/AuthContext';
 import { window, wsize, hsize } from '../../entities/constants';
-import { updateUserInfo } from '../../services/api/user'
+import TextButton from '../../components/TextButton';
+import { updateUserInfo } from '../../services/api/user';
 const borderCOLOR = '#DADBDA';
 
 const EditProfileScreen = ({ route, navigation }) => {
@@ -31,20 +32,32 @@ const EditProfileScreen = ({ route, navigation }) => {
   const [phone, setPhone] = useState(user.phoneNumber);
   const [gender, setGender] = useState(userExtraInfo.gender);
   const [photoURL, setPhotoURL] = useState(user.photoURL);
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
   const iconSize = wsize(28);
   const submitHandler = () => {
-    setLoading(true)
-    updateUserInfo(user, { name, photoURL, userName, status, city, link, description, email, phone, gender }).then(() => {
-      setLoading(false)
-      navigation.navigate('Profile')
+    setLoading(true);
+    updateUserInfo(user, {
+      name,
+      photoURL,
+      userName,
+      status,
+      city,
+      link,
+      description,
+      email,
+      phone,
+      gender,
+    }).then(() => {
+      setLoading(false);
+      navigation.navigate('Profile');
     });
-  }
+  };
   navigation.setOptions({
-    headerRight: () => (<Button title="Save" onPress={submitHandler} />)
-  })
+    headerRight: () => <TextButton onPress={submitHandler}>Save</TextButton>,
+  });
+
   if (loading) {
-    return (<LoadingScreen />)
+    return <LoadingScreen />;
   }
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -53,8 +66,7 @@ const EditProfileScreen = ({ route, navigation }) => {
           <Image
             style={styles.profilePhoto}
             source={{
-              uri:
-                photoURL
+              uri: photoURL,
             }}
           />
           <TouchableOpacity>
@@ -75,7 +87,8 @@ const EditProfileScreen = ({ route, navigation }) => {
             <TextInput
               style={styles.lineInput}
               value={userName}
-              onChangeText={(text) => setUserName(text)} />
+              onChangeText={(text) => setUserName(text)}
+            />
           </View>
           <View style={styles.lineContainer}>
             <Text style={styles.lineTitle}>Status</Text>
@@ -125,7 +138,8 @@ const EditProfileScreen = ({ route, navigation }) => {
             <TextInput
               style={styles.lineInput}
               value={phone}
-              onChangeText={(text) => setPhone(text)} />
+              onChangeText={(text) => setPhone(text)}
+            />
           </View>
           <View style={styles.lineContainer}>
             <Text style={styles.lineTitle}>Gender</Text>

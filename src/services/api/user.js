@@ -171,7 +171,9 @@ const deleteSubRequestForPrivateUser = (userId) => {
       }),
   ]);
 };
-
+const isPrivateUser = () => {
+  return firebase.auth().currentUser.private;
+};
 const subscribeToUser = (userId) => {
   const currentUser = firebase.auth().currentUser;
   return Promise.all([
@@ -285,4 +287,5 @@ export {
   getSubRequestForPrivateUser,
   confirmSubRequestForPrivateUser,
   deleteSubRequestForPrivateUser,
+  isPrivateUser,
 };
