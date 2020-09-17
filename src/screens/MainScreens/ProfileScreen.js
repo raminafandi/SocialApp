@@ -30,7 +30,7 @@ const tabs = {
 const LooksTab = React.memo(({ navigation }) => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
-  const fetchData = () => lookAPI.getUserLooks()
+  const fetchData = () => lookAPI.getUserLooks();
   useEffect(() => {
     fetchData().then((allData) => {
       setData(allData);
@@ -66,12 +66,12 @@ const LooksTab = React.memo(({ navigation }) => {
               source={{ uri: item.coverImage }}
             />
           ) : (
-              <PhotoGrid
-                items={item.images}
-                clickEventListener={clickEventListener}
-                gridStyle={{ width: wsize(123), height: wsize(123) }}
-              />
-            )}
+            <PhotoGrid
+              items={item.images}
+              clickEventListener={clickEventListener}
+              gridStyle={{ width: wsize(123), height: wsize(123) }}
+            />
+          )}
         </TouchableOpacity>
       )}
     />
@@ -81,7 +81,7 @@ const LooksTab = React.memo(({ navigation }) => {
 const ItemsTab = React.memo(function ({ navigation, user }) {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
-  const fetchData = () => itemAPI.getUserItems()
+  const fetchData = () => itemAPI.getUserItems();
   useEffect(() => {
     fetchData().then((allData) => {
       setData(allData);
@@ -124,25 +124,28 @@ const BookmarsTab = React.memo(({ navigation, user }) => {
       numColumns={3}
       data={user.saved}
       renderItem={({ item }) => {
-        return(
-        <TouchableOpacity
-          onPress={() => {
-            navigation.navigate('Look', item);
-          }}>
-          {item.data.coverImage ? (
-            <Image
-              style={{ width: wsize(123), height: wsize(123) }}
-              source={{ uri: item.data.coverImage }}
-            />
-          ) : (
+        return (
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate('Look', item);
+            }}>
+            {item.data.coverImage ? (
+              <Image
+                style={{ width: wsize(123), height: wsize(123) }}
+                source={{ uri: item.data.coverImage }}
+              />
+            ) : (
               <PhotoGrid
                 items={item.data.images}
                 clickEventListener={() => {}}
                 gridStyle={{ width: wsize(123), height: wsize(123) }}
               />
             )}
-        </TouchableOpacity>)}}
-    />)
+          </TouchableOpacity>
+        );
+      }}
+    />
+  );
 });
 const ProfileScreen = ({ navigation }) => {
   const authContext = useContext(AuthContext);
@@ -191,7 +194,9 @@ const ProfileScreen = ({ navigation }) => {
               <Text style={styles.followersText}>friends</Text>
             </View>
             <View style={styles.followers}>
-              <Text style={styles.followersNumbers}>{userExtraInfo.subs.length}</Text>
+              <Text style={styles.followersNumbers}>
+                {userExtraInfo.subs.length}
+              </Text>
               <Text style={styles.followersText}>subs</Text>
             </View>
           </View>
@@ -208,7 +213,20 @@ const ProfileScreen = ({ navigation }) => {
         <Button
           title="edit info"
           onPress={() => {
-            navigation.navigate('EditProfile', { userExtraInfo });
+            navigation.navigate('EditProfile', {
+              userExtraInfo: {
+                name: userExtraInfo.name,
+                photoURL: userExtraInfo.photoURL,
+                userName: userExtraInfo.userName,
+                status: userExtraInfo.status,
+                city: userExtraInfo.city,
+                link: userExtraInfo.link,
+                description: userExtraInfo.description,
+                email: userExtraInfo.email,
+                phone: userExtraInfo.phone,
+                gender: userExtraInfo.gender,
+              },
+            });
           }}
           style={{
             backgroundColor: '#D8D8D8',
@@ -251,7 +269,9 @@ const ProfileScreen = ({ navigation }) => {
         {currentTab === items && (
           <ItemsTab navigation={navigation} user={user} />
         )}
-        {currentTab === bookmarks && <BookmarsTab navigation={navigation} user={userExtraInfo} />}
+        {currentTab === bookmarks && (
+          <BookmarsTab navigation={navigation} user={userExtraInfo} />
+        )}
       </View>
       <UserModal
         setModalVisible={setModalVisible}
