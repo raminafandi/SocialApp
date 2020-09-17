@@ -4,7 +4,7 @@ import {
   Text,
   StyleSheet,
   TextInput,
-  TouchableOpacity,
+  KeyboardAvoidingView,
   SafeAreaView,
   Alert
 } from 'react-native';
@@ -14,6 +14,7 @@ import Logo from '../../components/Logo';
 import TextButton from '../../components/TextButton';
 import Button from '../../components/Button';
 import Input from '../../components/Input';
+import { ScrollView } from 'react-native-gesture-handler';
 const SignupScreen = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [fullName, setFullName] = useState('');
@@ -45,50 +46,50 @@ const SignupScreen = ({ navigation }) => {
   return (
     <>
       <Logo />
-      <SafeAreaView style={styles.container}>
-        <View style={styles.mainContainer}>
-          <Input
-            placeholder="Mobile Number or Email"
-            onChangeText={(text) => setEmail(text)}
-          />
-          <Input
-            placeholder="Full Name"
-            onChangeText={(text) => setFullName(text)}
-          />
-          <Input
-            placeholder="Username"
-            onChangeText={(text) => setUserName(text)}
-          />
-          <Input
-            placeholder="Password"
-            onChangeText={(text) => setPassword(text)}
-            secureTextEntry
-          />
-          <Input
-            placeholder="Confirm Password"
-            onChangeText={(text) => setConfPassword(text)}
-            secureTextEntry
-          />
-          <Button
-            title="Sign Up"
-            style={{ backgroundColor: '#52BDEB', marginTop: wsize(5) }}
-            titleStyle={{ color: 'white' }}
-            onPress={() =>
-              authHandler(email, fullName, userName, password, confPassword)
-            }
-          />
-          <View style={styles.getHelpContainer}>
-            <Text style={styles.getHelpText}>Forgot your login details? </Text>
-            <TextButton>Get help signing in</TextButton>
+        <SafeAreaView style={styles.container}>
+          <View style={styles.mainContainer}>
+            <Input
+              placeholder="Mobile Number or Email"
+              onChangeText={(text) => setEmail(text)}
+            />
+            <Input
+              placeholder="Full Name"
+              onChangeText={(text) => setFullName(text)}
+            />
+            <Input
+              placeholder="Username"
+              onChangeText={(text) => setUserName(text)}
+            />
+            <Input
+              placeholder="Password"
+              onChangeText={(text) => setPassword(text)}
+              secureTextEntry
+            />
+            <Input
+              placeholder="Confirm Password"
+              onChangeText={(text) => setConfPassword(text)}
+              secureTextEntry
+            />
+            <Button
+              title="Sign Up"
+              style={{ backgroundColor: '#52BDEB', marginTop: wsize(5) }}
+              titleStyle={{ color: 'white' }}
+              onPress={() =>
+                authHandler(email, fullName, userName, password, confPassword)
+              }
+            />
+            <View style={styles.getHelpContainer}>
+              <Text style={styles.getHelpText}>Forgot your login details? </Text>
+              <TextButton>Get help signing in</TextButton>
+            </View>
           </View>
-        </View>
-        <View style={styles.bottomContainer}>
-          <Text style={styles.getHelpText}>Already have an account?</Text>
-          <TextButton onPress={() => navigation.navigate('Login')}>
-            Log In
+          <View style={styles.bottomContainer}>
+            <Text style={styles.getHelpText}>Already have an account?</Text>
+            <TextButton onPress={() => navigation.navigate('Login')}>
+              Log In
           </TextButton>
-        </View>
-      </SafeAreaView>
+          </View>
+        </SafeAreaView>
     </>
   );
 };

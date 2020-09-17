@@ -5,40 +5,41 @@ import {
   StyleSheet,
   Image,
   TouchableOpacity,
-  TextInput,
+  TextInput, 
+  KeyboardAvoidingView
 } from 'react-native';
 import { window, wsize, hsize } from '../entities/constants';
 import TextButton from './TextButton';
 import { addComment } from '../services/api/comment';
 
-export default React.memo(function CommentForm({ photoUrl, postId }) {
+export default React.memo(function CommentForm({ photoUrl, postId, onSubmit }) {
   const [comment, setComment] = useState('');
   const postHandler = () => {
-    addComment({ postId, comment });
+    addComment({ postId, comment }).then(docRef => {onSubmit && onSubmit(docRef.id, comment, postId)})
     setComment('');
   };
 
   return (
-    <View style={styles.bottomContainer}>
-      <Image
-        source={{
-          uri: photoUrl,
-        }}
-        style={styles.postHeaderIcon}
-      />
-      <TextInput
-        placeholder="Add a comment..."
-        value={comment}
-        onChangeText={(text) => setComment(text)}
-        style={styles.textInput}
-      />
-      <TextButton
-        onPress={() => {
-          comment && postHandler();
-        }}>
-        Post
+      <View style={styles.bottomContainer}>
+        <Image
+          source={{
+            uri: photoUrl,
+          }}
+          style={styles.postHeaderIcon}
+        />
+        <TextInput
+          placeholder="Add a comment..."
+          value={comment}
+          onChangeText={(text) => setComment(text)}
+          style={styles.textInput}
+        />
+        <TextButton
+          onPress={() => {
+            comment && postHandler();
+          }}>
+          Post
       </TextButton>
-    </View>
+      </View>
   );
 });
 
