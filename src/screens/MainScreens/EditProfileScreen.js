@@ -16,7 +16,7 @@ import { AuthContext } from '../../services/context/AuthContext';
 import { window, wsize, hsize } from '../../entities/constants';
 import TextButton from '../../components/TextButton';
 import { updateUserInfo } from '../../services/api/user';
-import { launchImageLibraryAsync } from 'expo-image-picker'
+import { launchImageLibraryAsync } from 'expo-image-picker';
 const borderCOLOR = '#DADBDA';
 
 const EditProfileScreen = ({ route, navigation }) => {
@@ -58,9 +58,8 @@ const EditProfileScreen = ({ route, navigation }) => {
   });
   const changeProfile = async () => {
     const res = await launchImageLibraryAsync();
-    if(!res.cancelled)
-      setPhotoURL(res.uri);
-  }
+    if (!res.cancelled) setPhotoURL(res.uri);
+  };
 
   if (loading) {
     return <LoadingScreen />;
@@ -86,6 +85,7 @@ const EditProfileScreen = ({ route, navigation }) => {
               style={styles.lineInput}
               value={name}
               onChangeText={(text) => setName(text)}
+              maxLength={45}
             />
           </View>
           <View style={styles.lineContainer}>
@@ -94,6 +94,7 @@ const EditProfileScreen = ({ route, navigation }) => {
               style={styles.lineInput}
               value={userName}
               onChangeText={(text) => setUserName(text)}
+              maxLength={45}
             />
           </View>
           <View style={styles.lineContainer}>
@@ -102,6 +103,7 @@ const EditProfileScreen = ({ route, navigation }) => {
               style={styles.lineInput}
               value={status}
               onChangeText={(text) => setStatus(text)}
+              maxLength={200}
             />
           </View>
           <View style={styles.lineContainer}>
@@ -110,6 +112,7 @@ const EditProfileScreen = ({ route, navigation }) => {
               style={styles.lineInput}
               value={city}
               onChangeText={(text) => setCity(text)}
+              maxLength={30}
             />
           </View>
           <View style={styles.lineContainer}>
@@ -118,6 +121,7 @@ const EditProfileScreen = ({ route, navigation }) => {
               style={styles.lineInput}
               value={link}
               onChangeText={(text) => setLink(text)}
+              maxLength={30}
             />
           </View>
           <View style={styles.lineContainer}>
@@ -126,6 +130,7 @@ const EditProfileScreen = ({ route, navigation }) => {
               style={styles.lineInput}
               value={description}
               onChangeText={(text) => setDescription(text)}
+              maxLength={300}
             />
           </View>
           <View style={styles.titleContainer}>
@@ -137,6 +142,7 @@ const EditProfileScreen = ({ route, navigation }) => {
               style={styles.lineInput}
               value={email}
               onChangeText={(text) => setEmail(text)}
+              maxLength={45}
             />
           </View>
           <View style={styles.lineContainer}>
@@ -145,6 +151,7 @@ const EditProfileScreen = ({ route, navigation }) => {
               style={styles.lineInput}
               value={phone}
               onChangeText={(text) => setPhone(text)}
+              maxLength={15}
             />
           </View>
           <View style={styles.lineContainer}>
@@ -153,6 +160,7 @@ const EditProfileScreen = ({ route, navigation }) => {
               style={styles.lineInput}
               value={gender}
               onChangeText={(text) => setGender(text)}
+              maxLength={8}
             />
           </View>
           <View style={styles.lineContainer} />

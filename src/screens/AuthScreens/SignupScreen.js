@@ -6,7 +6,7 @@ import {
   TextInput,
   KeyboardAvoidingView,
   SafeAreaView,
-  Alert
+  Alert,
 } from 'react-native';
 import { window, wsize, hsize } from '../../entities/constants';
 import { AuthContext } from '../../services/context/AuthContext';
@@ -46,50 +46,53 @@ const SignupScreen = ({ navigation }) => {
   return (
     <>
       <Logo />
-        <SafeAreaView style={styles.container}>
-          <View style={styles.mainContainer}>
-            <Input
-              placeholder="Mobile Number or Email"
-              onChangeText={(text) => setEmail(text)}
-            />
-            <Input
-              placeholder="Full Name"
-              onChangeText={(text) => setFullName(text)}
-            />
-            <Input
-              placeholder="Username"
-              onChangeText={(text) => setUserName(text)}
-            />
-            <Input
-              placeholder="Password"
-              onChangeText={(text) => setPassword(text)}
-              secureTextEntry
-            />
-            <Input
-              placeholder="Confirm Password"
-              onChangeText={(text) => setConfPassword(text)}
-              secureTextEntry
-            />
-            <Button
-              title="Sign Up"
-              style={{ backgroundColor: '#52BDEB', marginTop: wsize(5) }}
-              titleStyle={{ color: 'white' }}
-              onPress={() =>
-                authHandler(email, fullName, userName, password, confPassword)
-              }
-            />
-            <View style={styles.getHelpContainer}>
-              <Text style={styles.getHelpText}>Forgot your login details? </Text>
-              <TextButton>Get help signing in</TextButton>
-            </View>
+      <SafeAreaView style={styles.container}>
+        <View style={styles.mainContainer}>
+          <Input
+            placeholder="Mobile Number or Email"
+            onChangeText={(text) => setEmail(text)}
+            maxLength={45}
+          />
+          <Input
+            placeholder="Full Name"
+            onChangeText={(text) => setFullName(text)}
+            maxLength={45}
+          />
+          <Input
+            placeholder="Username"
+            onChangeText={(text) => setUserName(text)}
+            maxLength={32}
+          />
+          <Input
+            placeholder="Password"
+            onChangeText={(text) => setPassword(text)}
+            secureTextEntry
+          />
+          <Input
+            placeholder="Confirm Password"
+            onChangeText={(text) => setConfPassword(text)}
+            secureTextEntry
+          />
+          <Button
+            title="Sign Up"
+            style={{ backgroundColor: '#52BDEB', marginTop: wsize(5) }}
+            titleStyle={{ color: 'white' }}
+            onPress={() =>
+              authHandler(email, fullName, userName, password, confPassword)
+            }
+          />
+          <View style={styles.getHelpContainer}>
+            <Text style={styles.getHelpText}>Forgot your login details? </Text>
+            <TextButton>Get help signing in</TextButton>
           </View>
-          <View style={styles.bottomContainer}>
-            <Text style={styles.getHelpText}>Already have an account?</Text>
-            <TextButton onPress={() => navigation.navigate('Login')}>
-              Log In
+        </View>
+        <View style={styles.bottomContainer}>
+          <Text style={styles.getHelpText}>Already have an account?</Text>
+          <TextButton onPress={() => navigation.navigate('Login')}>
+            Log In
           </TextButton>
-          </View>
-        </SafeAreaView>
+        </View>
+      </SafeAreaView>
     </>
   );
 };

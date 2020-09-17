@@ -41,8 +41,7 @@ const LoginScreen = ({ navigation }) => {
           <Input
             placeholder="Phone Number, username or email"
             onChangeText={(text) => setEmail(text)}
-            blurOnSubmit
-            maxLength={40}
+            maxLength={45}
           />
           <Input
             placeholder="Password"

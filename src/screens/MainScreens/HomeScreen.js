@@ -37,8 +37,7 @@ const HomeScreen = React.memo(function ({ navigation }) {
     return <LoadingScreen fullscreen />;
   }
   return (
-    <SafeAreaView
-      style={{ flex: 1, backgroundColor: 'white', paddingTop: hsize(20) }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
       <Text style={{ fontFamily: 'myfont' }}></Text>
       <FlatList
         data={data}
@@ -52,7 +51,9 @@ const HomeScreen = React.memo(function ({ navigation }) {
           ]).then(() => setLoading(false));
         }}
         refreshing={loading}
-        renderItem={({ item }) => <Post look={item} navigation={navigation} userInfo={userInfo} />}
+        renderItem={({ item }) => (
+          <Post look={item} navigation={navigation} userInfo={userInfo} />
+        )}
       />
       {/* <InfiniteScroll navigation={navigation} userInfo={userInfo} /> */}
     </SafeAreaView>

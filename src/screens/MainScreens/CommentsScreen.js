@@ -9,7 +9,7 @@ import {
   ScrollView,
   SafeAreaView,
   Alert,
-  KeyboardAvoidingView
+  KeyboardAvoidingView,
 } from 'react-native';
 
 import { window, wsize, hsize } from '../../entities/constants';
@@ -39,17 +39,21 @@ const CommentsScreen = ({ navigation, route }) => {
         setLoading(false);
       });
   }, []);
-  const addCommentToUI = (id,comment, postId) => setComments([...comments, {
-    id: id,
-    author: {
-      id: user.id,
-      photo: user.photoURL,
-      userName: user.displayName
-    },
-    body: comment,
-    postId: postId,
-    likes: []
-  }]);
+  const addCommentToUI = (id, comment, postId) =>
+    setComments([
+      ...comments,
+      {
+        id: id,
+        author: {
+          id: user.id,
+          photo: user.photoURL,
+          userName: user.displayName,
+        },
+        body: comment,
+        postId: postId,
+        likes: [],
+      },
+    ]);
   if (loading) return <LoadingScreen fullscreen />;
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -67,7 +71,11 @@ const CommentsScreen = ({ navigation, route }) => {
           ))}
         </View>
         <View style={{ width: '95%', alignSelf: 'center' }}>
-          <CommentForm photoUrl={user.photoURL} postId={postId} onSubmit={addCommentToUI} />
+          <CommentForm
+            photoUrl={user.photoURL}
+            postId={postId}
+            onSubmit={addCommentToUI}
+          />
         </View>
       </View>
     </SafeAreaView>
