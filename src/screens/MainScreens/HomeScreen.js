@@ -52,11 +52,9 @@ const HomeScreen = React.memo(function ({ navigation }) {
           ]).then(() => setLoading(false));
         }}
         refreshing={loading}
-        renderItem={({ item }) => (
-          <Post look={item} navigation={navigation} userInfo={userInfo} />
-        )}
+        renderItem={({ item }) => <Post look={item} navigation={navigation} userInfo={userInfo} />}
       />
-      <InfiniteScroll navigation={navigation} userInfo={userInfo} />
+      {/* <InfiniteScroll navigation={navigation} userInfo={userInfo} /> */}
     </SafeAreaView>
   );
 });

@@ -4,7 +4,6 @@ const db = firebase.firestore();
 import { uploadImage } from './image';
 import { firestore } from 'firebase';
 import { Alert } from 'react-native';
-import { getDate } from './helper'
 import { addLookIdToProfile, getUserInfo } from './user'
 const collectionName = 'packs';
 const addLook = ({ images, description, tags, coverImage }) => {
@@ -23,7 +22,7 @@ const addLook = ({ images, description, tags, coverImage }) => {
         userName: currentUser.displayName,
         photo: currentUser.photoURL,
       },
-      date: getDate(),
+      date: new Date(),
       likes: [],
       comments: [],
     }).then(doc => addLookIdToProfile(doc.id)).catch(console.log)

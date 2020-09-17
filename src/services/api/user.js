@@ -2,7 +2,6 @@ import firebase from '../firebase/index';
 import 'firebase/firestore';
 import { firestore } from 'firebase';
 import { Alert } from 'react-native';
-import { getDate } from './helper';
 import * as Permissions from 'expo-permissions';
 import * as Notifications from 'expo-notifications';
 
@@ -50,7 +49,7 @@ const createUser = (email, password, userName, fullName) => {
         saved: [],
         looks: [],
         items: [],
-        date: getDate(),
+        date: new Date(),
       });
       console.log('User account created & signed in!');
     })

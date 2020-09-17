@@ -1,7 +1,6 @@
 import firebase from '../firebase/index'
 import 'firebase/firestore';
 import { firestore } from 'firebase';
-import { getDate } from './helper'
 const db = firestore();
 
 const addComment = ({ postId, comment }) => {
@@ -14,7 +13,7 @@ const addComment = ({ postId, comment }) => {
             userName: currentUser.displayName,
             photo: currentUser.photoURL,
         },
-        date: getDate(),
+        date: new Date(),
         likes: [],
     }).catch(console.log)
 }

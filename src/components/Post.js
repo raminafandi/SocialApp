@@ -163,7 +163,7 @@ const Post = React.memo(({ look, navigation, userInfo }) => {
             <TouchableOpacity
                 style={styles.viewComments}
                 onPress={() => {
-                    navigation.navigate('Comments', { photoUrl: currentUser.photoURL, postId: look.id });
+                    navigation.navigate('Comments', { user: currentUser, postId: look.id });
                 }}>
                 <Text style={{ color: "grey" }}>View all comments</Text>
             </TouchableOpacity>

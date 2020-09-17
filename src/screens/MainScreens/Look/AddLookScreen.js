@@ -13,6 +13,7 @@ import {
 } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 
+import LoadingScreen from '../../OtherScreens/LoadingScreen'
 import Button from '../../../components/Button';
 import { window, wsize, hsize } from '../../../entities/constants';
 import Tag from '../../../components/Tag';
@@ -40,6 +41,7 @@ export default memo(({ route, navigation }) => {
   const [tags, setTags] = useState([]);
   const [text, setText] = useState('');
   const [coverImage, setCoverImage] = useState('');
+  const [loading, setLoading] = useState(false);
   const itemContext = useContext(ItemContext);
   const clearSelectedItems = itemContext.clearSelectedItems;
   const selectedItems = itemContext.selectedItems;
@@ -47,12 +49,18 @@ export default memo(({ route, navigation }) => {
     return <Tag title={item} key={index} />;
   });
   const submitHandler = () => {
+    setLoading(true)
     addLook({
       images: selectedItems,
       description: text,
       tags: tags,
       coverImage: coverImage,
-    }).then(() => Alert.alert('Completed!', 'Look has successfully added'));
+    }).then(() => {
+      Alert.alert('Completed!', 'Look has successfully added')
+      clearSelectedItems();
+      setLoading(false)
+      navigation.goBack();
+    });
   };
   const galeryHandler = async () => {
     let result = await ImagePicker.launchImageLibraryAsync();
@@ -82,9 +90,9 @@ export default memo(({ route, navigation }) => {
       Alert.alert('All Fields should be filled. ', '');
     } else {
       submitHandler();
-      navigation.navigate('Profile');
     }
   };
+  if (loading) return <LoadingScreen fullscreen />
   return (
     <View>
       <ScrollView style={styles.container}>
