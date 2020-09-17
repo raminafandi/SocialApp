@@ -29,7 +29,7 @@ const addLook = ({ images, description, tags, coverImage }) => {
   ).catch(console.log);
 };
 
-const getLookById = (lookId) =>  db.collection(collectionName).doc(lookId).get().then(doc => ({id: doc?.id, ...doc?.data()}))
+const getLookById = (lookId) => db.collection(collectionName).doc(lookId).get().then(doc => ({ id: doc?.id, ...doc?.data() }))
 
 
 const getUserLooks = (userId = firebase.auth().currentUser.uid) => {
@@ -65,8 +65,26 @@ const dislikeLook = (lookId) => {
     .catch((err) => console.error(err));
 };
 
+const limit = 3;
 const getLooksForHomeScreen = () => {
-  return db.collection(collectionName).get().catch(console.log);
+  return db.collection(collectionName)
+    .orderBy('date')
+    .limit(limit).get().then(snap => {
+      const allData = [];
+      snap.forEach(doc => allData.push({ id: doc.id, ...doc.data() }))
+      return allData
+    })
 };
+const getMoreLooksForHomeScreen = (lastVisible) => {
+  return db.collection(collectionName)
+    .orderBy('date')
+    .startAfter(lastVisible)
+    .limit(limit).get().then(snap => {
+      const allData = [];
+      snap.forEach(doc => allData.push({ id: doc.id, ...doc.data() }))
+      return allData
+    })
 
-export { addLook, getLooksForHomeScreen, likeLook, getUserLooks, dislikeLook };
+}
+
+export { addLook, getLooksForHomeScreen, getMoreLooksForHomeScreen,likeLook, getUserLooks, dislikeLook };

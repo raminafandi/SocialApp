@@ -6,7 +6,7 @@ import { useFonts } from 'expo-font';
 import { hsize } from '../../entities/constants';
 import * as lookApi from '../../services/api/look';
 import { getUserInfo } from '../../services/api/user';
-import InfiniteScroll from './InfinityScroll';
+import InfiniteScroll from '../../components/InfinityScroll';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 const HomeScreen = React.memo(function ({ navigation }) {
@@ -16,22 +16,8 @@ const HomeScreen = React.memo(function ({ navigation }) {
   const [fontLoaded] = useFonts({
     myfont: require('../../assets/fonts/Rubik-Italic-VariableFont_wght.ttf'),
   });
-  const fetchData = () => {
-    return lookApi.getLooksForHomeScreen().then((querySnapshot) => {
-      const allData = [];
-      querySnapshot.forEach((doc) => {
-        allData.push({ id: doc.id, ...doc.data() });
-      });
-      return allData;
-    });
-  };
   useEffect(() => {
-    Promise.all([
-      fetchData().then((allData) => {
-        setData(allData);
-      }),
-      getUserInfo().then((doc) => setUserInfo(doc.data())),
-    ]).then(() => setLoading(false));
+    getUserInfo().then((doc) => setUserInfo(doc.data())).then(() => setLoading(false));
   }, []);
   if (loading || !fontLoaded) {
     return <LoadingScreen fullscreen />;
@@ -39,23 +25,7 @@ const HomeScreen = React.memo(function ({ navigation }) {
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
       <Text style={{ fontFamily: 'myfont' }}></Text>
-      <FlatList
-        data={data}
-        onRefresh={() => {
-          setLoading(true);
-          Promise.all([
-            fetchData().then((allData) => {
-              setData(allData);
-            }),
-            getUserInfo().then((doc) => setUserInfo(doc.data())),
-          ]).then(() => setLoading(false));
-        }}
-        refreshing={loading}
-        renderItem={({ item }) => (
-          <Post look={item} navigation={navigation} userInfo={userInfo} />
-        )}
-      />
-      {/* <InfiniteScroll navigation={navigation} userInfo={userInfo} /> */}
+      <InfiniteScroll navigation={navigation} userInfo={userInfo} fetchData={lookApi.getLooksForHomeScreen} fetchMore={lookApi.getMoreLooksForHomeScreen} orderBy="date"/>
     </SafeAreaView>
   );
 });
