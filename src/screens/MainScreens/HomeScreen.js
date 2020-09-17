@@ -3,7 +3,7 @@ import { View, FlatList, Text } from 'react-native';
 import LoadingScreen from '../OtherScreens/LoadingScreen';
 import Post from '../../components/Post';
 import { useFonts } from 'expo-font';
-
+import { hsize } from '../../entities/constants';
 import * as lookApi from '../../services/api/look';
 import { getUserInfo } from '../../services/api/user';
 import InfiniteScroll from './InfinityScroll';
