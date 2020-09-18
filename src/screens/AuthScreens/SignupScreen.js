@@ -6,6 +6,7 @@ import {
   TextInput,
   KeyboardAvoidingView,
   SafeAreaView,
+  ScrollView,
   Alert,
 } from 'react-native';
 import { window, wsize, hsize } from '../../entities/constants';
@@ -14,7 +15,6 @@ import Logo from '../../components/Logo';
 import TextButton from '../../components/TextButton';
 import Button from '../../components/Button';
 import Input from '../../components/Input';
-import { ScrollView } from 'react-native-gesture-handler';
 const SignupScreen = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [fullName, setFullName] = useState('');
@@ -44,7 +44,7 @@ const SignupScreen = ({ navigation }) => {
     }
   };
   return (
-    <>
+    <ScrollView>
       <Logo />
       <SafeAreaView style={styles.container}>
         <View style={styles.mainContainer}>
@@ -81,10 +81,16 @@ const SignupScreen = ({ navigation }) => {
               authHandler(email, fullName, userName, password, confPassword)
             }
           />
-          <View style={styles.getHelpContainer}>
+        </View>
+        {/* <View style={styles.getHelpContainer}>
             <Text style={styles.getHelpText}>Forgot your login details? </Text>
             <TextButton>Get help signing in</TextButton>
-          </View>
+          </View> */}
+        <View style={styles.termsView}>
+          <Text style={styles.termsText}>
+            By signing up, you agree to Looks'Terms of Use and confirm that you
+            have read Looks'Privacy Policy
+          </Text>
         </View>
         <View style={styles.bottomContainer}>
           <Text style={styles.getHelpText}>Already have an account?</Text>
@@ -93,7 +99,7 @@ const SignupScreen = ({ navigation }) => {
           </TextButton>
         </View>
       </SafeAreaView>
-    </>
+    </ScrollView>
   );
 };
 
@@ -113,6 +119,13 @@ const styles = StyleSheet.create({
   },
   getHelpText: {
     color: '#939094',
+  },
+  termsView: {
+    marginTop: hsize(20),
+    marginHorizontal: wsize(45),
+  },
+  termsText: {
+    textAlign: 'center',
   },
   bottomContainer: {
     justifyContent: 'center',

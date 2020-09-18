@@ -175,20 +175,22 @@ const isPrivateUser = () => {
 };
 const subscribeToUser = (userId) => {
   const currentUser = firebase.auth().currentUser;
-  return Promise.all([
-    db
-      .collection('users')
-      .doc(userId)
-      .update({
-        subs: firestore.FieldValue.arrayUnion(currentUser.uid),
-      }),
-    db
-      .collection('users')
-      .doc(currentUser.uid)
-      .update({
-        friends: firestore.FieldValue.arrayUnion(userId),
-      }),
-  ]);
+  if (currentUser.uid !== userId) {
+    return Promise.all([
+      db
+        .collection('users')
+        .doc(userId)
+        .update({
+          subs: firestore.FieldValue.arrayUnion(currentUser.uid),
+        }),
+      db
+        .collection('users')
+        .doc(currentUser.uid)
+        .update({
+          friends: firestore.FieldValue.arrayUnion(userId),
+        }),
+    ]);
+  }
 };
 
 const unsubscribeFromUser = (userId) => {

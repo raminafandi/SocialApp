@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   SafeAreaView,
   Alert,
+  ScrollView,
 } from 'react-native';
 import TextButton from '../../components/TextButton';
 import { window, wsize, hsize } from '../../entities/constants';
@@ -34,7 +35,7 @@ const LoginScreen = ({ navigation }) => {
   };
 
   return (
-    <>
+    <ScrollView>
       <Logo />
       <SafeAreaView style={styles.container}>
         <View style={styles.mainContainer}>
@@ -89,7 +90,7 @@ const LoginScreen = ({ navigation }) => {
           </TextButton>
         </View>
       </SafeAreaView>
-    </>
+    </ScrollView>
   );
 };
 
@@ -111,6 +112,7 @@ const styles = StyleSheet.create({
     color: '#939094',
   },
   bottomContainer: {
+    marginTop: hsize(161),
     justifyContent: 'center',
     alignItems: 'center',
     flexDirection: 'row',

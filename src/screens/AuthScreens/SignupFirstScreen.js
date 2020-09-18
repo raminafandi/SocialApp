@@ -1,5 +1,11 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, SafeAreaView } from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  SafeAreaView,
+} from 'react-native';
 import TextButton from '../../components/TextButton';
 import { window, wsize, hsize } from '../../entities/constants';
 import Logo from '../../components/Logo';
@@ -55,11 +61,19 @@ const LoginScreen = ({ navigation }) => {
             titleStyle={styles.titleStyle}
           />
         </View>
-        <View style={styles.bottomContainer}>
-          <Text style={styles.getHelpText}>Already have an account?</Text>
-          <TextButton onPress={() => navigation.navigate('Login')}>
-            Log In
-        </TextButton>
+        <View>
+          <View style={styles.termsView}>
+            <Text style={styles.termsText}>
+              By signing up, you agree to Looks'Terms of Use and confirm that
+              you have read Looks'Privacy Policy
+            </Text>
+          </View>
+          <View style={styles.bottomContainer}>
+            <Text style={styles.getHelpText}>Already have an account?</Text>
+            <TextButton onPress={() => navigation.navigate('Login')}>
+              Log In
+            </TextButton>
+          </View>
         </View>
       </SafeAreaView>
     </>
@@ -69,7 +83,7 @@ const LoginScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
   },
   mainContainer: {
     marginTop: hsize(54),
@@ -83,11 +97,16 @@ const styles = StyleSheet.create({
   getHelpText: {
     color: '#939094',
   },
+  termsView: {
+    marginTop: hsize(20),
+    marginHorizontal: wsize(45),
+  },
+  termsText: {
+    textAlign: 'center',
+  },
   bottomContainer: {
     justifyContent: 'center',
     alignItems: 'center',
-    position: 'absolute',
-    bottom: 0,
     flexDirection: 'row',
     borderTopWidth: 1,
     height: hsize(79),
@@ -103,14 +122,14 @@ const styles = StyleSheet.create({
   },
   iconStyle: {
     marginLeft: wsize(15),
-    marginRight: wsize(20)
+    marginRight: wsize(20),
   },
   titleStyle: {
     color: '#313131',
     // fontFamily: 'Rubik',
-    fontWeight: "500",
-    fontSize: wsize(15)
-  }
+    fontWeight: '500',
+    fontSize: wsize(15),
+  },
 });
 
 export default LoginScreen;
