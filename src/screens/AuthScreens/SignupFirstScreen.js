@@ -15,6 +15,9 @@ import { Entypo, Ionicons, AntDesign } from '@expo/vector-icons';
 
 const LoginScreen = ({ navigation }) => {
   const iconSize = wsize(24);
+  const facebookHandler = () => {
+    
+  }
   return (
     <>
       <Logo />
@@ -46,6 +49,7 @@ const LoginScreen = ({ navigation }) => {
             title="Continue with Facebook"
             style={styles.additionalButton}
             titleStyle={styles.titleStyle}
+            onPress={facebookHandler}
           />
           <Button
             icon={

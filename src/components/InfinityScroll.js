@@ -94,7 +94,7 @@ const InfiniteScrollFunc = ({ navigation, userInfo, fetchData, fetchMore, orderB
             // On End Reached (Takes a function)
             onEndReached={() => { retrieveMore() }}
             // How Close To The End Of List Until Next Data Request Is Made
-            onEndReachedThreshold={Platform === "ios" ? 0 : 0.01}
+            onEndReachedThreshold={Platform === "ios" ? 0 : 0.001}
             // Refreshing (Set To True When End Reached)
             refreshing={loading}
             onRefresh={() => {
