@@ -10,14 +10,13 @@ import {
   InstantSearch,
   connectRefinementList,
 } from 'react-instantsearch-native';
-import Filters from './src/Filters';
 import SearchBox from './src/SearchBox';
 import InfiniteHits from './src/InfiniteHits';
 import algoliasearch from 'algoliasearch/lite';
 
 const searchClient = algoliasearch(
-  'RWCGA0GQ1P',
-  '7ff2845ec876110cfa72bf3ea3e0abbd'
+  'JFX0SC061C',
+  'd8f2fb0b57c723d265ab606f167f360d'
 );
 
 const styles = StyleSheet.create({
