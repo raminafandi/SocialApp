@@ -1,9 +1,12 @@
 import firebase from '../firebase/index';
+import libFirebase from 'firebase'
 import 'firebase/firestore';
+import 'firebase/auth'
 import { firestore } from 'firebase';
 import { Alert } from 'react-native';
 import * as Permissions from 'expo-permissions';
 import * as Notifications from 'expo-notifications';
+import * as Facebook from 'expo-facebook';
 
 const db = firebase.firestore();
 const registerForPushNotificationsAsync = async () => {
@@ -80,6 +83,16 @@ const loginUser = (email, password) => {
       Alert.alert('Wrong Credentials', 'Login Credentials are not valid');
     });
 };
+
+const facebookSignIn = async () => {
+  const { type, token } = await Facebook.logInWithReadPermissionsAsync("326392205351093", { permissions: ['public_profile'] })
+  if (type === 'success') {
+    const credential = libFirebase.auth.FacebookAuthProvider.credential(token)
+    firebase.auth().signInWithCredential(credential).catch((error) => {
+      console.log(error)
+    })
+  }
+}
 
 const addLookIdToProfile = (lookId) => {
   const currentUser = firebase.auth().currentUser;
@@ -289,4 +302,5 @@ export {
   confirmSubRequestForPrivateUser,
   deleteSubRequestForPrivateUser,
   isPrivateUser,
+  facebookSignIn
 };

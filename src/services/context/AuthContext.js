@@ -2,12 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { YellowBox, Alert } from 'react-native';
 import firebase from '../firebase/index';
 import { createUser, loginUser, logoutUser } from '../api/user';
-
+import * as Facebook from 'expo-facebook';
+import { facebookSignIn } from '../api/user'
 const AuthContext = React.createContext({
   authenticated: false,
-  login: () => {},
-  register: () => {},
-  logout: () => {},
+  login: () => { },
+  facebookLogin: () => { },
+  register: () => { },
+  logout: () => { },
   user: null,
   loading: false,
 });
@@ -19,6 +21,7 @@ const AuthProvider = ({ children, ...props }) => {
   useEffect(() => {
     YellowBox.ignoreWarnings(['Setting a timer']);
     const subscriber = firebase.auth().onAuthStateChanged(onAuthStateChanged);
+    // Facebook.initializeAsync('326392205351093')
     return subscriber; // unsubscribe on unmount
   }, []);
 
@@ -39,6 +42,9 @@ const AuthProvider = ({ children, ...props }) => {
     setLoading(true);
     loginUser(email, password).catch(() => setLoading(false));
   };
+
+  
+
   const logoutHandler = () => {
     setLoading(true);
     logoutUser();
@@ -47,6 +53,7 @@ const AuthProvider = ({ children, ...props }) => {
     <AuthContext.Provider
       value={{
         login: loginHandler,
+        facebookLogin: facebookSignIn,
         register: registerHandler,
         logout: logoutHandler,
         authenticated: authenticated,
