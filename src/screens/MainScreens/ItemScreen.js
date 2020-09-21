@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   ScrollView,
   SafeAreaView,
+  Linking
 } from 'react-native';
 
 import { window, wsize, hsize } from '../../entities/constants';
@@ -34,6 +35,7 @@ export default React.memo(({ route }) => {
               uri: item.image,
             }}
             style={styles.postImage}
+            resizeMode="contain"
           />
         </View>
         <View style={styles.postInfoContainer}>
@@ -60,7 +62,7 @@ export default React.memo(({ route }) => {
               }}>
               <AntDesign name="infocirlce" size={iconSize} color="black" />
             </TouchableOpacity>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => Linking.openURL(item.url)}>
               <Entypo name="link" size={iconSize} color="black" />
             </TouchableOpacity>
             <TouchableOpacity>
