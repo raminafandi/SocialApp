@@ -17,14 +17,14 @@ import { InstantSearch } from 'react-instantsearch-native';
 import algoliasearch from 'algoliasearch/lite';
 
 import SearchBox from './Settings/src/SearchBox';
-import InfiniteHits from './Settings/src/InfiniteHits';
+import InfiniteHits from './Settings/src/InfiniteHitsUsers';
 const searchClient = algoliasearch(
   'RWCGA0GQ1P',
   '7ff2845ec876110cfa72bf3ea3e0abbd'
 );
 
 export default React.memo(({ navigation }) => {
-  const [search, setSearch] = useState({ page: '', query: '' });
+  const [search, setSearch] = useState({});
 
   return (
     <View style={styles.container}>
@@ -34,7 +34,7 @@ export default React.memo(({ navigation }) => {
         searchState={search}
         onSearchStateChange={(text) => setSearch(text)}>
         <SearchBox />
-        <InfiniteHits />
+        <InfiniteHits navigation={navigation} />
       </InstantSearch>
     </View>
   );

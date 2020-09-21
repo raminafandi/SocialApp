@@ -2,6 +2,7 @@ import React, { useState, useContext } from 'react';
 
 import { createStackNavigator } from '@react-navigation/stack';
 import ProfileScreen from '../../screens/MainScreens/ProfileScreen';
+import OtherProfileScreen from '../../screens/MainScreens/OtherProfileScreen';
 import ItemScreen from '../../screens/MainScreens/ItemScreen';
 import EditProfileScreen from '../../screens/MainScreens/EditProfileScreen';
 import SettingsScreen from '../../screens/MainScreens/Settings/MainScreen';
@@ -33,6 +34,7 @@ export default function ProfileStackScreen() {
         }}
       />
       <ProfileStack.Screen name="Item" component={ItemScreen} />
+      <ProfileStack.Screen name="OtherProfile" component={OtherProfileScreen} />
       <ProfileStack.Screen
         name="EditProfile"
         component={EditProfileScreen}

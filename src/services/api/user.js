@@ -1,7 +1,7 @@
 import firebase from '../firebase/index';
-import libFirebase from 'firebase'
+import libFirebase from 'firebase';
 import 'firebase/firestore';
-import 'firebase/auth'
+import 'firebase/auth';
 import { firestore } from 'firebase';
 import { Alert } from 'react-native';
 import * as Permissions from 'expo-permissions';
@@ -85,14 +85,22 @@ const loginUser = (email, password) => {
 };
 
 const facebookSignIn = async () => {
-  const { type, token } = await Facebook.logInWithReadPermissionsAsync("326392205351093", { permissions: ['public_profile'] })
+  const {
+    type,
+    token,
+  } = await Facebook.logInWithReadPermissionsAsync('326392205351093', {
+    permissions: ['public_profile'],
+  });
   if (type === 'success') {
-    const credential = libFirebase.auth.FacebookAuthProvider.credential(token)
-    firebase.auth().signInWithCredential(credential).catch((error) => {
-      console.log(error)
-    })
+    const credential = libFirebase.auth.FacebookAuthProvider.credential(token);
+    firebase
+      .auth()
+      .signInWithCredential(credential)
+      .catch((error) => {
+        console.log(error);
+      });
   }
-}
+};
 
 const addLookIdToProfile = (lookId) => {
   const currentUser = firebase.auth().currentUser;
@@ -204,6 +212,9 @@ const subscribeToUser = (userId) => {
         }),
     ]);
   }
+  return new Promise((res, rej) => {
+    rej('You cant subscribe to yourself');
+  });
 };
 
 const unsubscribeFromUser = (userId) => {
@@ -302,5 +313,5 @@ export {
   confirmSubRequestForPrivateUser,
   deleteSubRequestForPrivateUser,
   isPrivateUser,
-  facebookSignIn
+  facebookSignIn,
 };

@@ -33,9 +33,6 @@
         "react-native-screens": "~2.9.0",
         "react-native-snap-carousel": "^4.0.0-beta.6",
         "react-native-web": "~0.11.7",
-        "expo-permissions": "~9.0.1",
-        "expo-notifications": "~0.3.3",
-        "expo-font": "~8.2.1",
         "expo-facebook": "~8.2.1"
     },
     "devDependencies": {

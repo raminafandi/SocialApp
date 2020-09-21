@@ -105,7 +105,11 @@ const OtherProfileScreen = ({ navigation, route }) => {
     if (isPrivate) {
       userAPI.sendSubscribeRequestToPrivateUser(user.id);
     } else {
-      userAPI.subscribeToUser(user.id).then(() => setSubscribed(true));
+      console.log(user.id);
+      userAPI
+        .subscribeToUser(user.id)
+        .then(() => setSubscribed(true))
+        .catch(console.error);
     }
   };
   const unsubscriptionHandler = () => {
