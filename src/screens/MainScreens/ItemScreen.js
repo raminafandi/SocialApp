@@ -37,11 +37,11 @@ export default React.memo(({ route }) => {
           />
         </View>
         <View style={styles.postInfoContainer}>
-          <Text style={styles.postTitle}>{item.title}</Text>
+          <Text style={styles.postTitle}>{item.name}</Text>
           <Text style={styles.postBrand}>{item.brand}</Text>
           <View style={[styles.toggleableContainer, { display: display }]}>
-            <Text style={styles.postPrice}>{item.info.price}</Text>
-            <Text style={styles.postDescription}>{item.info.description}</Text>
+            <Text style={styles.postPrice}>{item.info?.price}</Text>
+            <Text style={styles.postDescription}>{item.info?.description}</Text>
             <View style={{ flexDirection: 'row' }}>
               <Text style={styles.postPublisher}>added by</Text>
               <TextButton style={styles.postPublisherLink}>
