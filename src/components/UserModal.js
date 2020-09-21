@@ -52,7 +52,10 @@ export default React.memo(function UserModal({
               style={styles.iconStyle}
             />
           </Option>
-          <Option title="Add Friends" navigation={navigation} navigateTo="">
+          <Option
+            title="Add Friends"
+            navigation={navigation}
+            navigateTo="AddFriend">
             <AntDesign
               name="adduser"
               size={29}

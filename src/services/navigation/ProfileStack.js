@@ -14,6 +14,7 @@ import AlternativeLookScreen from '../../screens/MainScreens/AlternativeLookScre
 
 import SecurityScreen from '../../screens/MainScreens/Settings/SecurityScreen';
 import FollowRequestsScreen from '../../screens/MainScreens/FollowRequestsScreen';
+import AddFriendScreen from '../../screens/MainScreens/AddFriendScreen';
 
 const ProfileStack = createStackNavigator();
 export default function ProfileStackScreen() {
@@ -47,6 +48,7 @@ export default function ProfileStackScreen() {
       <ProfileStack.Screen name="Help" component={HelpScreen} />
       <ProfileStack.Screen name="About" component={AboutScreen} />
       <ProfileStack.Screen name="Look" component={LookScreen} />
+      <ProfileStack.Screen name="AddFriend" component={AddFriendScreen} />
       <ProfileStack.Screen
         name="AlternativeLook"
         component={AlternativeLookScreen}

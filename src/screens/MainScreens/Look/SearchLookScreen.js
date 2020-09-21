@@ -32,7 +32,7 @@ const searchClient = algoliasearch(
 );
 
 export default React.memo(({ navigation }) => {
-  const [search, setSearch] = useState({});
+  const [search, setSearch] = useState({ page: '', query: '' });
   const [loading, setLoading] = useState(true);
   const [miniLoading, setMiniLoading] = useState(false);
   const [albums, setAlbums] = useState(null);
@@ -74,6 +74,7 @@ export default React.memo(({ navigation }) => {
         searchState={search}
         onSearchStateChange={(text) => setSearch(text)}>
         <SearchBox />
+        {console.log(search)}
         {search.query.length > 0 ? (
           <InfiniteHits />
         ) : (
