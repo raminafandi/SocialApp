@@ -40,7 +40,7 @@ const AuthProvider = ({ children, ...props }) => {
   };
   const loginHandler = (email, password) => {
     setLoading(true);
-    loginUser(email, password).catch(() => setLoading(false));
+    loginUser(email, password).finally(() => setLoading(false));
   };
 
   

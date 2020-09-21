@@ -21,10 +21,10 @@ export default React.memo(({ route }) => {
   const [display, setDisplay] = useState('none');
   useEffect(() => {
     const { image, brand, title, info, tags, fetchId } = route.params;
-    if (fetchId) getItemById(fetchId).then(item => setItem(item));
+    if (fetchId) getItemById(fetchId).then(item => {setItem(item) });
     else setItem({ image, brand, title, info, tags });
   }, []);
-  if (!item) return <LoadingScreen fullscreen/>;
+  if (!item) return <LoadingScreen fullscreen />;
   return (
     <ScrollView style={styles.container}>
       <View style={styles.postContainer}>

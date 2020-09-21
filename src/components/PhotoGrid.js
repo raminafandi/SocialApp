@@ -28,7 +28,7 @@ export default React.memo(function ({
       <View style={styles.row}>
         <TouchableOpacity
           style={[styles.imageContent, styles.imageContent1]}
-          onPress={clickEventListener}>
+          onPress={() => clickEventListener(items[0])}>
           <Image style={styles.image} source={{ uri: images[0] }} />
         </TouchableOpacity>
       </View>

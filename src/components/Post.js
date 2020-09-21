@@ -81,6 +81,7 @@ const Post = React.memo(({ look, navigation, userInfo }) => {
   const currentUser = firebase.auth().currentUser;
   const [numOfLikes, setNumOfLikes] = useState(look.likes.length);
   const clickEventListener = React.useCallback((item) => {
+    console.log('dsadasdasd',item)
     navigation.navigate('Item', { fetchId: item.id });
   });
   const profileClickHandler = () => {

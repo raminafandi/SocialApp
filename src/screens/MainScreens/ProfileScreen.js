@@ -40,9 +40,6 @@ const LooksTab = React.memo(({ navigation }) => {
   if (loading) {
     return <LoadingScreen />;
   }
-  const clickEventListener = (item) => {
-    navigation.navigate('Item', { fetchId: item.id });
-  };
   return (
     <FlatList
       numColumns={3}
@@ -55,7 +52,9 @@ const LooksTab = React.memo(({ navigation }) => {
         });
       }}
       refreshing={loading}
-      renderItem={({ item }) => (
+      renderItem={({ item }) => {
+        console.log('renderItem', item)
+        return (
         <TouchableOpacity
           onPress={() => {
             navigation.navigate('AlternativeLook', item);
@@ -68,12 +67,12 @@ const LooksTab = React.memo(({ navigation }) => {
           ) : (
             <PhotoGrid
               items={item.images}
-              clickEventListener={clickEventListener}
+              clickEventListener={(itemFromGrid) => navigation.navigate('Item', { fetchId: itemFromGrid.id })}
               gridStyle={{ width: wsize(123), height: wsize(123) }}
             />
           )}
         </TouchableOpacity>
-      )}
+      )}}
     />
   );
 });
