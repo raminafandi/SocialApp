@@ -1,13 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import { View } from 'react-native';
 import Post from '../../components/Post';
+import { getUserInfo } from '../../services/api/user'
+import LoadingScreen from '../OtherScreens/LoadingScreen';
 
-const HomeScreen = React.memo(function ({ navigation, route }) {
+const AlternativeLookScreen = React.memo(function ({ navigation, route }) {
   const item = route.params;
-  return (
-    <View style={{ flex: 1 }}>
-      <Post look={item} navigation={navigation} />
-    </View>
-  );
+  const [userInfo, setUserInfo] = useState(null);
+  useEffect(() => {
+    getUserInfo().then((doc) => setUserInfo(doc.data()));
+  }, []);
+  if (userInfo)
+    return (
+      <View style={{ flex: 1 }}>
+        <Post look={item} navigation={navigation} userInfo={userInfo} />
+      </View>
+    );
+  return <LoadingScreen />
 });
-export default HomeScreen;
+export default AlternativeLookScreen;

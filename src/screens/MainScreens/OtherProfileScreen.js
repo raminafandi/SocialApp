@@ -11,32 +11,63 @@ import {
 import { wsize, hsize } from '../../entities/constants';
 import { Feather } from '@expo/vector-icons';
 import Button from '../../components/Button';
+import PhotoGrid from '../../components/PhotoGrid';
 import LoadingScreen from '../OtherScreens/LoadingScreen';
 import { FlatList } from 'react-native-gesture-handler';
 import * as userAPI from '../../services/api/user';
 import * as itemAPI from '../../services/api/item';
+import * as lookAPI from '../../services/api/look';
 const tabs = {
   items: 'items',
   looks: 'looks',
   bookmarks: 'bookmarks',
 };
 
-const LooksTab = React.memo(({ navigation }) => {
+const LooksTab = React.memo(({ navigation, user }) => {
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const fetchData = () => lookAPI.getUserLooks(user.id);
+  useEffect(() => {
+    fetchData().then((allData) => {
+      setData(allData);
+      setLoading(false);
+    });
+  }, []);
+  if (loading) {
+    return <LoadingScreen />;
+  }
   return (
     <FlatList
       numColumns={3}
-      // data={data}
-      // renderItem={({ item }) => (
-      //   <TouchableOpacity
-      //     onPress={() => {
-      //       navigation.navigate('Item', item);
-      //     }}>
-      //     <Image
-      //       style={{ width: wsize(124), height: wsize(123) }}
-      //       source={{ uri: item.img }}
-      //     />
-      //   </TouchableOpacity>
-      // )}
+      data={data}
+      onRefresh={() => {
+        setLoading(true);
+        fetchData().then((res) => {
+          setData(res);
+          setLoading(false);
+        });
+      }}
+      refreshing={loading}
+      renderItem={({ item }) => {
+        return (
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate('AlternativeLook', item);
+          }}>
+          {item.coverImage ? (
+            <Image
+              style={{ width: wsize(123), height: wsize(123) }}
+              source={{ uri: item.coverImage }}
+            />
+          ) : (
+            <PhotoGrid
+              items={item.images}
+              clickEventListener={(itemFromGrid) => navigation.navigate('Item', { fetchId: itemFromGrid.id })}
+              gridStyle={{ width: wsize(123), height: wsize(123) }}
+            />
+          )}
+        </TouchableOpacity>
+      )}}
     />
   );
 });

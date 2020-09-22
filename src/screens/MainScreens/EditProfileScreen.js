@@ -49,14 +49,14 @@ const EditProfileScreen = ({ route, navigation }) => {
       phone,
       gender,
     }).then(() => {
-      setLoading(false);
       navigation.navigate('Profile');
-    });
+    }).finally(() => setLoading(false));
   };
   navigation.setOptions({
     headerRight: () => <TextButton onPress={submitHandler}>Save</TextButton>,
   });
-  const changeProfile = async () => {
+  const changeProfilePicture = async () => {
+    console.log('edit image')
     const res = await launchImageLibraryAsync();
     if (!res.cancelled) setPhotoURL(res.uri);
   };
@@ -74,9 +74,7 @@ const EditProfileScreen = ({ route, navigation }) => {
               uri: photoURL,
             }}
           />
-          <TouchableOpacity onPress={changeProfile}>
-            <TextButton>Change profile photo</TextButton>
-          </TouchableOpacity>
+          <TextButton onPress={changeProfilePicture}>Change profile photo</TextButton>
         </View>
         <View style={styles.aboutPageContainer}>
           <View style={styles.lineContainer}>
