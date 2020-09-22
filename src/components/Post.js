@@ -17,7 +17,7 @@ import firebase from '../services/firebase/index';
 import CommentForm from './CommentForm';
 import * as lookApi from '../services/api/look';
 import { bookmark, unmark } from '../services/api/user';
-
+import FontText from '../components/FontText';
 const iconSize = wsize(28);
 
 const HeartButton = React.memo(({ look, updateLikes }) => {
@@ -81,7 +81,7 @@ const Post = React.memo(({ look, navigation, userInfo }) => {
   const currentUser = firebase.auth().currentUser;
   const [numOfLikes, setNumOfLikes] = useState(look.likes.length);
   const clickEventListener = React.useCallback((item) => {
-    console.log('dsadasdasd',item)
+    console.log('dsadasdasd', item);
     navigation.navigate('Item', { fetchId: item.id });
   });
   const profileClickHandler = () => {
@@ -111,16 +111,17 @@ const Post = React.memo(({ look, navigation, userInfo }) => {
             }}
             style={styles.postHeaderIcon}
           />
-          <Text style={styles.postHeaderProfileName}>
+
+          <FontText font="MYRIADPRO" style={styles.postHeaderProfileName}>
             {look.author.userName}
-          </Text>
+          </FontText>
         </TouchableOpacity>
         <TouchableOpacity style={styles.postHeaderSecond}>
           <Entypo name="dots-three-horizontal" size={wsize(24)} color="black" />
         </TouchableOpacity>
       </View>
       <View style={styles.postDescription}>
-        <Text>{look.description}</Text>
+        <FontText font="Rubik">{look.description}</FontText>
       </View>
       <View style={styles.postImageContainer}>{carouselOrGrid}</View>
       <View style={styles.postActionsContainer}>
@@ -157,11 +158,15 @@ const Post = React.memo(({ look, navigation, userInfo }) => {
         <BookmarkButton look={look} userInfo={userInfo} />
       </View>
       <View style={styles.likesContainer}>
-        <Text style={styles.likesText}>{numOfLikes} likes</Text>
+        <FontText style={styles.likesText} font="Rubik">
+          {numOfLikes} likes
+        </FontText>
       </View>
       <View style={styles.postInfoContainer}>
         <TouchableOpacity onPress={profileClickHandler}>
-          <Text style={styles.profileName}>{look.author.userName}</Text>
+          <FontText style={styles.profileName} font="Rubik">
+            {look.author.userName}
+          </FontText>
         </TouchableOpacity>
         {look.tags.map((tag, index) => {
           return <Tag title={tag} key={index} />;
@@ -179,7 +184,11 @@ const Post = React.memo(({ look, navigation, userInfo }) => {
             postId: look.id,
           });
         }}>
-        <Text style={{ color: 'grey' }}>View all comments</Text>
+        <FontText
+          style={{ color: 'grey', fontWeight: 'bold', fontSize: wsize(13) }}
+          font="Rubik">
+          View all comments
+        </FontText>
       </TouchableOpacity>
       <CommentForm photoUrl={currentUser.photoURL} postId={look.id} />
     </View>
@@ -195,7 +204,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: wsize(4),
     marginBottom: hsize(11),
   },
-  likesText: {},
+  likesText: {
+    fontWeight: 'bold',
+    fontSize: wsize(13),
+  },
   profileName: {
     color: '#0148FF',
     fontWeight: 'bold',
@@ -221,7 +233,7 @@ const styles = StyleSheet.create({
   },
   postHeaderProfileName: {
     alignSelf: 'center',
-    fontWeight: '500',
+    fontWeight: 'bold',
     fontSize: wsize(14),
     marginLeft: wsize(9),
     color: '#262626',

@@ -85,12 +85,12 @@ const loginUser = (email, password) => {
 };
 
 const facebookSignIn = async () => {
-  const {
-    type,
-    token,
-  } = await Facebook.logInWithReadPermissionsAsync('326392205351093', {
-    permissions: ['public_profile'],
-  });
+  const { type, token } = await Facebook.logInWithReadPermissionsAsync(
+    '326392205351093',
+    {
+      permissions: ['public_profile'],
+    }
+  );
   if (type === 'success') {
     const credential = libFirebase.auth.FacebookAuthProvider.credential(token);
     firebase
@@ -213,7 +213,7 @@ const subscribeToUser = (userId) => {
     ]);
   }
   return new Promise((res, rej) => {
-    rej('You cant subscribe to yourself');
+    rej('You cant subscribe to yourself ');
   });
 };
 

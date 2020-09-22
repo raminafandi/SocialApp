@@ -20,6 +20,7 @@ export default React.memo(function UserModal({
   const requests = (
     <Option
       title="Look Requests"
+      setModalVisible={setModalVisible}
       navigation={navigation}
       navigateTo="FollowRequests">
       <AntDesign
@@ -54,6 +55,7 @@ export default React.memo(function UserModal({
           </Option>
           <Option
             title="Add Friends"
+            setModalVisible={setModalVisible}
             navigation={navigation}
             navigateTo="AddFriend">
             <AntDesign

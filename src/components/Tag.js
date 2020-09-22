@@ -1,11 +1,11 @@
 import React from 'react';
 import { TouchableOpacity, Text, StyleSheet } from 'react-native';
 import { wsize, hsize } from '../entities/constants';
-
+import FontText from './FontText';
 export default function Tag({ title, style, titleStyle, ...props }) {
   return (
     <TouchableOpacity style={[styles.tag, style]} {...props}>
-      <Text style={[styles.tagText, titleStyle]}>{title}</Text>
+      <FontText style={[styles.tagText, titleStyle]}>{title}</FontText>
     </TouchableOpacity>
   );
 }
@@ -20,5 +20,7 @@ const styles = StyleSheet.create({
   },
   tagText: {
     color: '#FFFFFF',
+    fontWeight: wsize(13),
+    fontWeight: '500',
   },
 });

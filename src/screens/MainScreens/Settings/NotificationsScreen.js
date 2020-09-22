@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext } from 'react';
 import {
   View,
   Text,
@@ -9,45 +9,73 @@ import {
   ScrollView,
   SafeAreaView,
   Alert,
-  Button,
 } from 'react-native';
 
 import { window, wsize, hsize } from '../../../entities/constants';
-import Tag from '../../../components/Tag';
-import { FontAwesome5, MaterialIcons, AntDesign } from '@expo/vector-icons';
+import {
+  FontAwesome5,
+  MaterialIcons,
+  MaterialCommunityIcons,
+  AntDesign,
+  Ionicons,
+} from '@expo/vector-icons';
 import Option from '../../../components/Option';
+import TextButton from '../../../components/TextButton';
+import { AuthContext } from '../../../services/context/AuthContext';
 
-const NotificationsScreen = ({ navigation }) => {
-  const [tag, setTag] = useState('');
-  const [tags, setTags] = useState([]);
-  const renderingTags = tags.map((item, index) => {
-    return <Tag title={item} key={index} />;
-  });
+const MainScreen = ({ navigation }) => {
+  const authContext = useContext(AuthContext);
+  const iconSize = 30;
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <ScrollView style={styles.container}>
-        <View style={styles.inputContainer}>
-          <TextInput
-            placeholder="Tags..."
-            value={tag}
-            onChangeText={(text) => {
-              setTag(text);
-            }}
-            style={styles.textInput}
+        <Option
+          title="Pause all"
+          navigation={navigation}
+          navigateTo="Notifications"></Option>
+        <Option
+          title="New Sub Notifications"
+          navigation={navigation}
+          navigateTo="Privacy">
+          <MaterialIcons
+            name="person"
+            size={iconSize}
+            color="black"
+            style={styles.iconStyle}
           />
-          <TouchableOpacity
-            style={styles.enterButton}
-            onPress={() => {
-              if (tag !== '') {
-                setTags([...tags, tag]);
-                setTag('');
-              }
-            }}>
-            <AntDesign name="right" size={24} color="black" />
-          </TouchableOpacity>
+        </Option>
+        <Option title="Security" navigation={navigation} navigateTo="Security">
+          <MaterialCommunityIcons
+            name="shield-lock-outline"
+            size={iconSize}
+            color="black"
+            style={styles.iconStyle}
+          />
+        </Option>
+        <Option title="Help" navigation={navigation} navigateTo="Help">
+          <AntDesign
+            name="questioncircleo"
+            size={iconSize}
+            color="black"
+            style={styles.iconStyle}
+          />
+        </Option>
+        <Option title="About" navigation={navigation} navigateTo="About">
+          <AntDesign
+            name="infocirlceo"
+            size={iconSize}
+            color="black"
+            style={styles.iconStyle}
+          />
+        </Option>
+        <View style={styles.logins}>
+          <Text style={styles.loginsText}>Logins</Text>
         </View>
-
-        <View style={{ flexDirection: 'row' }}>{renderingTags}</View>
+        <TextButton
+          textStyle={{ fontSize: wsize(18), paddingLeft: wsize(21) }}
+          onPress={authContext.logout}>
+          Log Out
+        </TextButton>
       </ScrollView>
     </SafeAreaView>
   );
@@ -57,31 +85,20 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingTop: hsize(24),
+    backgroundColor: 'white',
   },
-  inputContainer: {
-    borderColor: '#ececec',
-    backgroundColor: '#fafafa',
-    alignSelf: 'center',
-    borderWidth: 1,
-    width: wsize(304),
-    height: hsize(70),
-    borderRadius: wsize(12),
-    justifyContent: 'space-between',
-    overflow: 'hidden',
-    paddingStart: wsize(17),
-    flexDirection: 'row',
+  iconStyle: {
+    marginRight: wsize(24),
   },
-  textInput: {
+  logins: {
+    padding: 4,
+    borderBottomWidth: 1,
+    borderColor: '#DADBDA',
+  },
+  loginsText: {
     fontSize: wsize(18),
-    width: wsize(240),
-  },
-  enterButton: {
-    borderLeftWidth: 1,
-    borderLeftColor: '#DADBDA',
-    height: hsize(70),
-    width: wsize(43),
-    justifyContent: 'center',
-    alignItems: 'center',
+    paddingLeft: wsize(21),
+    fontWeight: 'bold',
   },
 });
-export default NotificationsScreen;
+export default MainScreen;

@@ -13,9 +13,7 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true
     },
@@ -23,7 +21,8 @@
       "favicon": "./assets/favicon.png"
     },
     "android": {
-      "package": "com.anday2000.SocialApp"
+      "package": "com.anday2000.SocialApp",
+      "useNextNotificationsApi": true
     }
   }
 }

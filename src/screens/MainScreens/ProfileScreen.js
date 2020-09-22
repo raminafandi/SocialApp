@@ -21,6 +21,8 @@ import UserModal from '../../components/UserModal';
 import * as userAPI from '../../services/api/user';
 import * as lookAPI from '../../services/api/look';
 import * as itemAPI from '../../services/api/item';
+import FontText from '../../components/FontText';
+
 const tabs = {
   items: 'items',
   looks: 'looks',
@@ -53,26 +55,29 @@ const LooksTab = React.memo(({ navigation }) => {
       }}
       refreshing={loading}
       renderItem={({ item }) => {
-        console.log('renderItem', item)
+        console.log('renderItem', item);
         return (
-        <TouchableOpacity
-          onPress={() => {
-            navigation.navigate('AlternativeLook', item);
-          }}>
-          {item.coverImage ? (
-            <Image
-              style={{ width: wsize(123), height: wsize(123) }}
-              source={{ uri: item.coverImage }}
-            />
-          ) : (
-            <PhotoGrid
-              items={item.images}
-              clickEventListener={(itemFromGrid) => navigation.navigate('Item', { fetchId: itemFromGrid.id })}
-              gridStyle={{ width: wsize(123), height: wsize(123) }}
-            />
-          )}
-        </TouchableOpacity>
-      )}}
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate('AlternativeLook', item);
+            }}>
+            {item.coverImage ? (
+              <Image
+                style={{ width: wsize(123), height: wsize(123) }}
+                source={{ uri: item.coverImage }}
+              />
+            ) : (
+              <PhotoGrid
+                items={item.images}
+                clickEventListener={(itemFromGrid) =>
+                  navigation.navigate('Item', { fetchId: itemFromGrid.id })
+                }
+                gridStyle={{ width: wsize(123), height: wsize(123) }}
+              />
+            )}
+          </TouchableOpacity>
+        );
+      }}
     />
   );
 });
@@ -168,35 +173,47 @@ const ProfileScreen = ({ navigation }) => {
           }}
         />
         <View style={styles.profileNameContainer}>
-          <Text style={styles.profileName}>{user.displayName}</Text>
-          <Text style={styles.profileType}>{userExtraInfo.status}</Text>
+          <FontText font="MYRIADPRO" style={styles.profileName}>
+            {user.displayName}
+          </FontText>
+          <FontText font="Rubik" style={styles.profileType}>
+            {userExtraInfo.status}
+          </FontText>
         </View>
       </View>
       <View style={styles.profileInfoContainer}>
         <View style={styles.profileInfo}>
-          <Text style={styles.textInfo}>{userExtraInfo.city}</Text>
+          <FontText font="Rubik" style={styles.textInfo}>
+            {userExtraInfo.city}
+          </FontText>
         </View>
         <TouchableOpacity style={styles.profileInfo}>
-          <Text style={styles.linkInfo}>{userExtraInfo.link}</Text>
+          <FontText font="Rubik" style={styles.linkInfo}>
+            {userExtraInfo.link}
+          </FontText>
         </TouchableOpacity>
         <View style={styles.profileInfo}>
-          <Text style={styles.textInfo}>
+          <FontText font="Rubik" style={styles.textInfo}>
             friends with michel_n, serg,dre and 91 others
-          </Text>
+          </FontText>
         </View>
         <View style={styles.followersContainer}>
           <View style={styles.followersContainerLeft}>
             <View style={styles.followers}>
-              <Text style={styles.followersNumbers}>
+              <FontText font="Rubik" style={styles.followersNumbers}>
                 {userExtraInfo.friends.length}
-              </Text>
-              <Text style={styles.followersText}>friends</Text>
+              </FontText>
+              <FontText font="Rubik" style={styles.followersText}>
+                friends
+              </FontText>
             </View>
             <View style={styles.followers}>
-              <Text style={styles.followersNumbers}>
+              <FontText font="Rubik" style={styles.followersNumbers}>
                 {userExtraInfo.subs.length}
-              </Text>
-              <Text style={styles.followersText}>subs</Text>
+              </FontText>
+              <FontText font="Rubik" style={styles.followersText}>
+                subs
+              </FontText>
             </View>
           </View>
           <View style={styles.followersContainerRight}>
@@ -205,7 +222,9 @@ const ProfileScreen = ({ navigation }) => {
               onPress={() => {
                 setModalVisible(true);
               }}>
-              <Text style={styles.lbuttonText}>info</Text>
+              <FontText font="Rubik" style={styles.lbuttonText}>
+                info
+              </FontText>
             </TouchableOpacity>
           </View>
         </View>
@@ -303,7 +322,7 @@ const styles = StyleSheet.create({
   },
   profileName: {
     fontSize: wsize(24),
-    fontWeight: '500',
+    fontWeight: 'bold',
     color: '#262626',
   },
   profileType: {
