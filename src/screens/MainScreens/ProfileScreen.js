@@ -53,7 +53,6 @@ const LooksTab = React.memo(({ navigation }) => {
       }}
       refreshing={loading}
       renderItem={({ item }) => {
-        console.log('renderItem', item)
         return (
         <TouchableOpacity
           onPress={() => {
