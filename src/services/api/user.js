@@ -274,24 +274,34 @@ const updateUserInfo = async (
     .catch(console.log);
 };
 
-const bookmark = (id, data) => {
+const bookmark = (id, data, item) => {
   const currentUser = firebase.auth().currentUser;
+  const bookmartData = {
+    id,
+    data,
+    item: item ? true : false
+  }
   return db
     .collection('users')
     .doc(currentUser.uid)
     .update({
-      saved: firestore.FieldValue.arrayUnion({ id, data }),
+      saved: firestore.FieldValue.arrayUnion(bookmartData),
     })
     .catch(console.log);
 };
 
-const unmark = (id, data) => {
+const unmark = (id, data, item) => {
   const currentUser = firebase.auth().currentUser;
+  const bookmartData = {
+    id,
+    data,
+    item: item ? true : false
+  }
   return db
     .collection('users')
     .doc(currentUser.uid)
     .update({
-      saved: firestore.FieldValue.arrayRemove({ id, data }),
+      saved: firestore.FieldValue.arrayRemove(bookmartData),
     })
     .catch(console.log);
 };

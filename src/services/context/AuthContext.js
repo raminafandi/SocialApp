@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { YellowBox, Alert } from 'react-native';
 import firebase from '../firebase/index';
-import { createUser, loginUser, logoutUser } from '../api/user';
+import { createUser, loginUser, logoutUser, getUserInfo } from '../api/user';
 import * as Facebook from 'expo-facebook';
 import { facebookSignIn } from '../api/user'
 const AuthContext = React.createContext({
@@ -11,12 +11,14 @@ const AuthContext = React.createContext({
   register: () => { },
   logout: () => { },
   user: null,
+  userExtraInfo: null,
   loading: false,
 });
 
 const AuthProvider = ({ children, ...props }) => {
   const [authenticated, setAuthenticated] = useState(false);
   const [user, setUser] = useState(null);
+  const [userExtraInfo, setUserExtraInfo] = useState(null);
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     YellowBox.ignoreWarnings(['Setting a timer']);
@@ -25,6 +27,11 @@ const AuthProvider = ({ children, ...props }) => {
     return subscriber; // unsubscribe on unmount
   }, []);
 
+  useEffect(() => {
+    if (user)
+      getUserInfo().then(doc => setUserExtraInfo(doc.data()))
+
+  }, [user])
   // Handle user state changes
   const onAuthStateChanged = (user) => {
     setUser(user);
@@ -43,7 +50,6 @@ const AuthProvider = ({ children, ...props }) => {
     loginUser(email, password).finally(() => setLoading(false));
   };
 
-  
 
   const logoutHandler = () => {
     setLoading(true);
@@ -58,6 +64,7 @@ const AuthProvider = ({ children, ...props }) => {
         logout: logoutHandler,
         authenticated: authenticated,
         user: user,
+        userExtraInfo: userExtraInfo,
         loading: loading,
       }}>
       {children}

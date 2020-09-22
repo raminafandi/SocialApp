@@ -66,16 +66,14 @@ const LooksTab = React.memo(({ navigation }) => {
                 source={{ uri: item.coverImage }}
               />
             ) : (
-              <PhotoGrid
-                items={item.images}
-                clickEventListener={(itemFromGrid) =>
-                  navigation.navigate('Item', { fetchId: itemFromGrid.id })
-                }
-                gridStyle={{ width: wsize(123), height: wsize(123) }}
-              />
-            )}
+                <PhotoGrid
+                  items={item.images}
+                  clickEventListener={(itemFromGrid) => navigation.navigate('Item', { fetchId: itemFromGrid.id })}
+                  gridStyle={{ width: wsize(123), height: wsize(123) }}
+                />
+              )}
           </TouchableOpacity>
-        );
+        )
       }}
     />
   );
@@ -127,6 +125,18 @@ const BookmarsTab = React.memo(({ navigation, user }) => {
       numColumns={3}
       data={user.saved}
       renderItem={({ item }) => {
+        if (item.item)
+          return (
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate('Item', { fetchId: item.id });
+              }}>
+              <Image
+                style={{ width: wsize(124), height: wsize(123) }}
+                source={{ uri: item.data.image }}
+              />
+            </TouchableOpacity>
+          )
         return (
           <TouchableOpacity
             onPress={() => {
@@ -138,12 +148,12 @@ const BookmarsTab = React.memo(({ navigation, user }) => {
                 source={{ uri: item.data.coverImage }}
               />
             ) : (
-              <PhotoGrid
-                items={item.data.images}
-                clickEventListener={() => {}}
-                gridStyle={{ width: wsize(123), height: wsize(123) }}
-              />
-            )}
+                <PhotoGrid
+                  items={item.data.images}
+                  clickEventListener={() => { }}
+                  gridStyle={{ width: wsize(123), height: wsize(123) }}
+                />
+              )}
           </TouchableOpacity>
         );
       }}

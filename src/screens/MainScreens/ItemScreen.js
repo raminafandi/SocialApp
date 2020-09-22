@@ -7,30 +7,29 @@ import {
   TouchableOpacity,
   ScrollView,
   SafeAreaView,
-  Linking,
+  Linking
 } from 'react-native';
 
 import { window, wsize, hsize } from '../../entities/constants';
-import { Entypo, Feather, AntDesign } from '@expo/vector-icons';
+import { Entypo, Feather, AntDesign, FontAwesome } from '@expo/vector-icons';
 import TextButton from '../../components/TextButton';
 import Tag from '../../components/Tag';
 import { getItemById } from '../../services/api/item';
 import LoadingScreen from '../OtherScreens/LoadingScreen';
-import FontText from '../../components/FontText';
-
+import { bookmark, unmark ,getUserInfo } from '../../services/api/user'
+import { AuthContext } from '../../services/context/AuthContext';
+const iconSize = wsize(26);
 export default React.memo(({ route }) => {
-  const iconSize = wsize(26);
   const [item, setItem] = useState(null);
   const [display, setDisplay] = useState('none');
+  const [userInfo, setUserInfo] = useState(null)
   useEffect(() => {
     const { image, brand, title, info, tags, fetchId } = route.params;
-    if (fetchId)
-      getItemById(fetchId).then((item) => {
-        setItem(item);
-      });
+    getUserInfo().then(doc => setUserInfo(doc.data()))
+    if (fetchId) getItemById(fetchId).then(item => { setItem(item) });
     else setItem({ image, brand, title, info, tags });
   }, []);
-  if (!item) return <LoadingScreen fullscreen />;
+  if (!item || !userInfo) return <LoadingScreen fullscreen />;
   return (
     <ScrollView style={styles.container}>
       <View style={styles.postContainer}>
@@ -44,24 +43,13 @@ export default React.memo(({ route }) => {
           />
         </View>
         <View style={styles.postInfoContainer}>
-          <FontText font="MYRIADPRO" style={styles.postTitle}>
-            {item.name}
-          </FontText>
-          <FontText font="MYRIADPRO" style={styles.postBrand}>
-            {item.brand}
-          </FontText>
-
+          <Text style={styles.postTitle}>{item.name}</Text>
+          <Text style={styles.postBrand}>{item.brand}</Text>
           <View style={[styles.toggleableContainer, { display: display }]}>
-            <FontText font="Rubik" style={styles.postPrice}>
-              {item.info?.price}
-            </FontText>
-            <FontText font="Rubik" style={styles.postDescription}>
-              {item.info?.description}
-            </FontText>
+            <Text style={styles.postPrice}>{item.info?.price}</Text>
+            <Text style={styles.postDescription}>{item.info?.description}</Text>
             <View style={{ flexDirection: 'row' }}>
-              <FontText font="Rubik" style={styles.postPublisher}>
-                added by
-              </FontText>
+              <Text style={styles.postPublisher}>added by</Text>
               <TextButton style={styles.postPublisherLink}>
                 {item.info.userName}
               </TextButton>
@@ -81,14 +69,10 @@ export default React.memo(({ route }) => {
             <TouchableOpacity onPress={() => Linking.openURL(item.url)}>
               <Entypo name="link" size={iconSize} color="black" />
             </TouchableOpacity>
-            <TouchableOpacity>
-              <Feather name="bookmark" size={iconSize} color="black" />
-            </TouchableOpacity>
+            <BookmarkButton item={item} userInfo={userInfo}/>
           </View>
           <View style={{ flexDirection: 'row' }}>
-            {item.tags.map((tag, index) => (
-              <Tag title={tag} key={index} />
-            ))}
+            {item.tags.map((tag, index) => (<Tag title={tag} key={index} />))}
           </View>
         </View>
       </View>
@@ -96,9 +80,36 @@ export default React.memo(({ route }) => {
   );
 });
 
+
+const BookmarkButton = React.memo(({ item, userInfo }) => {
+  const [marked, setMarked] = useState(false);
+  const bookmarkHandler = () => {
+    marked
+      ? unmark(item.id, { image: item.image }, true)
+      : bookmark(item.id, {
+          image: item.image
+        },true);
+    setMarked(!marked);
+  };
+  useEffect(() => {
+    if (userInfo.saved?.find(save => save.id === item.id)) setMarked(true);
+  }, []);
+  return (
+    <TouchableOpacity onPress={bookmarkHandler}>
+      <FontAwesome
+        name={marked ? 'bookmark' : 'bookmark-o'}
+        size={iconSize}
+        color="black"
+        style={styles.postActionIcon}
+      />
+    </TouchableOpacity>
+  );
+});
+
+
 const styles = StyleSheet.create({
   container: {
-    paddingVertical: hsize(20),
+    paddingTop: hsize(30),
   },
   postContainer: {
     justifyContent: 'center',
@@ -127,20 +138,20 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   postPrice: {
-    fontSize: 22,
+    fontSize: wsize(22),
   },
   postDescription: {
     marginTop: hsize(8),
     marginHorizontal: wsize(40), //should be fixed
-    fontSize: 19.5,
+    fontSize: wsize(19.5),
     textAlign: 'center',
   },
   postPublisher: {
-    fontSize: 19.5,
+    fontSize: wsize(19.5),
     color: '#979797',
   },
   postPublisherLink: {
-    fontSize: 19.5,
+    fontSize: wsize(19.5),
   },
   postActions: {
     flexDirection: 'row',
