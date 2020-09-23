@@ -12,7 +12,6 @@ import PropTypes from 'prop-types';
 import { connectInfiniteHits } from 'react-instantsearch-native';
 import navigation from '../../../../services/navigation';
 import { ItemContext } from '../../../../services/context/ItemContext';
-
 const styles = StyleSheet.create({
   separator: {
     borderBottomWidth: 1,
@@ -21,6 +20,7 @@ const styles = StyleSheet.create({
   item: {
     padding: 10,
     flexDirection: 'row',
+    width: '80%'
   },
   titleText: {
     fontWeight: 'bold',

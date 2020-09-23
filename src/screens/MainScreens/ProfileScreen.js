@@ -44,7 +44,7 @@ const LooksTab = React.memo(({ navigation }) => {
     return <LoadingScreen />;
   }
   return (
-    <ScrollView>
+    <ScrollView style={{ height: '40%' }}>
       <FlatList
         numColumns={3}
         data={data}
@@ -70,17 +70,12 @@ const LooksTab = React.memo(({ navigation }) => {
               ) : (
                   <TouchableOpacity
                     onPress={() => {
-                      navigation.navigate('Look', {
-                        navigation: navigation,
-                        images: item.images,
-                      });
+                      navigation.navigate('AlternativeLook', item);
                     }}>
                     <PhotoGrid
                       items={item.images}
                       clickEventListener={(itemFromGrid) =>
-                        navigation.navigate('Look', {
-                          images: item.images,
-                        })
+                        navigation.navigate('AlternativeLook', item)
                       }
                       gridStyle={{ width: wsize(123), height: wsize(123) }}
                     />
@@ -108,71 +103,76 @@ const ItemsTab = React.memo(function ({ navigation, user }) {
     return <LoadingScreen fullscreen />;
   }
   return (
-    <FlatList
-      numColumns={3}
-      data={data}
-      onRefresh={() => {
-        setLoading(true);
-        fetchData().then((res) => {
-          setData(res);
-          setLoading(false);
-        });
-      }}
-      refreshing={loading}
-      renderItem={({ item }) => (
-        <TouchableOpacity
-          onPress={() => {
-            navigation.navigate('Item', item);
-          }}>
-          <Image
-            style={{ width: wsize(124), height: wsize(123) }}
-            source={{ uri: item.image }}
-          />
-        </TouchableOpacity>
-      )}
-    />
+    <ScrollView style={{ height: '40%' }}>
+
+      <FlatList
+        numColumns={3}
+        data={data}
+        onRefresh={() => {
+          setLoading(true);
+          fetchData().then((res) => {
+            setData(res);
+            setLoading(false);
+          });
+        }}
+        refreshing={loading}
+        renderItem={({ item }) => (
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate('Item', item);
+            }}>
+            <Image
+              style={{ width: wsize(124), height: wsize(123) }}
+              source={{ uri: item.image }}
+            />
+          </TouchableOpacity>
+        )}
+      />
+    </ScrollView>
   );
 });
 
 const BookmarsTab = React.memo(({ navigation, user }) => {
   return (
-    <FlatList
-      numColumns={3}
-      data={user.saved}
-      renderItem={({ item }) => {
-        if (item.item)
+    <ScrollView style={{ height: '40%' }}>
+      <FlatList
+        numColumns={3}
+        data={user.saved}
+        renderItem={({ item }) => {
+          if (item.item)
+            return (
+              <TouchableOpacity
+                onPress={() => {
+                  navigation.navigate('Item', { fetchId: item.id });
+                }}>
+                <Image
+                  style={{ width: wsize(124), height: wsize(123) }}
+                  source={{ uri: item.data.image }}
+                />
+              </TouchableOpacity>
+            );
           return (
             <TouchableOpacity
               onPress={() => {
-                navigation.navigate('Item', { fetchId: item.id });
+                navigation.navigate('Look', item);
               }}>
-              <Image
-                style={{ width: wsize(124), height: wsize(123) }}
-                source={{ uri: item.data.image }}
-              />
+              {item.data.coverImage ? (
+                <Image
+                  style={{ width: wsize(123), height: wsize(123) }}
+                  source={{ uri: item.data.coverImage }}
+                />
+              ) : (
+                  <PhotoGrid
+                    items={item.data.images}
+                    clickEventListener={() => { }}
+                    gridStyle={{ width: wsize(123), height: wsize(123) }}
+                  />
+                )}
             </TouchableOpacity>
           );
-        return (
-          <TouchableOpacity
-            onPress={() => {
-              navigation.navigate('Look', item);
-            }}>
-            {item.data.coverImage ? (
-              <Image
-                style={{ width: wsize(123), height: wsize(123) }}
-                source={{ uri: item.data.coverImage }}
-              />
-            ) : (
-                <PhotoGrid
-                  items={item.data.images}
-                  clickEventListener={() => { }}
-                  gridStyle={{ width: wsize(123), height: wsize(123) }}
-                />
-              )}
-          </TouchableOpacity>
-        );
-      }}
-    />
+        }}
+      />
+    </ScrollView>
   );
 });
 const ProfileScreen = ({ navigation }) => {

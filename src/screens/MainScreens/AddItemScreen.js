@@ -62,9 +62,7 @@ const AddItemScreen = ({ route, navigation }) => {
   const checkFields = (name, brand, price, description, gender) => {
     if (!name || !brand || !price || !description || !gender) {
       Alert.alert('All Fields should be filled. ', '');
-    } else if (isNaN(price)) {
-      Alert.alert('Price is not a number');
-    } else {
+    }  else {
       saveHandler();
     }
   };
@@ -103,7 +101,6 @@ const AddItemScreen = ({ route, navigation }) => {
             />
             <TextInput
               placeholder="Price of Item"
-              keyboardType="numeric"
               onChangeText={(text) => setPrice(text)}
               style={styles.textInput}
               maxLength={8}
@@ -152,11 +149,6 @@ const AddItemScreen = ({ route, navigation }) => {
           </View>
 
           <View style={styles.tagsContainer}>{renderingTags}</View>
-          <Button
-            title="Save"
-            style={{ backgroundColor: 'red' }}
-            onPress={() => checkFields(name, brand, price, description, gender)}
-          />
         </View>
       </ScrollView>
     </KeyboardAvoidingView>

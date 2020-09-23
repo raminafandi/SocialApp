@@ -12,7 +12,7 @@ const HomeScreen = React.memo(function ({ navigation }) {
     return <LoadingScreen fullscreen />;
   }
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: 'white', paddingTop: 10 }}>
     <StatusBar barStyle="light-content"/>
       <InfiniteScroll
         navigation={navigation}

@@ -30,23 +30,8 @@ export default React.memo(({ navigation, route }) => {
       setLoading(false)
     })
   }, [])
-  // useEffect(() => {
-  //   const { clearSelectedItems } = route.params
-  //   if (clearSelectedItems) {
-  //     setSelectedItems([])
-  //     firstUpdate.current = true
-  //   }
-  // }, [route.params])
-  // useLayoutEffect(() => {
-  //   if (firstUpdate.current) {
-  //     firstUpdate.current = false;
-  //     return;
-  //   }
-  //   navigation.navigate('AddLook', { selectedItems: selectedItems });
-  // }, [selectedItems]);
   return (
     <View style={styles.container}>
-      <Search setSearch={setSearch} />
       {loading ? <LoadingScreen /> :
         <FlatList
           numColumns={3}

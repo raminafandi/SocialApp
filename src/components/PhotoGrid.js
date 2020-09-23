@@ -30,7 +30,7 @@ export default React.memo(function ({
         <TouchableOpacity
           style={[styles.imageContent, styles.imageContent1]}
           onPress={() => clickEventListener(items[0])}>
-          <Image style={styles.image} source={{ uri: images[0] }} />
+          <Image style={styles.image} source={{ uri: images[0] }} resizeMode="contain"/>
         </TouchableOpacity>
       </View>
     );
@@ -52,6 +52,7 @@ export default React.memo(function ({
           <Image
             style={styles.image}
             source={{ uri: conditionalRender ? images[1] : images[0] }}
+            resizeMode="contain"
           />
         </TouchableOpacity>
         <TouchableOpacity
@@ -63,6 +64,7 @@ export default React.memo(function ({
           <Image
             style={styles.image}
             source={{ uri: conditionalRender ? images[2] : images[1] }}
+            resizeMode="contain"
           />
         </TouchableOpacity>
       </View>
@@ -104,6 +106,7 @@ export default React.memo(function ({
             <Image
               style={styles.image}
               source={{ uri: conditionalRender ? images[1] : images[2] }}
+              resizeMode="contain"
             />
           </TouchableOpacity>
           <TouchableOpacity
@@ -115,6 +118,7 @@ export default React.memo(function ({
             <Image
               style={styles.image}
               source={{ uri: conditionalRender ? images[2] : images[3] }}
+              resizeMode="contain"
             />
           </TouchableOpacity>
           {overlay}
@@ -133,6 +137,7 @@ export default React.memo(function ({
         <Image
           style={styles.image}
           source={{ uri: images[images.length - 1] }}
+          resizeMode="contain"
         />
       </TouchableOpacity>
     );
@@ -161,6 +166,7 @@ export default React.memo(function ({
           <Image
             style={styles.image}
             source={{ uri: conditionalRender ? images[3] : images[4] }}
+            resizeMode="contain"
           />
           <View style={styles.overlayContent}>
             <View>

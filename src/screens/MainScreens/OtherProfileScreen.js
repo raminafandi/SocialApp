@@ -7,6 +7,7 @@ import {
   SafeAreaView,
   TouchableHighlight,
   TouchableOpacity,
+  ScrollView
 } from 'react-native';
 import { wsize, hsize } from '../../entities/constants';
 import { Feather } from '@expo/vector-icons';
@@ -37,6 +38,7 @@ const LooksTab = React.memo(({ navigation, user }) => {
     return <LoadingScreen />;
   }
   return (
+    <ScrollView style={{height: '40%'}}>
     <FlatList
       numColumns={3}
       data={data}
@@ -63,7 +65,7 @@ const LooksTab = React.memo(({ navigation, user }) => {
               <PhotoGrid
                 items={item.images}
                 clickEventListener={(itemFromGrid) =>
-                  navigation.navigate('Item', { fetchId: itemFromGrid.id })
+                  navigation.navigate('AlternativeLook', item)
                 }
                 gridStyle={{ width: wsize(123), height: wsize(123) }}
               />
@@ -72,6 +74,7 @@ const LooksTab = React.memo(({ navigation, user }) => {
         );
       }}
     />
+    </ScrollView>
   );
 });
 
@@ -93,6 +96,8 @@ const ItemsTab = React.memo(({ navigation, user }) => {
     return <LoadingScreen />;
   }
   return (
+    <ScrollView style={{height: '40%'}}>
+
     <FlatList
       numColumns={3}
       data={data}
@@ -108,6 +113,7 @@ const ItemsTab = React.memo(({ navigation, user }) => {
         </TouchableOpacity>
       )}
     />
+    </ScrollView>
   );
 });
 
