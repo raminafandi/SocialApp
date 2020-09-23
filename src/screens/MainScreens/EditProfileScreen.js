@@ -56,7 +56,6 @@ const EditProfileScreen = ({ route, navigation }) => {
     headerRight: () => <TextButton onPress={submitHandler}>Save</TextButton>,
   });
   const changeProfilePicture = async () => {
-    console.log('edit image')
     const res = await launchImageLibraryAsync();
     if (!res.cancelled) setPhotoURL(res.uri);
   };

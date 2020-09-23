@@ -90,7 +90,7 @@ const ItemsTab = React.memo(function ({ navigation, user }) {
     });
   }, []);
   if (loading) {
-    return <LoadingScreen />;
+    return <LoadingScreen fullscreen/>;
   }
   return (
     <FlatList
@@ -201,11 +201,11 @@ const ProfileScreen = ({ navigation }) => {
             {userExtraInfo.link}
           </FontText>
         </TouchableOpacity>
-        <View style={styles.profileInfo}>
+        {/* <View style={styles.profileInfo}>
           <FontText font="Rubik" style={styles.textInfo}>
             friends with michel_n, serg,dre and 91 others
           </FontText>
-        </View>
+        </View> */}
         <View style={styles.followersContainer}>
           <View style={styles.followersContainerLeft}>
             <View style={styles.followers}>

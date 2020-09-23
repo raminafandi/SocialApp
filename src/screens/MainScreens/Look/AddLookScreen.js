@@ -38,23 +38,20 @@ const RenderedPhotoGrid = memo(
 
 export default memo(({ route, navigation }) => {
   const [tag, setTag] = useState('');
-  const [tags, setTags] = useState([]);
-  const [text, setText] = useState('');
-  const [coverImage, setCoverImage] = useState('');
   const [loading, setLoading] = useState(false);
   const itemContext = useContext(ItemContext);
   const clearSelectedItems = itemContext.clearSelectedItems;
   const selectedItems = itemContext.selectedItems;
-  const renderingTags = tags.map((item, index) => {
+  const renderingTags = itemContext.tags.map((item, index) => {
     return <Tag title={item} key={index} />;
   });
   const submitHandler = () => {
     setLoading(true)
     addLook({
       images: selectedItems,
-      description: text,
-      tags: tags,
-      coverImage: coverImage,
+      description: itemContext.text,
+      tags: itemContext.tags,
+      coverImage: itemContext.coverImage,
     }).then(() => {
       Alert.alert('Completed!', 'Look has successfully added')
       clearSelectedItems();
@@ -65,7 +62,7 @@ export default memo(({ route, navigation }) => {
   const galeryHandler = async () => {
     let result = await ImagePicker.launchImageLibraryAsync();
     if (!result.cancelled) {
-      setCoverImage(result.uri);
+      itemContext.setCoverImage(result.uri);
     }
   };
   navigation.setOptions({
@@ -80,7 +77,7 @@ export default memo(({ route, navigation }) => {
       <ButtonReact
         title="Publish"
         onPress={() => {
-          checkFields(text);
+          checkFields(itemContext.text);
         }}
       />
     ),
@@ -98,8 +95,8 @@ export default memo(({ route, navigation }) => {
       <ScrollView style={styles.container}>
         <TextInput
           placeholder="Say something meaningful..."
-          value={text}
-          onChangeText={(text) => setText(text)}
+          value={itemContext.text}
+          onChangeText={(text) => itemContext.setText(text)}
           style={styles.input}
           maxLength={200}
         />
@@ -120,7 +117,7 @@ export default memo(({ route, navigation }) => {
             style={styles.enterButton}
             onPress={() => {
               if (tag !== '') {
-                setTags([...tags, tag]);
+                itemContext.setTags([...itemContext.tags, tag]);
                 setTag('');
               }
             }}>
@@ -135,6 +132,7 @@ export default memo(({ route, navigation }) => {
             style={styles.buttonStyle}
             titleStyle={styles.buttonTitleStyle}
             onPress={navigation.goBack}
+            disabled={itemContext.selectedItems.length === 10 ? true : false}
           />
           <Button
             title="add cover"
@@ -149,9 +147,9 @@ export default memo(({ route, navigation }) => {
             marginTop: hsize(20),
             marginBottom: hsize(50),
           }}>
-          {coverImage ? (
+          {itemContext.coverImage ? (
             <Image
-              source={{ uri: coverImage }}
+              source={{ uri: itemContext.coverImage }}
               resizeMode="contain"
               style={{ width: wsize(338), height: hsize(200) }}
             />
