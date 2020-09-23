@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { View } from 'react-native';
 import Post from '../../components/Post';
-import { getUserInfo } from '../../services/api/user'
+import { getUserInfo } from '../../services/api/user';
 import LoadingScreen from '../OtherScreens/LoadingScreen';
 
 const AlternativeLookScreen = React.memo(function ({ navigation, route }) {
@@ -13,9 +13,9 @@ const AlternativeLookScreen = React.memo(function ({ navigation, route }) {
   if (userInfo)
     return (
       <View style={{ flex: 1 }}>
-        <Post look={item} navigation={navigation} userInfo={userInfo} />
+        <Post look={item} userInfo={userInfo} />
       </View>
     );
-  return <LoadingScreen />
+  return <LoadingScreen />;
 });
 export default AlternativeLookScreen;

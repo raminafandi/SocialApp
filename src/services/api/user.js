@@ -234,6 +234,20 @@ const unsubscribeFromUser = (userId) => {
       }),
   ]);
 };
+
+const makePrivate = () => {
+  let currentUser = firebase.auth().currentUser;
+  if (currentUser.private === false) {
+    currentUser.private = true;
+  }
+};
+
+const makePublic = () => {
+  let currentUser = firebase.auth().currentUser;
+  if (currentUser.private === true) {
+    currentUser.private = false;
+  }
+};
 const updateUserInfo = async (
   user,
   {
@@ -279,8 +293,8 @@ const bookmark = (id, data, item) => {
   const bookmartData = {
     id,
     data,
-    item: item ? true : false
-  }
+    item: item ? true : false,
+  };
   return db
     .collection('users')
     .doc(currentUser.uid)
@@ -295,8 +309,8 @@ const unmark = (id, data, item) => {
   const bookmartData = {
     id,
     data,
-    item: item ? true : false
-  }
+    item: item ? true : false,
+  };
   return db
     .collection('users')
     .doc(currentUser.uid)
@@ -323,5 +337,7 @@ export {
   confirmSubRequestForPrivateUser,
   deleteSubRequestForPrivateUser,
   isPrivateUser,
+  makePrivate,
+  makePublic,
   facebookSignIn,
 };

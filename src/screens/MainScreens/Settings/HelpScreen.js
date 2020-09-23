@@ -1,98 +1,32 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
-  StyleSheet,
   View,
+  Text,
+  StyleSheet,
+  Image,
+  TouchableOpacity,
+  TextInput,
+  ScrollView,
   SafeAreaView,
-  StatusBar,
-  Button,
+  Alert,
 } from 'react-native';
-import {
-  InstantSearch,
-  connectRefinementList,
-} from 'react-instantsearch-native';
-import SearchBox from './src/SearchBox';
-import InfiniteHits from './src/InfiniteHits';
-import algoliasearch from 'algoliasearch/lite';
 
-const searchClient = algoliasearch(
-  'JFX0SC061C',
-  'd8f2fb0b57c723d265ab606f167f360d'
-);
+import { window, wsize, hsize } from '../../../entities/constants';
+import { FontAwesome5, MaterialIcons, AntDesign } from '@expo/vector-icons';
+import Option from '../../../components/Option';
+
+const PrivacyScreen = ({ navigation }) => {
+  return (
+    <SafeAreaView style={{ flex: 1 }}>
+      <ScrollView style={styles.container}></ScrollView>
+    </SafeAreaView>
+  );
+};
 
 const styles = StyleSheet.create({
-  safe: {
-    flex: 1,
-    backgroundColor: '#252b33',
-  },
   container: {
     flex: 1,
-    backgroundColor: '#FFFFFF',
+    paddingTop: hsize(24),
   },
 });
-
-const VirtualRefinementList = connectRefinementList(() => null);
-
-class App extends React.Component {
-  root = {
-    Root: View,
-    props: {
-      style: {
-        flex: 1,
-      },
-    },
-  };
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      isModalOpen: false,
-      searchState: {},
-    };
-  }
-
-  toggleModal = () => {
-    this.setState(({ isModalOpen }) => ({
-      isModalOpen: !isModalOpen,
-    }));
-  };
-
-  onSearchStateChange = (searchState) => {
-    this.setState(() => ({
-      searchState,
-    }));
-  };
-
-  render() {
-    const { isModalOpen, searchState } = this.state;
-    return (
-      <SafeAreaView style={styles.safe}>
-        <StatusBar barStyle="light-content" />
-        <View style={styles.container}>
-          <InstantSearch
-            searchClient={searchClient}
-            indexName="items"
-            root={this.root}
-            searchState={searchState}
-            onSearchStateChange={this.onSearchStateChange}>
-            <VirtualRefinementList attribute="brand" />
-            <Filters
-              isModalOpen={isModalOpen}
-              searchState={searchState}
-              toggleModal={this.toggleModal}
-              onSearchStateChange={this.onSearchStateChange}
-            />
-            <SearchBox />
-            <Button
-              title="Show Filters Modal"
-              color="red"
-              onPress={this.toggleModal}
-            />
-            <InfiniteHits />
-          </InstantSearch>
-        </View>
-      </SafeAreaView>
-    );
-  }
-}
-
-export default App;
+export default PrivacyScreen;

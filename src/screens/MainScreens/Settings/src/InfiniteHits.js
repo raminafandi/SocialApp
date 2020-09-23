@@ -1,8 +1,17 @@
-import React from 'react';
-import { StyleSheet, Text, View, FlatList, Image } from 'react-native';
+import React, { useContext } from 'react';
+import {
+  StyleSheet,
+  Text,
+  View,
+  FlatList,
+  Image,
+  TouchableOpacity,
+} from 'react-native';
 import Highlight from './Highlight';
 import PropTypes from 'prop-types';
 import { connectInfiniteHits } from 'react-instantsearch-native';
+import navigation from '../../../../services/navigation';
+import { ItemContext } from '../../../../services/context/ItemContext';
 
 const styles = StyleSheet.create({
   separator: {
@@ -18,9 +27,10 @@ const styles = StyleSheet.create({
   },
 });
 
-const InfiniteHits = ({ hits, hasMore, refine }) => {
+const InfiniteHits = ({ hits, hasMore, refine, navigation }) => {
   // console.log('infinite hits: ', hits,)
   // console.log('infinite hasMore: ', hasMore)
+  const itemContext = useContext(ItemContext);
   return (
     <FlatList
       data={hits}
@@ -28,7 +38,12 @@ const InfiniteHits = ({ hits, hasMore, refine }) => {
       ItemSeparatorComponent={() => <View style={styles.separator} />}
       onEndReached={() => hasMore && refine()}
       renderItem={({ item }) => (
-        <View style={styles.item}>
+        <TouchableOpacity
+          style={styles.item}
+          onPress={() => {
+            itemContext.selectItem(item);
+            navigation.navigate('AddLook');
+          }}>
           <Image
             source={{ uri: item.image }}
             style={{ height: 80, width: 80 }}
@@ -37,7 +52,7 @@ const InfiniteHits = ({ hits, hasMore, refine }) => {
             <Highlight attribute="name" hit={item} />
             <Highlight attribute="info.description" hit={item} />
           </View>
-        </View>
+        </TouchableOpacity>
       )}
     />
   );

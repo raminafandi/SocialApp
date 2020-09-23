@@ -77,7 +77,6 @@ const LooksTab = React.memo(({ navigation }) => {
                   items={item.images}
                   clickEventListener={(itemFromGrid) =>
                     navigation.navigate('Look', {
-                      navigation: navigation,
                       images: item.images,
                     })
                   }

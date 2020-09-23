@@ -76,7 +76,7 @@ export default React.memo(({ navigation }) => {
         <SearchBox />
         {console.log(search)}
         {search.query.length > 0 ? (
-          <InfiniteHits />
+          <InfiniteHits navigation={navigation} />
         ) : (
           <View>
             <View style={styles.tabContainer}>

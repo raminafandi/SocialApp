@@ -155,7 +155,6 @@ export default React.memo(function ({
           style={[styles.imageContent, styles.imageContent3]}
           onPress={() => {
             navigation.navigate('Look', {
-              navigation: navigation,
               images: items,
             });
           }}>
