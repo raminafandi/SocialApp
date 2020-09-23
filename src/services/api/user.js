@@ -303,6 +303,23 @@ const bookmark = (id, data, item) => {
     })
     .catch(console.log);
 };
+const getUserSubs = (userId = firebase.auth().currentUser.uid) => {
+  const promises = [];
+  return getUserInfo(userId).then((doc) => {
+    doc.data().subs.forEach((subId) => {
+      promises.push(getUserInfo(subId));
+    });
+    return Promise.all(promises);
+  });
+};
+const getUserFriends = (userId = firebase.auth().currentUser.uid) => {
+  return getUserInfo(userId).then((doc) => {
+    doc.data().friends.forEach((lookId) => {
+      promises.push(getUserInfo(lookId));
+    });
+    return Promise.all(promises);
+  });
+};
 
 const unmark = (id, data, item) => {
   const currentUser = firebase.auth().currentUser;
@@ -330,6 +347,8 @@ export {
   unsubscribeFromUser,
   bookmark,
   unmark,
+  getUserSubs,
+  getUserFriends,
   addItemIdToProfile,
   addLookIdToProfile,
   sendSubscribeRequestToPrivateUser,

@@ -17,7 +17,6 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderColor: '#ddd',
   },
-
   postHeaderContainer: {
     flexDirection: 'row',
     paddingHorizontal: wsize(20),

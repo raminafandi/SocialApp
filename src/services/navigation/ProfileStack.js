@@ -12,7 +12,7 @@ import NotificationsScreen from '../../screens/MainScreens/Settings/Notification
 import PrivacyScreen from '../../screens/MainScreens/Settings/PrivacyScreen';
 import LookScreen from '../../screens/MainScreens/Look/LookScreen';
 import AlternativeLookScreen from '../../screens/MainScreens/AlternativeLookScreen';
-
+import SubsScreen from '../../screens/MainScreens/SubsScreen';
 import SecurityScreen from '../../screens/MainScreens/Settings/SecurityScreen';
 import FollowRequestsScreen from '../../screens/MainScreens/FollowRequestsScreen';
 import AddFriendScreen from '../../screens/MainScreens/AddFriendScreen';
@@ -49,6 +49,7 @@ export default function ProfileStackScreen() {
       <ProfileStack.Screen name="Security" component={SecurityScreen} />
       <ProfileStack.Screen name="Help" component={HelpScreen} />
       <ProfileStack.Screen name="About" component={AboutScreen} />
+      <ProfileStack.Screen name="Subs" component={SubsScreen} />
       <ProfileStack.Screen name="Look" component={LookScreen} />
       <ProfileStack.Screen name="AddFriend" component={AddFriendScreen} />
       <ProfileStack.Screen
