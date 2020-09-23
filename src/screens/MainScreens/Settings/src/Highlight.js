@@ -9,9 +9,6 @@ const Highlight = ({ attribute, hit, highlight }) => {
     attribute,
     hit,
   });
-  // console.log('Highlight: ', Highlight)
-  // console.log('attribute: ', attribute)
-  // console.log('hit: ', hit)
   return (
     <Text>
       {highlights.map(({ value, isHighlighted }, index) => {

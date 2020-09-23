@@ -54,7 +54,6 @@ const createUser = (email, password, userName, fullName) => {
         items: [],
         date: new Date(),
       });
-      console.log('User account created & signed in!');
     })
     .catch((error) => {
       if (error.code === 'auth/email-already-in-use') {
@@ -75,7 +74,6 @@ const loginUser = (email, password) => {
   return firebase
     .auth()
     .signInWithEmailAndPassword(email, password)
-    .then((cred) => console.log('display-name', cred.user.displayName))
     .then(() => {
       registerForPushNotificationsAsync();
     })
@@ -126,9 +124,6 @@ const logoutUser = () => {
   return firebase
     .auth()
     .signOut()
-    .then(() => {
-      console.log('User signed out!');
-    })
     .catch(console.log);
 };
 
@@ -191,8 +186,8 @@ const deleteSubRequestForPrivateUser = (userId) => {
       }),
   ]);
 };
-const isPrivateUser = () => {
-  return firebase.auth().currentUser.private;
+const isPrivateUser = (userId = firebase.auth().currentUser.uid) => {
+  return db.collection('users').doc(userId).get().then(doc => doc.data().private)
 };
 const subscribeToUser = (userId) => {
   const currentUser = firebase.auth().currentUser;
@@ -237,16 +232,16 @@ const unsubscribeFromUser = (userId) => {
 
 const makePrivate = () => {
   let currentUser = firebase.auth().currentUser;
-  if (currentUser.private === false) {
-    currentUser.private = true;
-  }
+  return db.collection('users').doc(currentUser.uid).update({
+    private: true
+  })
 };
 
 const makePublic = () => {
   let currentUser = firebase.auth().currentUser;
-  if (currentUser.private === true) {
-    currentUser.private = false;
-  }
+  return db.collection('users').doc(currentUser.uid).update({
+    private: false
+  })
 };
 const updateUserInfo = async (
   user,
@@ -304,8 +299,8 @@ const bookmark = (id, data, item) => {
     .catch(console.log);
 };
 const getUserSubs = (userId = firebase.auth().currentUser.uid) => {
-  const promises = [];
   return getUserInfo(userId).then((doc) => {
+    const promises = [];
     doc.data().subs.forEach((subId) => {
       promises.push(getUserInfo(subId));
     });

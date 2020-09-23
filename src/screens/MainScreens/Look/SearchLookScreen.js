@@ -74,7 +74,6 @@ export default React.memo(({ navigation }) => {
         searchState={search}
         onSearchStateChange={(text) => setSearch(text)}>
         <SearchBox />
-        {console.log(search)}
         {search.query.length > 0 ? (
           <InfiniteHits navigation={navigation} />
         ) : (

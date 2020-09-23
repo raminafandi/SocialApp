@@ -84,7 +84,7 @@ const Post = React.memo(({ look, navigation, userInfo }) => {
     navigation.navigate('Item', { fetchId: item.id });
   });
   const clickEventListenerOverlay = React.useCallback((look, navigation) => {
-    navigation.navigate('Look', { navigation: navigation, images: look });
+    navigation.navigate('Look', { images: look });
   });
   const profileClickHandler = () => {
     navigation.navigate('OtherProfile', { user: look.author });

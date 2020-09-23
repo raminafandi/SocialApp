@@ -23,7 +23,6 @@ const styles = StyleSheet.create({
 });
 
 const SearchBox = ({ currentRefinement, refine }) => {
-  console.log('currentRefinement: ', currentRefinement);
   return (
     <View style={styles.container}>
       <TextInput

@@ -27,6 +27,10 @@ const FollowRequestsScreen = ({ navigation }) => {
       setLoading(false);
     });
   }, []);
+
+  const removeRequestHandler = (requestId) => {
+    setRequests(requests.filter(id => id !== requestId))
+  }
   if (loading) return <LoadingScreen fullscreen />;
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -35,7 +39,7 @@ const FollowRequestsScreen = ({ navigation }) => {
           data={requests}
           refreshing={loading}
           keyExtractor={(item, index) => item}
-          renderItem={({ item }) => <Request userId={item} />}
+          renderItem={({ item }) => <Request userId={item} removeRequestHandler={removeRequestHandler} />}
         />
       </View>
     </SafeAreaView>

@@ -7,9 +7,10 @@ import {
   SafeAreaView,
   TouchableHighlight,
   TouchableOpacity,
+  TouchableWithoutFeedback
 } from 'react-native';
 import { wsize, hsize } from '../../entities/constants';
-import { Feather } from '@expo/vector-icons';
+import { Feather, Entypo } from '@expo/vector-icons';
 import { useIsFocused } from '@react-navigation/native';
 import Button from '../../components/Button';
 import LoadingScreen from '../OtherScreens/LoadingScreen';
@@ -43,46 +44,53 @@ const LooksTab = React.memo(({ navigation }) => {
     return <LoadingScreen />;
   }
   return (
-    <FlatList
-      numColumns={3}
-      data={data}
-      onRefresh={() => {
-        setLoading(true);
-        fetchData().then((res) => {
-          setData(res);
-          setLoading(false);
-        });
-      }}
-      refreshing={loading}
-      renderItem={({ item }) => {
-        return (
-          <TouchableOpacity
-            onPress={() => {
-              navigation.navigate('AlternativeLook', item);
-            }}>
-            {item.coverImage ? (
-              <Image
-                style={{ width: wsize(123), height: wsize(123) }}
-                source={{ uri: item.coverImage }}
-              />
-            ) : (
-              <TouchableOpacity
-                onPress={() => {
-                  navigation.navigate('AlternativeLook', item);
-                }}>
-                <PhotoGrid
-                  items={item.images}
-                  clickEventListener={(itemFromGrid) =>
-                    navigation.navigate('AlternativeLook', item)
-                  }
-                  gridStyle={{ width: wsize(123), height: wsize(123) }}
+    <ScrollView>
+      <FlatList
+        numColumns={3}
+        data={data}
+        onRefresh={() => {
+          setLoading(true);
+          fetchData().then((res) => {
+            setData(res);
+            setLoading(false);
+          });
+        }}
+        refreshing={loading}
+        renderItem={({ item }) => {
+          return (
+            <TouchableWithoutFeedback
+              onPress={() => {
+                navigation.navigate('AlternativeLook', item);
+              }}>
+              {item.coverImage ? (
+                <Image
+                  style={{ width: wsize(123), height: wsize(123) }}
+                  source={{ uri: item.coverImage }}
                 />
-              </TouchableOpacity>
-            )}
-          </TouchableOpacity>
-        );
-      }}
-    />
+              ) : (
+                  <TouchableOpacity
+                    onPress={() => {
+                      navigation.navigate('Look', {
+                        navigation: navigation,
+                        images: item.images,
+                      });
+                    }}>
+                    <PhotoGrid
+                      items={item.images}
+                      clickEventListener={(itemFromGrid) =>
+                        navigation.navigate('Look', {
+                          images: item.images,
+                        })
+                      }
+                      gridStyle={{ width: wsize(123), height: wsize(123) }}
+                    />
+                  </TouchableOpacity>
+                )}
+            </TouchableWithoutFeedback>
+          );
+        }}
+      />
+    </ScrollView>
   );
 });
 
@@ -155,12 +163,12 @@ const BookmarsTab = React.memo(({ navigation, user }) => {
                 source={{ uri: item.data.coverImage }}
               />
             ) : (
-              <PhotoGrid
-                items={item.data.images}
-                clickEventListener={() => {}}
-                gridStyle={{ width: wsize(123), height: wsize(123) }}
-              />
-            )}
+                <PhotoGrid
+                  items={item.data.images}
+                  clickEventListener={() => { }}
+                  gridStyle={{ width: wsize(123), height: wsize(123) }}
+                />
+              )}
           </TouchableOpacity>
         );
       }}
@@ -178,6 +186,17 @@ const ProfileScreen = ({ navigation }) => {
   useEffect(() => {
     userAPI.getUserInfo(user.uid).then((doc) => setUserExstraInfo(doc.data()));
   }, [isFocused]);
+
+  navigation.setOptions({
+    headerRight: () => (
+      <TouchableOpacity onPress={() => {
+        setModalVisible(true);
+      }}>
+        <Entypo name="dots-three-horizontal" size={24} color="black" style={{ marginRight: 15 }} />
+      </TouchableOpacity>
+    ),
+  });
+
   if (!userExtraInfo) return <LoadingScreen fullscreen />;
   return (
     <View style={styles.container}>
@@ -243,9 +262,7 @@ const ProfileScreen = ({ navigation }) => {
           <View style={styles.followersContainerRight}>
             <TouchableOpacity
               style={styles.followersLittleButton}
-              onPress={() => {
-                setModalVisible(true);
-              }}>
+            >
               <FontText font="Rubik" style={styles.lbuttonText}>
                 info
               </FontText>
@@ -327,7 +344,7 @@ const ProfileScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: hsize(44),
+    // paddingTop: hsize(44),
   },
   profileInitialContainer: {
     flexDirection: 'row',

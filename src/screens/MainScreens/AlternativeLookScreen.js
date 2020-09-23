@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { ScrollView } from 'react-native';
+import { ScrollView, View } from 'react-native';
 import Post from '../../components/Post';
 import { getUserInfo } from '../../services/api/user';
 import LoadingScreen from '../OtherScreens/LoadingScreen';
@@ -12,8 +12,8 @@ const AlternativeLookScreen = React.memo(function ({ navigation, route }) {
   }, []);
   if (userInfo)
     return (
-      <ScrollView style={{ flex: 1, paddingBottom: 30 }}>
-        <Post look={item} userInfo={userInfo} />
+      <ScrollView style={{ flex: 1, paddingVertical: 10}}>
+        <Post look={item} userInfo={userInfo} navigation={navigation}/>
       </ScrollView>
     );
   return <LoadingScreen />;

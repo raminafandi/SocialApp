@@ -15,7 +15,6 @@ import LoadingScreen from '../OtherScreens/LoadingScreen';
 export default function SubsScreen(navigation) {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
-  console.log(navigation);
   useEffect(() => {
     getUserSubs().then((querySnapshot) => {
       const allData = [];
@@ -40,7 +39,7 @@ export default function SubsScreen(navigation) {
               <TouchableOpacity
                 style={styles.postHeaderFirst}
                 onPress={() => {
-                  navigation.navigate('OtherProfile', {
+                  navigation.navigation.navigate('OtherProfile', {
                     user: {
                       id: item.key,
                       photo: item.photoURL,

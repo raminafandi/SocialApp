@@ -19,12 +19,13 @@ import {
 import LoadingScreen from '../screens/OtherScreens/LoadingScreen';
 
 import Button from './Button';
-export default function Comment({
+export default function Request({
   style,
   // author,
   userId,
   //   comment,
   navigation,
+  removeRequestHandler
 }) {
   const profileHandler = () => {
     navigation.navigate('OtherProfile', { user: userId });
@@ -64,6 +65,7 @@ export default function Comment({
         }}
         onPress={() => {
           confirmSubRequestForPrivateUser(userId);
+          removeRequestHandler(userId)
         }}
       />
       <Button
@@ -75,6 +77,7 @@ export default function Comment({
         }}
         onPress={() => {
           deleteSubRequestForPrivateUser(userId);
+          removeRequestHandler(userId)
         }}
       />
     </View>

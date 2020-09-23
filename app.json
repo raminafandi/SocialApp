@@ -1,28 +1,28 @@
 {
-  "expo": {
-    "name": "SocialApp",
-    "slug": "SocialApp",
-    "version": "1.0.0",
-    "orientation": "portrait",
-    "icon": "./assets/icon.png",
-    "splash": {
-      "image": "./assets/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
-    },
-    "updates": {
-      "fallbackToCacheTimeout": 0
-    },
-    "assetBundlePatterns": ["**/*"],
-    "ios": {
-      "supportsTablet": true
-    },
-    "web": {
-      "favicon": "./assets/favicon.png"
-    },
-    "android": {
-      "package": "com.anday2000.SocialApp",
-      "useNextNotificationsApi": true
+    "expo": {
+        "name": "Looks",
+        "slug": "Looks",
+        "version": "1.0.0",
+        "orientation": "portrait",
+        "icon": "./assets/icon.png",
+        "splash": {
+            "image": "./assets/splash.png",
+            "resizeMode": "cover",
+            "backgroundColor": "#2B85F5"
+        },
+        "updates": {
+            "fallbackToCacheTimeout": 0
+        },
+        "assetBundlePatterns": ["**/*"],
+        "ios": {
+            "supportsTablet": true
+        },
+        "web": {
+            "favicon": "./assets/splash.png"
+        },
+        "android": {
+            "package": "com.anday2000.Looks",
+            "useNextNotificationsApi": true
+        }
     }
-  }
 }

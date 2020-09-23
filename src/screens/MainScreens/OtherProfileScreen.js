@@ -119,6 +119,7 @@ const OtherProfileScreen = ({ navigation, route }) => {
   const [currentTab, setCurrentTab] = useState(looks);
   const [isPrivate, setIsPrivate] = useState(false);
   const [subscribed, setSubscribed] = useState(false);
+  const [subText, setSubText] = useState('Sub')
   const isSubscribed = () => {
     userAPI
       .getUserInfo()
@@ -138,11 +139,14 @@ const OtherProfileScreen = ({ navigation, route }) => {
   const subscriptionHandler = () => {
     if (isPrivate) {
       userAPI.sendSubscribeRequestToPrivateUser(user.id);
+      setSubText('requested')
     } else {
-      console.log(user.id);
       userAPI
         .subscribeToUser(user.id)
-        .then(() => setSubscribed(true))
+        .then(() => {
+          setSubscribed(true)
+          setSubText('unsub')
+        })
         .catch(console.error);
     }
   };
@@ -209,7 +213,8 @@ const OtherProfileScreen = ({ navigation, route }) => {
           </View>
         </View>
         <Button
-          title={subscribed ? 'unsub' : 'sub'}
+          title={subText}
+          disabled={subText==="requested" ? true : false}
           style={{
             backgroundColor: subscribed ? '#D8D8D8' : '#0148FF',
             marginTop: wsize(20),

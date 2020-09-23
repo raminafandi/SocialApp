@@ -15,16 +15,6 @@ import LoadingScreen from '../OtherScreens/LoadingScreen';
 export default function FriendsScreen(navigation) {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
-  const clickHandler = () => {
-    navigation.navigate('');
-    // navigation.navigate('Friends', {
-    //   user: {
-    //     id: item.key,
-    //     photo: item.photoURL,
-    //     userName: item.userName,
-    //   },
-    // });
-  };
   useEffect(() => {
     getUserFriends().then((querySnapshot) => {
       const allData = [];
@@ -48,7 +38,15 @@ export default function FriendsScreen(navigation) {
             <View style={styles.postHeaderContainer}>
               <TouchableOpacity
                 style={styles.postHeaderFirst}
-                onPress={clickHandler}>
+                onPress={() => {
+                  navigation.navigation.navigate('OtherProfile', {
+                    user: {
+                      id: item.key,
+                      photo: item.photoURL,
+                      userName: item.userName,
+                    },
+                  });
+                }}>
                 <Image
                   source={{ uri: item.photoURL }}
                   style={{ height: 50, width: 50, borderRadius: 25 }}

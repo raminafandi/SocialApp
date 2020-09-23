@@ -28,8 +28,6 @@ const styles = StyleSheet.create({
 });
 
 const InfiniteHits = ({ hits, hasMore, refine, navigation }) => {
-  // console.log('infinite hits: ', hits,)
-  // console.log('infinite hasMore: ', hasMore)
   const itemContext = useContext(ItemContext);
   return (
     <FlatList

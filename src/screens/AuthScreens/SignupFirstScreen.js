@@ -49,6 +49,7 @@ const LoginScreen = ({ navigation }) => {
             style={styles.additionalButton}
             titleStyle={styles.titleStyle}
             onPress={facebookLogin}
+            disabled
           />
           <Button
             icon={
@@ -62,6 +63,7 @@ const LoginScreen = ({ navigation }) => {
             title="Continue with Google "
             style={styles.additionalButton}
             titleStyle={styles.titleStyle}
+            disabled
           />
         </View>
         <View>

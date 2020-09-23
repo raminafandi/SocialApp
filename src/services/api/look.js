@@ -9,10 +9,11 @@ const collectionName = 'packs';
 const addLook = ({ images, description, tags, coverImage }) => {
   const currentUser = firebase.auth().currentUser;
   return (coverImage
-    ? uploadImage(coverImage)
+    ? uploadImage(coverImage, 'lookCoverImages/')
     : new Promise((res) => res(''))
-  ).then((coverImageUrl) =>
-    db.collection(collectionName).add({
+  ).then((coverImageUrl) => {
+    console.log(coverImageUrl)
+    return db.collection(collectionName).add({
       images: images,
       description: description,
       tags: tags,
@@ -26,6 +27,8 @@ const addLook = ({ images, description, tags, coverImage }) => {
       likes: [],
       comments: [],
     }).then(doc => addLookIdToProfile(doc.id)).catch(console.log)
+
+  }
   ).catch(console.log);
 };
 
@@ -65,10 +68,10 @@ const dislikeLook = (lookId) => {
     .catch((err) => console.error(err));
 };
 
-const limit = 3;
+const limit = 5;
 const getLooksForHomeScreen = () => {
   return db.collection(collectionName)
-    .orderBy('date')
+    .orderBy('date', 'desc')
     .limit(limit).get().then(snap => {
       const allData = [];
       snap.forEach(doc => allData.push({ id: doc.id, ...doc.data() }))
@@ -77,7 +80,7 @@ const getLooksForHomeScreen = () => {
 };
 const getMoreLooksForHomeScreen = (lastVisible) => {
   return db.collection(collectionName)
-    .orderBy('date')
+    .orderBy('date', 'desc')
     .startAfter(lastVisible)
     .limit(limit).get().then(snap => {
       const allData = [];
@@ -87,4 +90,4 @@ const getMoreLooksForHomeScreen = (lastVisible) => {
 
 }
 
-export { addLook, getLooksForHomeScreen, getMoreLooksForHomeScreen,likeLook, getUserLooks, dislikeLook };
+export { addLook, getLooksForHomeScreen, getMoreLooksForHomeScreen, likeLook, getUserLooks, dislikeLook };

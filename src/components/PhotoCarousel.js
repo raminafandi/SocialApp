@@ -17,6 +17,7 @@ export default React.memo(function PhotoCarousel({
         sliderWidth={window.width}
         itemWidth={window.width}
         renderItem={({ item, index }) => {
+          console.log(item)
           return (
             <TouchableOpacity
               onPress={() => {

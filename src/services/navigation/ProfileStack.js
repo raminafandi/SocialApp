@@ -31,7 +31,8 @@ export default function ProfileStackScreen() {
         name="Profile"
         component={ProfileScreen}
         options={{
-          headerShown: false,
+          headerShown: true,
+          title: '',
         }}
       />
       <ProfileStack.Screen name="Item" component={ItemScreen} />

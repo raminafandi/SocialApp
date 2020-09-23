@@ -10,7 +10,6 @@ const uploadImage = async (img, path) => {
             .ref(path)
             .child(img.split('/').pop());
     return ref.put(blob).then(() => {
-        console.log('Image uploaded to the bucket!');
         return ref.getDownloadURL()
     })
 }

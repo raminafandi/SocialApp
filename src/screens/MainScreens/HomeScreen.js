@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from 'react';
-import { View, FlatList, Text } from 'react-native';
+import { View, FlatList, Text, StatusBar} from 'react-native';
 import LoadingScreen from '../OtherScreens/LoadingScreen';
 import * as lookApi from '../../services/api/look';
 import { getUserInfo } from '../../services/api/user';
@@ -13,6 +13,7 @@ const HomeScreen = React.memo(function ({ navigation }) {
   }
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
+    <StatusBar barStyle="light-content"/>
       <InfiniteScroll
         navigation={navigation}
         userInfo={userExtraInfo}
