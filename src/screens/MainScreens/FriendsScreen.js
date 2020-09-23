@@ -9,15 +9,24 @@ import {
   TouchableOpacity,
   SafeAreaView,
 } from 'react-native';
-import { getUserSubs } from '../../services/api/user';
+import { getUserFriends, getUserSubs } from '../../services/api/user';
 import { wsize, hsize } from '../../entities/constants';
 import LoadingScreen from '../OtherScreens/LoadingScreen';
-export default function SubsScreen(navigation) {
+export default function FriendsScreen(navigation) {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
-  console.log(navigation);
+  const clickHandler = () => {
+    navigation.navigate('');
+    // navigation.navigate('Friends', {
+    //   user: {
+    //     id: item.key,
+    //     photo: item.photoURL,
+    //     userName: item.userName,
+    //   },
+    // });
+  };
   useEffect(() => {
-    getUserSubs().then((querySnapshot) => {
+    getUserFriends().then((querySnapshot) => {
       const allData = [];
       querySnapshot.forEach((doc) => {
         allData.push({ key: doc.id, ...doc.data() });
@@ -39,15 +48,7 @@ export default function SubsScreen(navigation) {
             <View style={styles.postHeaderContainer}>
               <TouchableOpacity
                 style={styles.postHeaderFirst}
-                onPress={() => {
-                  navigation.navigate('OtherProfile', {
-                    user: {
-                      id: item.key,
-                      photo: item.photoURL,
-                      userName: item.userName,
-                    },
-                  });
-                }}>
+                onPress={clickHandler}>
                 <Image
                   source={{ uri: item.photoURL }}
                   style={{ height: 50, width: 50, borderRadius: 25 }}

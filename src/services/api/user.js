@@ -313,9 +313,10 @@ const getUserSubs = (userId = firebase.auth().currentUser.uid) => {
   });
 };
 const getUserFriends = (userId = firebase.auth().currentUser.uid) => {
+  const promises = [];
   return getUserInfo(userId).then((doc) => {
-    doc.data().friends.forEach((lookId) => {
-      promises.push(getUserInfo(lookId));
+    doc.data().friends.forEach((subId) => {
+      promises.push(getUserInfo(subId));
     });
     return Promise.all(promises);
   });

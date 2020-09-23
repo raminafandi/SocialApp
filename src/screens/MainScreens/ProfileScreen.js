@@ -220,14 +220,18 @@ const ProfileScreen = ({ navigation }) => {
         </View> */}
         <View style={styles.followersContainer}>
           <View style={styles.followersContainerLeft}>
-            <View style={styles.followers}>
+            <TouchableOpacity
+              style={styles.followers}
+              onPress={() => {
+                navigation.navigate('Friends');
+              }}>
               <FontText font="Rubik" style={styles.followersNumbers}>
                 {userExtraInfo.friends.length}
               </FontText>
               <FontText font="Rubik" style={styles.followersText}>
                 friends
               </FontText>
-            </View>
+            </TouchableOpacity>
             <TouchableOpacity
               style={styles.followers}
               onPress={() => {
