@@ -68,17 +68,12 @@ const LooksTab = React.memo(({ navigation }) => {
             ) : (
               <TouchableOpacity
                 onPress={() => {
-                  navigation.navigate('Look', {
-                    navigation: navigation,
-                    images: item.images,
-                  });
+                  navigation.navigate('AlternativeLook', item);
                 }}>
                 <PhotoGrid
                   items={item.images}
                   clickEventListener={(itemFromGrid) =>
-                    navigation.navigate('Look', {
-                      images: item.images,
-                    })
+                    navigation.navigate('AlternativeLook', item)
                   }
                   gridStyle={{ width: wsize(123), height: wsize(123) }}
                 />

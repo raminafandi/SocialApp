@@ -50,24 +50,27 @@ const LooksTab = React.memo(({ navigation, user }) => {
       refreshing={loading}
       renderItem={({ item }) => {
         return (
-        <TouchableOpacity
-          onPress={() => {
-            navigation.navigate('AlternativeLook', item);
-          }}>
-          {item.coverImage ? (
-            <Image
-              style={{ width: wsize(123), height: wsize(123) }}
-              source={{ uri: item.coverImage }}
-            />
-          ) : (
-            <PhotoGrid
-              items={item.images}
-              clickEventListener={(itemFromGrid) => navigation.navigate('Item', { fetchId: itemFromGrid.id })}
-              gridStyle={{ width: wsize(123), height: wsize(123) }}
-            />
-          )}
-        </TouchableOpacity>
-      )}}
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate('AlternativeLook', item);
+            }}>
+            {item.coverImage ? (
+              <Image
+                style={{ width: wsize(123), height: wsize(123) }}
+                source={{ uri: item.coverImage }}
+              />
+            ) : (
+              <PhotoGrid
+                items={item.images}
+                clickEventListener={(itemFromGrid) =>
+                  navigation.navigate('Item', { fetchId: itemFromGrid.id })
+                }
+                gridStyle={{ width: wsize(123), height: wsize(123) }}
+              />
+            )}
+          </TouchableOpacity>
+        );
+      }}
     />
   );
 });
@@ -239,7 +242,16 @@ const OtherProfileScreen = ({ navigation, route }) => {
       </View>
       <View>
         {isPrivate && !subscribed ? (
-          <Text>Private</Text>
+          <View
+            style={{
+              paddingTop: 20,
+              justifyContent: 'center',
+              alignContent: 'center',
+              alignItems: 'center',
+            }}>
+            <Text style={{ fontWeight: 'bold' }}>This Account is Private</Text>
+            <Text>Follow to see their photos and videos.</Text>
+          </View>
         ) : currentTab === looks ? (
           <LooksTab navigation={navigation} user={user} />
         ) : (
