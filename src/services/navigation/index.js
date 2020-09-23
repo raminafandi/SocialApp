@@ -4,6 +4,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { MaterialIcons, AntDesign, Ionicons } from '@expo/vector-icons';
 import HomeScreen from '../../screens/MainScreens/HomeScreen';
 import ItemScreen from '../../screens/MainScreens/ItemScreen';
+import LookScreen from '../../screens/MainScreens/Look/LookScreen';
 import OtherProfileScreen from '../../screens/MainScreens/OtherProfileScreen';
 import LoadingScreen from '../../screens/OtherScreens/LoadingScreen';
 import CommentsScreen from '../../screens/MainScreens/CommentsScreen';
@@ -26,6 +27,11 @@ const HomeStackScreen = () => (
     <HomeStack.Screen
       name="Item"
       component={ItemScreen}
+      options={{ title: '' }}
+    />
+    <HomeStack.Screen
+      name="Look"
+      component={LookScreen}
       options={{ title: '' }}
     />
     <HomeStack.Screen

@@ -66,13 +66,24 @@ const LooksTab = React.memo(({ navigation }) => {
                 source={{ uri: item.coverImage }}
               />
             ) : (
-              <PhotoGrid
-                items={item.images}
-                clickEventListener={(itemFromGrid) =>
-                  navigation.navigate('Item', { fetchId: itemFromGrid.id })
-                }
-                gridStyle={{ width: wsize(123), height: wsize(123) }}
-              />
+              <TouchableOpacity
+                onPress={() => {
+                  navigation.navigate('Look', {
+                    navigation: navigation,
+                    images: item.images,
+                  });
+                }}>
+                <PhotoGrid
+                  items={item.images}
+                  clickEventListener={(itemFromGrid) =>
+                    navigation.navigate('Look', {
+                      navigation: navigation,
+                      images: item.images,
+                    })
+                  }
+                  gridStyle={{ width: wsize(123), height: wsize(123) }}
+                />
+              </TouchableOpacity>
             )}
           </TouchableOpacity>
         );

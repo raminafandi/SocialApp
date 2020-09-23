@@ -83,6 +83,9 @@ const Post = React.memo(({ look, navigation, userInfo }) => {
   const clickEventListener = React.useCallback((item) => {
     navigation.navigate('Item', { fetchId: item.id });
   });
+  const clickEventListenerOverlay = React.useCallback((look, navigation) => {
+    navigation.navigate('Look', { navigation: navigation, images: look });
+  });
   const profileClickHandler = () => {
     navigation.navigate('OtherProfile', { user: look.author });
   };
@@ -96,6 +99,7 @@ const Post = React.memo(({ look, navigation, userInfo }) => {
     <PhotoGrid
       items={[...look.images]}
       clickEventListener={clickEventListener}
+      navigation={navigation}
     />
   );
   return (

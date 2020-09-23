@@ -12,7 +12,7 @@ import {
   Alert,
 } from 'react-native';
 import { wsize } from '../entities/constants';
-
+import LookScreen from '../screens/MainScreens/Look/LookScreen';
 /*this is a react native version of this code https://github.com/Expertizo/react-fb-image-grid*/
 
 export default React.memo(function ({
@@ -20,6 +20,7 @@ export default React.memo(function ({
   items,
   gridStyle,
   clickEventListener,
+  navigation,
 }) {
   const [countFrom, setCountFrom] = useState(5);
   const images = items ? items.map((item) => item.image) : propImages;
@@ -138,7 +139,13 @@ export default React.memo(function ({
   });
 
   const RenderCountOverlay = React.memo(
-    ({ more, images, countFrom, clickEventListener }) => {
+    ({
+      more,
+      images,
+      countFrom,
+      clickEventListener,
+      clickEventListenerOverlay,
+    }) => {
       const extra =
         images.length - (countFrom && countFrom > 5 ? 5 : countFrom);
       const conditionalRender =
@@ -147,8 +154,10 @@ export default React.memo(function ({
         <TouchableOpacity
           style={[styles.imageContent, styles.imageContent3]}
           onPress={() => {
-            // clickEventListener();
-            console.log('overlay')
+            navigation.navigate('Look', {
+              navigation: navigation,
+              images: items,
+            });
           }}>
           <Image
             style={styles.image}
@@ -156,7 +165,7 @@ export default React.memo(function ({
           />
           <View style={styles.overlayContent}>
             <View>
-              <Text style={styles.count}>+{extra+2}</Text>
+              <Text style={styles.count}>+{extra + 2}</Text>
             </View>
           </View>
         </TouchableOpacity>
