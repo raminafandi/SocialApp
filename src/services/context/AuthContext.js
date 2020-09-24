@@ -3,13 +3,13 @@ import { YellowBox, Alert } from 'react-native';
 import firebase from '../firebase/index';
 import { createUser, loginUser, logoutUser, getUserInfo } from '../api/user';
 import * as Facebook from 'expo-facebook';
-import { facebookSignIn } from '../api/user'
+import { facebookSignIn } from '../api/user';
 const AuthContext = React.createContext({
   authenticated: false,
-  login: () => { },
-  facebookLogin: () => { },
-  register: () => { },
-  logout: () => { },
+  login: () => {},
+  facebookLogin: () => {},
+  register: () => {},
+  logout: () => {},
   user: null,
   userExtraInfo: null,
   loading: false,
@@ -22,17 +22,14 @@ const AuthProvider = ({ children, ...props }) => {
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     YellowBox.ignoreWarnings(['Setting a timer']);
-    console.disableYellowBox = true;
     const subscriber = firebase.auth().onAuthStateChanged(onAuthStateChanged);
     // Facebook.initializeAsync('326392205351093')
     return subscriber; // unsubscribe on unmount
   }, []);
 
   useEffect(() => {
-    if (user)
-      getUserInfo().then(doc => setUserExtraInfo(doc.data()))
-
-  }, [user])
+    if (user) getUserInfo().then((doc) => setUserExtraInfo(doc.data()));
+  }, [user]);
   // Handle user state changes
   const onAuthStateChanged = (user) => {
     setUser(user);
@@ -50,7 +47,6 @@ const AuthProvider = ({ children, ...props }) => {
     setLoading(true);
     loginUser(email, password).finally(() => setLoading(false));
   };
-
 
   const logoutHandler = () => {
     setLoading(true);

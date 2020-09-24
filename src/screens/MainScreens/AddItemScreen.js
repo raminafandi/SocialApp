@@ -41,7 +41,8 @@ const AddItemScreen = ({ route, navigation }) => {
   navigation.setOptions({
     headerRight: () => (
       <TextButton
-        onPress={() => checkFields(name, brand, price, description, gender)}>
+        onPress={() => checkFields(name, brand, price, description, gender)}
+        style={{ marginRight: wsize(10) }}>
         Add Item
       </TextButton>
     ),
@@ -62,7 +63,7 @@ const AddItemScreen = ({ route, navigation }) => {
   const checkFields = (name, brand, price, description, gender) => {
     if (!name || !brand || !price || !description || !gender) {
       Alert.alert('All Fields should be filled. ', '');
-    }  else {
+    } else {
       saveHandler();
     }
   };

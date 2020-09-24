@@ -7,7 +7,7 @@ import {
   SafeAreaView,
   TouchableHighlight,
   TouchableOpacity,
-  TouchableWithoutFeedback
+  TouchableWithoutFeedback,
 } from 'react-native';
 import { wsize, hsize } from '../../entities/constants';
 import { Feather, Entypo } from '@expo/vector-icons';
@@ -68,19 +68,19 @@ const LooksTab = React.memo(({ navigation }) => {
                   source={{ uri: item.coverImage }}
                 />
               ) : (
-                  <TouchableOpacity
-                    onPress={() => {
-                      navigation.navigate('AlternativeLook', item);
-                    }}>
-                    <PhotoGrid
-                      items={item.images}
-                      clickEventListener={(itemFromGrid) =>
-                        navigation.navigate('AlternativeLook', item)
-                      }
-                      gridStyle={{ width: wsize(123), height: wsize(123) }}
-                    />
-                  </TouchableOpacity>
-                )}
+                <TouchableOpacity
+                  onPress={() => {
+                    navigation.navigate('AlternativeLook', item);
+                  }}>
+                  <PhotoGrid
+                    items={item.images}
+                    clickEventListener={(itemFromGrid) =>
+                      navigation.navigate('AlternativeLook', item)
+                    }
+                    gridStyle={{ width: wsize(123), height: wsize(123) }}
+                  />
+                </TouchableOpacity>
+              )}
             </TouchableWithoutFeedback>
           );
         }}
@@ -104,7 +104,6 @@ const ItemsTab = React.memo(function ({ navigation, user }) {
   }
   return (
     <ScrollView style={{ height: '40%' }}>
-
       <FlatList
         numColumns={3}
         data={data}
@@ -152,9 +151,9 @@ const BookmarsTab = React.memo(({ navigation, user }) => {
               </TouchableOpacity>
             );
           return (
-            <TouchableOpacity
+            <TouchableWithoutFeedback
               onPress={() => {
-                navigation.navigate('Look', item);
+                navigation.navigate('AlternativeLook', item);
               }}>
               {item.data.coverImage ? (
                 <Image
@@ -162,13 +161,20 @@ const BookmarsTab = React.memo(({ navigation, user }) => {
                   source={{ uri: item.data.coverImage }}
                 />
               ) : (
+                <TouchableOpacity
+                  onPress={() => {
+                    navigation.navigate('AlternativeLook', item.data);
+                  }}>
                   <PhotoGrid
                     items={item.data.images}
-                    clickEventListener={() => { }}
+                    clickEventListener={(itemFromGrid) =>
+                      navigation.navigate('AlternativeLook', item.data)
+                    }
                     gridStyle={{ width: wsize(123), height: wsize(123) }}
                   />
-                )}
-            </TouchableOpacity>
+                </TouchableOpacity>
+              )}
+            </TouchableWithoutFeedback>
           );
         }}
       />
@@ -189,10 +195,16 @@ const ProfileScreen = ({ navigation }) => {
 
   navigation.setOptions({
     headerRight: () => (
-      <TouchableOpacity onPress={() => {
-        setModalVisible(true);
-      }}>
-        <Entypo name="dots-three-horizontal" size={24} color="black" style={{ marginRight: 15 }} />
+      <TouchableOpacity
+        onPress={() => {
+          setModalVisible(true);
+        }}>
+        <Entypo
+          name="dots-three-horizontal"
+          size={24}
+          color="black"
+          style={{ marginRight: 15 }}
+        />
       </TouchableOpacity>
     ),
   });
@@ -260,9 +272,7 @@ const ProfileScreen = ({ navigation }) => {
             </TouchableOpacity>
           </View>
           <View style={styles.followersContainerRight}>
-            <TouchableOpacity
-              style={styles.followersLittleButton}
-            >
+            <TouchableOpacity style={styles.followersLittleButton}>
               <FontText font="Rubik" style={styles.lbuttonText}>
                 info
               </FontText>
@@ -291,6 +301,7 @@ const ProfileScreen = ({ navigation }) => {
             backgroundColor: '#D8D8D8',
             marginTop: wsize(20),
             width: wsize(327),
+            marginBottom: hsize(10),
           }}
           titleStyle={{
             color: '#444444',

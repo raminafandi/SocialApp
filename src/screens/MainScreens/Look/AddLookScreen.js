@@ -13,7 +13,7 @@ import {
 } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 
-import LoadingScreen from '../../OtherScreens/LoadingScreen'
+import LoadingScreen from '../../OtherScreens/LoadingScreen';
 import Button from '../../../components/Button';
 import { window, wsize, hsize } from '../../../entities/constants';
 import Tag from '../../../components/Tag';
@@ -23,6 +23,7 @@ import BackButton from './BackButton';
 import { ItemContext } from '../../../services/context/ItemContext';
 import * as ImagePicker from 'expo-image-picker';
 import { addLook } from '../../../services/api/look';
+import TextButton from '../../../components/TextButton';
 
 const RenderedPhotoGrid = memo(
   ({ selectedItems, clickEventListener, ...props }) => {
@@ -46,16 +47,16 @@ export default memo(({ route, navigation }) => {
     return <Tag title={item} key={index} />;
   });
   const submitHandler = () => {
-    setLoading(true)
+    setLoading(true);
     addLook({
       images: selectedItems,
       description: itemContext.text,
       tags: itemContext.tags,
       coverImage: itemContext.coverImage,
     }).then(() => {
-      Alert.alert('Completed!', 'Look has successfully added')
+      Alert.alert('Completed!', 'Look has successfully added');
       clearSelectedItems();
-      setLoading(false)
+      setLoading(false);
       navigation.goBack();
     });
   };
@@ -74,12 +75,11 @@ export default memo(({ route, navigation }) => {
       />
     ),
     headerRight: () => (
-      <ButtonReact
-        title="Publish"
-        onPress={() => {
-          checkFields(itemContext.text);
-        }}
-      />
+      <TextButton
+        onPress={() => checkFields(name, brand, price, description, gender)}
+        style={{ marginRight: wsize(10) }}>
+        Add Look
+      </TextButton>
     ),
   });
   const checkFields = (text) => {
@@ -89,7 +89,7 @@ export default memo(({ route, navigation }) => {
       submitHandler();
     }
   };
-  if (loading) return <LoadingScreen fullscreen />
+  if (loading) return <LoadingScreen fullscreen />;
   return (
     <View>
       <ScrollView style={styles.container}>

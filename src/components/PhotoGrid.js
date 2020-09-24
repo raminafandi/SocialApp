@@ -30,7 +30,11 @@ export default React.memo(function ({
         <TouchableOpacity
           style={[styles.imageContent, styles.imageContent1]}
           onPress={() => clickEventListener(items[0])}>
-          <Image style={styles.image} source={{ uri: images[0] }} resizeMode="contain"/>
+          <Image
+            style={styles.image}
+            source={{ uri: images[0] }}
+            resizeMode="contain"
+          />
         </TouchableOpacity>
       </View>
     );
@@ -213,8 +217,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   imageContent: {
-    borderWidth: 1,
-    borderColor: 'black',
     height: 120,
   },
   imageContent1: {
