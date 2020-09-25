@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   ScrollView,
   SafeAreaView,
-  Linking
+  Linking,
 } from 'react-native';
 
 import { window, wsize, hsize } from '../../entities/constants';
@@ -16,17 +16,20 @@ import TextButton from '../../components/TextButton';
 import Tag from '../../components/Tag';
 import { getItemById } from '../../services/api/item';
 import LoadingScreen from '../OtherScreens/LoadingScreen';
-import { bookmark, unmark ,getUserInfo } from '../../services/api/user'
+import { bookmark, unmark, getUserInfo } from '../../services/api/user';
 import { AuthContext } from '../../services/context/AuthContext';
 const iconSize = wsize(26);
 export default React.memo(({ route }) => {
   const [item, setItem] = useState(null);
   const [display, setDisplay] = useState('none');
-  const [userInfo, setUserInfo] = useState(null)
+  const [userInfo, setUserInfo] = useState(null);
   useEffect(() => {
     const { image, brand, title, info, tags, fetchId } = route.params;
-    getUserInfo().then(doc => setUserInfo(doc.data()))
-    if (fetchId) getItemById(fetchId).then(item => { setItem(item) });
+    getUserInfo().then((doc) => setUserInfo(doc.data()));
+    if (fetchId)
+      getItemById(fetchId).then((item) => {
+        setItem(item);
+      });
     else setItem({ image, brand, title, info, tags });
   }, []);
   if (!item || !userInfo) return <LoadingScreen fullscreen />;
@@ -69,10 +72,12 @@ export default React.memo(({ route }) => {
             <TouchableOpacity onPress={() => Linking.openURL(item.url)}>
               <Entypo name="link" size={iconSize} color="black" />
             </TouchableOpacity>
-            <BookmarkButton item={item} userInfo={userInfo}/>
+            <BookmarkButton item={item} userInfo={userInfo} />
           </View>
           <View style={{ flexDirection: 'row' }}>
-            {item.tags.map((tag, index) => (<Tag title={tag} key={index} />))}
+            {item.tags.map((tag, index) => (
+              <Tag title={tag} key={index} />
+            ))}
           </View>
         </View>
       </View>
@@ -80,19 +85,22 @@ export default React.memo(({ route }) => {
   );
 });
 
-
 const BookmarkButton = React.memo(({ item, userInfo }) => {
   const [marked, setMarked] = useState(false);
   const bookmarkHandler = () => {
     marked
       ? unmark(item.id, { image: item.image }, true)
-      : bookmark(item.id, {
-          image: item.image
-        },true);
+      : bookmark(
+          item.id,
+          {
+            image: item.image,
+          },
+          true
+        );
     setMarked(!marked);
   };
   useEffect(() => {
-    if (userInfo.saved?.find(save => save.id === item.id)) setMarked(true);
+    if (userInfo.saved?.find((save) => save.id === item.id)) setMarked(true);
   }, []);
   return (
     <TouchableOpacity onPress={bookmarkHandler}>
@@ -105,7 +113,6 @@ const BookmarkButton = React.memo(({ item, userInfo }) => {
     </TouchableOpacity>
   );
 });
-
 
 const styles = StyleSheet.create({
   container: {

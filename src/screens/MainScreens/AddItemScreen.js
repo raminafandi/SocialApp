@@ -35,7 +35,16 @@ const AddItemScreen = ({ route, navigation }) => {
   const [gender, setGender] = useState('men');
 
   const renderingTags = tags.map((item, index) => {
-    return <Tag title={item} key={index} />;
+    return (
+      <Tag
+        title={item}
+        key={index}
+        deleteButton={true}
+        deleteHandler={(tag) => {
+          setTags(tags.filter((itemw) => itemw !== item));
+        }}
+      />
+    );
   });
   const { img } = route.params;
   navigation.setOptions({
@@ -159,7 +168,7 @@ const AddItemScreen = ({ route, navigation }) => {
 const styles = StyleSheet.create({
   container: {
     // flex: 1,
-    paddingTop: hsize(24),
+    paddingHorizontal: hsize(24),
   },
   postContainer: {
     justifyContent: 'center',

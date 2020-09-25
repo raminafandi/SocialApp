@@ -44,7 +44,18 @@ export default memo(({ route, navigation }) => {
   const clearSelectedItems = itemContext.clearSelectedItems;
   const selectedItems = itemContext.selectedItems;
   const renderingTags = itemContext.tags.map((item, index) => {
-    return <Tag title={item} key={index} />;
+    return (
+      <Tag
+        title={item}
+        key={index}
+        deleteButton={true}
+        deleteHandler={() => {
+          itemContext.setTags(
+            itemContext.tags.filter((itemw) => itemw !== item)
+          );
+        }}
+      />
+    );
   });
   const submitHandler = () => {
     setLoading(true);
