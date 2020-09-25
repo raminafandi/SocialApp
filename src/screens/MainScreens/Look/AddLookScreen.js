@@ -87,7 +87,10 @@ export default memo(({ route, navigation }) => {
     ),
     headerRight: () => (
       <TextButton
-        onPress={() => checkFields(name, brand, price, description, gender)}
+        onPress={() => {
+          checkFields(itemContext.text);
+          navigation.navigate('Home');
+        }}
         style={{ marginRight: wsize(10) }}>
         Add Look
       </TextButton>

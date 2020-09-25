@@ -58,6 +58,7 @@ export default function ProfileStackScreen() {
               component={AddLookScreen}
               options={{ title: '' }}
             />
+
             <AddPostStack.Screen name="Item" component={ItemScreen} />
             <AddPostStack.Screen name="Look" component={LookScreen} />
           </AddPostStack.Navigator>
