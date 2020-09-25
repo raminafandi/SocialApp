@@ -122,6 +122,12 @@ export default memo(({ route, navigation }) => {
               setTag(text);
             }}
             maxLength={30}
+            onSubmitEditing={() => {
+              if (tag !== '') {
+                itemContext.setTags([...itemContext.tags, tag]);
+                setTag('');
+              }
+            }}
             style={styles.tagsInput}
           />
           <TouchableOpacity

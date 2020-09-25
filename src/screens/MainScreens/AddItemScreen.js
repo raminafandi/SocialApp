@@ -40,7 +40,7 @@ const AddItemScreen = ({ route, navigation }) => {
         title={item}
         key={index}
         deleteButton={true}
-        deleteHandler={(tag) => {
+        deleteHandler={() => {
           setTags(tags.filter((itemw) => itemw !== item));
         }}
       />
@@ -142,6 +142,12 @@ const AddItemScreen = ({ route, navigation }) => {
               value={tag}
               onChangeText={(text) => {
                 setTag(text);
+              }}
+              onSubmitEditing={() => {
+                if (tag) {
+                  setTags([...tags, tag]);
+                  setTag('');
+                }
               }}
               maxLength={30}
               style={styles.tagsInput}
