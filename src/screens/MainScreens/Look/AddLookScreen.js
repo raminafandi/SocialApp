@@ -24,13 +24,15 @@ import { ItemContext } from '../../../services/context/ItemContext';
 import * as ImagePicker from 'expo-image-picker';
 import { addLook } from '../../../services/api/look';
 import TextButton from '../../../components/TextButton';
+// import navigation from '../../../services/navigation';
 
 const RenderedPhotoGrid = memo(
-  ({ selectedItems, clickEventListener, ...props }) => {
+  ({ selectedItems, clickEventListener, navigation, ...props }) => {
     return (
       <PhotoGrid
-        images={selectedItems.map((item) => item.image)}
+        items={selectedItems}
         clickEventListener={clickEventListener}
+        navigation={navigation}
         {...props}
       />
     );
@@ -115,7 +117,12 @@ export default memo(({ route, navigation }) => {
           maxLength={200}
         />
         <View style={styles.photoGrid}>
-          {<RenderedPhotoGrid selectedItems={selectedItems} />}
+          {
+            <RenderedPhotoGrid
+              selectedItems={selectedItems}
+              navigation={navigation}
+            />
+          }
         </View>
         <View style={styles.inputContainer}>
           <TextInput

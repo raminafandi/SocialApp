@@ -163,6 +163,7 @@ export default React.memo(function ({
         <TouchableOpacity
           style={[styles.imageContent, styles.imageContent3]}
           onPress={() => {
+            console.log(navigation);
             navigation.navigate('Look', {
               images: items,
             });
@@ -245,7 +246,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   count: {
-    fontSize: 50,
+    fontSize: 30,
     color: '#ffffff',
     fontWeight: 'bold',
     textShadowColor: 'rgba(0, 0, 139, 1)',
