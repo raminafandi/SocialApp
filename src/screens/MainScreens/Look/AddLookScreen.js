@@ -24,7 +24,6 @@ import { ItemContext } from '../../../services/context/ItemContext';
 import * as ImagePicker from 'expo-image-picker';
 import { addLook } from '../../../services/api/look';
 import TextButton from '../../../components/TextButton';
-// import navigation from '../../../services/navigation';
 
 const RenderedPhotoGrid = memo(
   ({ selectedItems, clickEventListener, navigation, ...props }) => {

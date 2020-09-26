@@ -1,8 +1,14 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, FlatList, Image } from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  FlatList,
+  Image,
+  TouchableWithoutFeedback,
+} from 'react-native';
 import { window, wsize, hsize } from '../entities/constants';
 import Carousel, { Pagination } from 'react-native-snap-carousel';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 
 export default React.memo(function PhotoCarousel({
   data,
@@ -18,12 +24,16 @@ export default React.memo(function PhotoCarousel({
         itemWidth={window.width}
         renderItem={({ item, index }) => {
           return (
-            <TouchableOpacity
+            <TouchableWithoutFeedback
               onPress={() => {
                 index !== 0 && clickEventListener(item);
               }}>
-              <Image source={{ uri: item.image }} style={styles.img} resizeMode="contain"/>
-            </TouchableOpacity>
+              <Image
+                source={{ uri: item.image }}
+                style={styles.img}
+                resizeMode="contain"
+              />
+            </TouchableWithoutFeedback>
           );
         }}
         onSnapToItem={(index) => {

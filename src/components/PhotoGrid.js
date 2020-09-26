@@ -6,6 +6,7 @@ import {
   FlatList,
   Dimensions,
   TouchableOpacity,
+  TouchableWithoutFeedback,
   Image,
   Modal,
   ScrollView,
@@ -27,15 +28,15 @@ export default React.memo(function ({
   const RenderOne = React.memo(({ images, clickEventListener }) => {
     return (
       <View style={styles.row}>
-        <TouchableOpacity
-          style={[styles.imageContent, styles.imageContent1]}
-          onPress={() => clickEventListener(items[0])}>
-          <Image
-            style={styles.image}
-            source={{ uri: images[0] }}
-            resizeMode="contain"
-          />
-        </TouchableOpacity>
+        <TouchableWithoutFeedback onPress={() => clickEventListener(items[0])}>
+          <View style={[styles.imageContent, styles.imageContent1]}>
+            <Image
+              style={styles.image}
+              source={{ uri: images[0] }}
+              resizeMode="contain"
+            />
+          </View>
+        </TouchableWithoutFeedback>
       </View>
     );
   });
@@ -47,30 +48,32 @@ export default React.memo(function ({
 
     return (
       <View style={styles.row}>
-        <TouchableOpacity
-          style={[styles.imageContent, styles.imageContent2]}
+        <TouchableWithoutFeedback
           onPress={() => {
             items &&
               clickEventListener(conditionalRender ? items[1] : items[0]);
           }}>
-          <Image
-            style={styles.image}
-            source={{ uri: conditionalRender ? images[1] : images[0] }}
-            resizeMode="contain"
-          />
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={[styles.imageContent, styles.imageContent2]}
+          <View style={[styles.imageContent, styles.imageContent2]}>
+            <Image
+              style={styles.image}
+              source={{ uri: conditionalRender ? images[1] : images[0] }}
+              resizeMode="contain"
+            />
+          </View>
+        </TouchableWithoutFeedback>
+        <TouchableWithoutFeedback
           onPress={() => {
             items &&
               clickEventListener(conditionalRender ? items[2] : items[1]);
           }}>
-          <Image
-            style={styles.image}
-            source={{ uri: conditionalRender ? images[2] : images[1] }}
-            resizeMode="contain"
-          />
-        </TouchableOpacity>
+          <View style={[styles.imageContent, styles.imageContent2]}>
+            <Image
+              style={styles.image}
+              source={{ uri: conditionalRender ? images[2] : images[1] }}
+              resizeMode="contain"
+            />
+          </View>
+        </TouchableWithoutFeedback>
       </View>
     );
   });
@@ -101,30 +104,32 @@ export default React.memo(function ({
 
       return (
         <View style={styles.row}>
-          <TouchableOpacity
-            style={[styles.imageContent, styles.imageContent3]}
+          <TouchableWithoutFeedback
             onPress={() => {
               items &&
                 clickEventListener(conditionalRender ? items[1] : items[2]);
             }}>
-            <Image
-              style={styles.image}
-              source={{ uri: conditionalRender ? images[1] : images[2] }}
-              resizeMode="contain"
-            />
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={[styles.imageContent, styles.imageContent3]}
+            <View style={[styles.imageContent, styles.imageContent3]}>
+              <Image
+                style={styles.image}
+                source={{ uri: conditionalRender ? images[1] : images[2] }}
+                resizeMode="contain"
+              />
+            </View>
+          </TouchableWithoutFeedback>
+          <TouchableWithoutFeedback
             onPress={() => {
               items &&
                 clickEventListener(conditionalRender ? items[2] : items[3]);
             }}>
-            <Image
-              style={styles.image}
-              source={{ uri: conditionalRender ? images[2] : images[3] }}
-              resizeMode="contain"
-            />
-          </TouchableOpacity>
+            <View style={[styles.imageContent, styles.imageContent3]}>
+              <Image
+                style={styles.image}
+                source={{ uri: conditionalRender ? images[2] : images[3] }}
+                resizeMode="contain"
+              />
+            </View>
+          </TouchableWithoutFeedback>
           {overlay}
         </View>
       );
@@ -133,17 +138,18 @@ export default React.memo(function ({
 
   const RenderOverlay = React.memo(({ images, clickEventListener }) => {
     return (
-      <TouchableOpacity
-        style={[styles.imageContent, styles.imageContent3]}
+      <TouchableWithoutFeedback
         onPress={() => {
           clickEventListener();
         }}>
-        <Image
-          style={styles.image}
-          source={{ uri: images[images.length - 1] }}
-          resizeMode="contain"
-        />
-      </TouchableOpacity>
+        <View style={[styles.imageContent, styles.imageContent3]}>
+          <Image
+            style={styles.image}
+            source={{ uri: images[images.length - 1] }}
+            resizeMode="contain"
+          />
+        </View>
+      </TouchableWithoutFeedback>
     );
   });
 
@@ -160,25 +166,26 @@ export default React.memo(function ({
       const conditionalRender =
         images.length == 4 || (images.length > +countFrom && +countFrom == 4);
       return (
-        <TouchableOpacity
-          style={[styles.imageContent, styles.imageContent3]}
+        <TouchableWithoutFeedback
           onPress={() => {
             console.log(navigation);
             navigation.navigate('Look', {
               images: items,
             });
           }}>
-          <Image
-            style={styles.image}
-            source={{ uri: conditionalRender ? images[3] : images[4] }}
-            resizeMode="contain"
-          />
-          <View style={styles.overlayContent}>
-            <View>
-              <Text style={styles.count}>+{extra + 2}</Text>
+          <View style={[styles.imageContent, styles.imageContent3]}>
+            <Image
+              style={styles.image}
+              source={{ uri: conditionalRender ? images[3] : images[4] }}
+              resizeMode="contain"
+            />
+            <View style={styles.overlayContent}>
+              <View>
+                <Text style={styles.count}>+{extra + 2}</Text>
+              </View>
             </View>
           </View>
-        </TouchableOpacity>
+        </TouchableWithoutFeedback>
       );
     }
   );
