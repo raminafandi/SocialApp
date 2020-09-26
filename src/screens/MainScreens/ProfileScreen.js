@@ -150,6 +150,7 @@ const BookmarsTab = React.memo(({ navigation, user }) => {
                 />
               </TouchableOpacity>
             );
+          console.log(item)
           return (
             <TouchableWithoutFeedback
               onPress={() => {

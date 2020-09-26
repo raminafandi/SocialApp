@@ -55,10 +55,9 @@ const BookmarkButton = React.memo(({ look, userInfo }) => {
   const [marked, setMarked] = useState(false);
   const bookmarkHandler = () => {
     marked
-      ? unmark(look.id, { coverImage: look?.coverImage, images: look.images })
+      ? unmark(look.id, { ...look })
       : bookmark(look.id, {
-          coverImage: look?.coverImage,
-          images: look.images,
+          ...look
         });
     setMarked(!marked);
   };
@@ -79,7 +78,7 @@ const BookmarkButton = React.memo(({ look, userInfo }) => {
 
 const Post = React.memo(({ look, navigation, userInfo }) => {
   const currentUser = firebase.auth().currentUser;
-  const [numOfLikes, setNumOfLikes] = useState(look.likes.length);
+  const [numOfLikes, setNumOfLikes] = useState(look.likes?.length);
   const clickEventListener = React.useCallback((item) => {
     navigation.navigate('Item', { fetchId: item.id });
   });
