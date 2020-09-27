@@ -57,7 +57,7 @@ const BookmarkButton = React.memo(({ look, userInfo }) => {
     marked
       ? unmark(look.id, { ...look })
       : bookmark(look.id, {
-          ...look
+          ...look,
         });
     setMarked(!marked);
   };

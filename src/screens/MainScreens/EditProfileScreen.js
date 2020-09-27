@@ -48,9 +48,24 @@ const EditProfileScreen = ({ route, navigation }) => {
       email,
       phone,
       gender,
-    }).then(() => {
-      navigation.navigate('Profile');
-    }).finally(() => setLoading(false));
+    })
+      .then(() => {
+        console.log(
+          user,
+          name,
+          photoURL,
+          userName,
+          status,
+          city,
+          link,
+          description,
+          email,
+          phone,
+          gender
+        );
+        navigation.navigate('Profile');
+      })
+      .finally(() => setLoading(false));
   };
   navigation.setOptions({
     headerRight: () => <TextButton onPress={submitHandler}>Save</TextButton>,
@@ -73,7 +88,9 @@ const EditProfileScreen = ({ route, navigation }) => {
               uri: photoURL,
             }}
           />
-          <TextButton onPress={changeProfilePicture}>Change profile photo</TextButton>
+          <TextButton onPress={changeProfilePicture}>
+            Change profile photo
+          </TextButton>
         </View>
         <View style={styles.aboutPageContainer}>
           <View style={styles.lineContainer}>
