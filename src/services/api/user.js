@@ -280,7 +280,7 @@ const updateUserInfo = async (
       },
       { merge: true }
     )
-    .catch(console.log);
+    .catch(console.error);
 };
 
 const bookmark = (id, data, item) => {

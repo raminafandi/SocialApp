@@ -150,7 +150,6 @@ const BookmarsTab = React.memo(({ navigation, user }) => {
                 />
               </TouchableOpacity>
             );
-          console.log(item);
           return (
             <TouchableWithoutFeedback
               onPress={() => {
@@ -285,7 +284,7 @@ const ProfileScreen = ({ navigation }) => {
           onPress={() => {
             navigation.navigate('EditProfile', {
               userExtraInfo: {
-                name: userExtraInfo.name,
+                fullName: userExtraInfo.fullName,
                 photoURL: userExtraInfo.photoURL,
                 userName: userExtraInfo.userName,
                 status: userExtraInfo.status,
