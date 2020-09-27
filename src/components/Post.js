@@ -17,7 +17,9 @@ import firebase from '../services/firebase/index';
 import CommentForm from './CommentForm';
 import * as lookApi from '../services/api/look';
 import { bookmark, unmark } from '../services/api/user';
-import FontText from '../components/FontText';
+import FontText from './FontText';
+import Slider from './Slider';
+
 const iconSize = wsize(28);
 
 const HeartButton = React.memo(({ look, updateLikes }) => {
@@ -90,9 +92,11 @@ const Post = React.memo(({ look, navigation, userInfo }) => {
   };
 
   const carouselOrGrid = look.coverImage ? (
-    <PhotoCarousel
-      data={[{ image: look.coverImage }, ...look.images]}
+    <Slider
+      coverImage={look.coverImage}
+      items={[...look.images]}
       clickEventListener={clickEventListener}
+      navigation={navigation}
     />
   ) : (
     <PhotoGrid
@@ -113,7 +117,6 @@ const Post = React.memo(({ look, navigation, userInfo }) => {
             }}
             style={styles.postHeaderIcon}
           />
-
           <FontText font="MYRIADPRO" style={styles.postHeaderProfileName}>
             {look.author.userName}
           </FontText>
@@ -132,7 +135,6 @@ const Post = React.memo(({ look, navigation, userInfo }) => {
             look={look}
             updateLikes={(val) => setNumOfLikes(numOfLikes + val)}
           />
-
           <TouchableOpacity
             onPress={() => {
               navigation.navigate('Comments', {

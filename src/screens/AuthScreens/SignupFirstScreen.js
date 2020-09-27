@@ -12,11 +12,12 @@ import Logo from '../../components/Logo';
 import Button from '../../components/Button';
 import Input from '../../components/Input';
 import { Entypo, Ionicons, AntDesign } from '@expo/vector-icons';
-import { AuthContext } from '../../services/context/AuthContext'
+import { AuthContext } from '../../services/context/AuthContext';
+import * as GoogleSignIn from 'expo-google-sign-in';
 
 const LoginScreen = ({ navigation }) => {
   const iconSize = wsize(24);
-  const { facebookLogin } = useContext(AuthContext)
+  const { facebookLogin } = useContext(AuthContext);
   return (
     <>
       <Logo />
