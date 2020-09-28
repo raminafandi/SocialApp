@@ -19,3 +19,4 @@ const AlternativeLookScreen = React.memo(function ({ navigation, route }) {
   return <LoadingScreen />;
 });
 export default AlternativeLookScreen;
+ 
