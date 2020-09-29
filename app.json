@@ -16,7 +16,12 @@
     "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.anday2000.Looks"
+      "bundleIdentifier": "com.anday2000.Looks",
+      "config": {
+        "googleSignIn": {
+          "reservedClientId": "411631689322-7ihe009nfabehldgftlj6sa84mqidtuf.apps.googleusercontent.com"
+        }
+      }
     },
     "web": {
       "favicon": "./assets/splash.png"
