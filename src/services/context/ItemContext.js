@@ -3,6 +3,7 @@ import React, { useState, useEffect, createContext } from 'react';
 const ItemContext = createContext({
     selectedItems: [],
     selectItem: () => { },
+    dragSelectedItems: () => { },
     clearSelectedItems: () => { },
     coverImage: '',
     setCoverImage: () => { },
@@ -29,6 +30,7 @@ const ItemProvider = ({ children, ...props }) => {
             value={{
                 selectItem: selectItem,
                 selectedItems: selectedItems,
+                dragSelectedItems: setSelectedItems,
                 clearSelectedItems: clearSelectedItems,
                 tags: tags,
                 coverImage: coverImage,

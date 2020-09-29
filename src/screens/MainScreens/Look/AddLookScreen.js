@@ -38,7 +38,7 @@ const RenderedPhotoGrid = memo(
   }
 );
 
-export default memo(({ route, navigation }) => {
+export default React.memo(({ route, navigation }) => {
   const [tag, setTag] = useState('');
   const [loading, setLoading] = useState(false);
   const itemContext = useContext(ItemContext);
