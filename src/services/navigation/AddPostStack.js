@@ -9,6 +9,7 @@ import ItemScreen from '../../screens/MainScreens/ItemScreen';
 import AlbumScreen from '../../screens/MainScreens/Look/AlbumScreen';
 import AddLookScreen from '../../screens/MainScreens/Look/AddLookScreen';
 import LookScreen from '../../screens/MainScreens/Look/LookScreen';
+import DraggableGrid from '../../screens/MainScreens/Look/DraggableGrid';
 import { ItemProvider, ItemContext } from '../context/ItemContext';
 import { useNavigation } from '@react-navigation/native';
 const AddPostStack = createStackNavigator();
@@ -58,7 +59,11 @@ export default function ProfileStackScreen() {
               component={AddLookScreen}
               options={{ title: '' }}
             />
-
+            <AddPostStack.Screen
+              name="DraggableGrid"
+              component={DraggableGrid}
+              options={{ title: '' }}
+            />
             <AddPostStack.Screen name="Item" component={ItemScreen} />
             <AddPostStack.Screen name="Look" component={LookScreen} />
           </AddPostStack.Navigator>

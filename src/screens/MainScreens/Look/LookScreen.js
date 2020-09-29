@@ -19,12 +19,12 @@ import {
 import { window, wsize, hsize } from '../../../entities/constants';
 
 export default React.memo(({ navigation, route }) => {
-  const { images } = route.params;
+  const { items } = route.params;
   return (
     <View style={styles.container}>
       <FlatList
         numColumns={3}
-        data={images}
+        data={items}
         style={styles.list}
         renderItem={({ item }) => {
           return (

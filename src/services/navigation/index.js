@@ -14,6 +14,7 @@ import ProfileStackScreen from './ProfileStack';
 import AuthFlow from './AuthStack';
 import AddPostStack from './AddPostStack';
 import { createStackNavigator } from '@react-navigation/stack';
+import LookScreen from '../../screens/MainScreens/Look/LookScreen';
 
 const Tab = createBottomTabNavigator();
 const HomeStack = createStackNavigator();
@@ -31,6 +32,11 @@ const HomeStackScreen = () => (
     />
     <HomeStack.Screen
       name="Look"
+      component={LookScreen}
+      options={{ title: '' }}
+    />
+    <HomeStack.Screen
+      name="DraggableGrid"
       component={DraggableGrid}
       options={{ title: '' }}
     />

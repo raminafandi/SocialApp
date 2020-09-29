@@ -161,6 +161,14 @@ export default React.memo(({ route, navigation }) => {
             disabled={itemContext.selectedItems.length === 10 ? true : false}
           />
           <Button
+            title="edit grid"
+            style={[styles.buttonStyle, { backgroundColor: '#0096c7' }]}
+            titleStyle={[styles.buttonTitleStyle]}
+            onPress={() => {
+              navigation.navigate('DraggableGrid', { items: selectedItems });
+            }}
+          />
+          <Button
             title="add cover"
             style={[styles.buttonStyle, { backgroundColor: '#0148FF' }]}
             titleStyle={[styles.buttonTitleStyle]}
