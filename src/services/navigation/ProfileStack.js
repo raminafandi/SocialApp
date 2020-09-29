@@ -19,6 +19,16 @@ import AddFriendScreen from '../../screens/MainScreens/AddFriendScreen';
 import FriendsScreen from '../../screens/MainScreens/FriendsScreen';
 import CommentsScreen from '../../screens/MainScreens/CommentsScreen';
 const ProfileStack = createStackNavigator();
+// const AlternativeLookStack = createStackNavigator();
+// const AlternativeLookStackScreen = () => (
+//   <AlternativeLookStack.Navigator>
+//     <AlternativeLookStack.Screen name="Comment" component={CommentsScreen} />
+//     <AlternativeLookStack.Screen
+//       name="AlternativeLook"
+//       component={AlternativeLookScreen}
+//     />
+//   </AlternativeLookStack.Navigator>
+// )
 export default function ProfileStackScreen() {
   return (
     <ProfileStack.Navigator

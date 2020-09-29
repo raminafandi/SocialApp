@@ -168,7 +168,6 @@ export default React.memo(function ({
       return (
         <TouchableWithoutFeedback
           onPress={() => {
-            console.log(navigation);
             navigation.navigate('Look', {
               images: items,
             });

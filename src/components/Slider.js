@@ -9,7 +9,6 @@ export default React.memo(function ({
   navigation,
   clickEventListener,
 }) {
-  console.log(items);
   return (
     <View>
       <ScrollView

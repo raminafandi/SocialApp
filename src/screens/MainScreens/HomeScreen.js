@@ -13,7 +13,7 @@ const HomeScreen = React.memo(function ({ navigation }) {
   }
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: 'white', paddingTop: 10 }}>
-    <StatusBar barStyle="light-content"/>
+    <StatusBar barStyle="dark-content"/>
       <InfiniteScroll
         navigation={navigation}
         userInfo={userExtraInfo}

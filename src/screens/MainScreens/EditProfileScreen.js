@@ -50,25 +50,12 @@ const EditProfileScreen = ({ route, navigation }) => {
       gender,
     })
       .then(() => {
-        console.log(
-          user,
-          name,
-          photoURL,
-          userName,
-          status,
-          city,
-          link,
-          description,
-          email,
-          phone,
-          gender
-        );
         navigation.navigate('Profile');
       })
       .finally(() => setLoading(false));
   };
   navigation.setOptions({
-    headerRight: () => <TextButton onPress={submitHandler}>Save</TextButton>,
+    headerRight: () => <TextButton style={{ marginRight: wsize(10) }} onPress={submitHandler}>Save</TextButton>,
   });
   const changeProfilePicture = async () => {
     const res = await launchImageLibraryAsync();

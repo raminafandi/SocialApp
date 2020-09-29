@@ -12,7 +12,6 @@ const addLook = ({ images, description, tags, coverImage }) => {
     ? uploadImage(coverImage, 'lookCoverImages/')
     : new Promise((res) => res(''))
   ).then((coverImageUrl) => {
-    console.log(coverImageUrl)
     return db.collection(collectionName).add({
       images: images,
       description: description,

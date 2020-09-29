@@ -59,8 +59,8 @@ const BookmarkButton = React.memo(({ look, userInfo }) => {
     marked
       ? unmark(look.id, { ...look })
       : bookmark(look.id, {
-          ...look,
-        });
+        ...look,
+      });
     setMarked(!marked);
   };
   useEffect(() => {
@@ -90,7 +90,6 @@ const Post = React.memo(({ look, navigation, userInfo }) => {
   const profileClickHandler = () => {
     navigation.navigate('OtherProfile', { user: look.author });
   };
-
   const carouselOrGrid = look.coverImage ? (
     <Slider
       coverImage={look.coverImage}
@@ -98,13 +97,14 @@ const Post = React.memo(({ look, navigation, userInfo }) => {
       clickEventListener={clickEventListener}
       navigation={navigation}
     />
-  ) : (
-    <PhotoGrid
-      items={[...look.images]}
-      clickEventListener={clickEventListener}
-      navigation={navigation}
-    />
-  );
+  )
+    : (
+      <PhotoGrid
+        items={[...look.images]}
+        clickEventListener={clickEventListener}
+        navigation={navigation}
+      />
+    );
   return (
     <View style={styles.postContainer}>
       <View style={styles.postHeaderContainer}>

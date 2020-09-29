@@ -153,7 +153,7 @@ const BookmarsTab = React.memo(({ navigation, user }) => {
           return (
             <TouchableWithoutFeedback
               onPress={() => {
-                navigation.navigate('AlternativeLook', item);
+                navigation.navigate('AlternativeLook', item.data);
               }}>
               {item.data.coverImage ? (
                 <Image
