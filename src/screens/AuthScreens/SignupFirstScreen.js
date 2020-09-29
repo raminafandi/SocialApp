@@ -5,6 +5,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   SafeAreaView,
+  Image,
 } from 'react-native';
 import TextButton from '../../components/TextButton';
 import { window, wsize, hsize } from '../../entities/constants';
@@ -183,20 +184,30 @@ export default class LoginScreen extends Component {
               titleStyle={styles.titleStyle}
               disabled
             />
-            <Button
-              icon={
+            <TouchableOpacity
+              style={styles.googleButton}
+              onPress={this.signInWithGoogle}>
+              <Image
+                source={require('../../../assets/google-logo-9808.png')}
+                style={{
+                  width: wsize(24),
+                  height: wsize(24),
+                  marginLeft: wsize(15),
+                  marginRight: wsize(20),
+                }}
+              />
+              <View style={{ flexDirection: 'row' }}>
+                <Text adjustsFontSizeToFit style={styles.googleButtonText}>
+                  Continue with Google
+                </Text>
                 <AntDesign
                   name="google"
                   size={iconSize}
-                  color="black"
+                  color="white"
                   style={styles.iconStyle}
                 />
-              }
-              title="Continue with Google "
-              onPress={this.signInWithGoogle}
-              style={styles.additionalButton}
-              titleStyle={styles.titleStyle}
-            />
+              </View>
+            </TouchableOpacity>
           </View>
           <View>
             <View style={styles.termsView}>
@@ -267,6 +278,29 @@ const styles = StyleSheet.create({
     // fontFamily: 'Rubik',
     fontWeight: '500',
     fontSize: wsize(15),
+  },
+  googleButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    alignSelf: 'center',
+    width: wsize(293),
+    height: hsize(56),
+    backgroundColor: '#FCF9FC',
+    // marginTop: hsize(13),
+    borderRadius: 6,
+    borderWidth: 1,
+    borderColor: '#DADBDA',
+    justifyContent: 'flex-start',
+    backgroundColor: '#FCF9FC',
+    borderColor: '#DADBDA',
+    borderWidth: 1,
+    borderRadius: 6,
+  },
+  googleButtonText: {
+    fontSize: wsize(15),
+    // lineHeight: wsize(18),
+    letterSpacing: 0.6,
+    color: '#313131',
   },
 });
 ``;
