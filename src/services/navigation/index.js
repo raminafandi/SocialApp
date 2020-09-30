@@ -7,17 +7,35 @@ import ItemScreen from '../../screens/MainScreens/ItemScreen';
 import DraggableGrid from '../../screens/MainScreens/Look/DraggableGrid';
 import OtherProfileScreen from '../../screens/MainScreens/OtherProfileScreen';
 import LoadingScreen from '../../screens/OtherScreens/LoadingScreen';
-import CommentsScreen from '../../screens/MainScreens/CommentsScreen';
 import { AuthContext, AuthProvider } from '../context/AuthContext';
-
+import LookScreen from '../../screens/MainScreens/Look/LookScreen';
 import ProfileStackScreen from './ProfileStack';
 import AuthFlow from './AuthStack';
 import AddPostStack from './AddPostStack';
+import CommentsScreen from '../../screens/MainScreens/CommentsScreen';
+
 import { createStackNavigator } from '@react-navigation/stack';
-import LookScreen from '../../screens/MainScreens/Look/LookScreen';
 
 const Tab = createBottomTabNavigator();
 const HomeStack = createStackNavigator();
+const HomeLookStack = createStackNavigator();
+
+const HomeLookStackScreen = () => {
+  return (
+    <HomeLookStack.Navigator>
+      <HomeLookStack.Screen
+        name="Look"
+        component={LookScreen}
+        options={{ title: '' }}
+      />
+      <HomeLookStack.Screen
+        name="Comments"
+        component={CommentsScreen}
+        options={{ title: '' }}
+      />
+    </HomeLookStack.Navigator>
+  );
+};
 const HomeStackScreen = () => (
   <HomeStack.Navigator>
     <HomeStack.Screen
@@ -31,18 +49,13 @@ const HomeStackScreen = () => (
       options={{ title: '' }}
     />
     <HomeStack.Screen
-      name="Look"
-      component={LookScreen}
-      options={{ title: '' }}
-    />
-    <HomeStack.Screen
       name="DraggableGrid"
       component={DraggableGrid}
       options={{ title: '' }}
     />
     <HomeStack.Screen
-      name="Comments"
-      component={CommentsScreen}
+      name="Look"
+      component={HomeLookStackScreen}
       options={{ title: '' }}
     />
     <HomeStack.Screen

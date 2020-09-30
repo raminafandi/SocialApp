@@ -55,6 +55,7 @@ const CommentsScreen = ({ navigation, route }) => {
       },
     ]);
   if (loading) return <LoadingScreen fullscreen />;
+  console.log('Men navigationam');
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <View style={styles.container}>

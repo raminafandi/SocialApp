@@ -10,25 +10,16 @@ import HelpScreen from '../../screens/MainScreens/Settings/HelpScreen';
 import AboutScreen from '../../screens/MainScreens/Settings/AboutScreen';
 import NotificationsScreen from '../../screens/MainScreens/Settings/NotificationsScreen';
 import PrivacyScreen from '../../screens/MainScreens/Settings/PrivacyScreen';
-import LookScreen from '../../screens/MainScreens/Look/LookScreen';
-import AlternativeLookScreen from '../../screens/MainScreens/AlternativeLookScreen';
 import SubsScreen from '../../screens/MainScreens/SubsScreen';
 import SecurityScreen from '../../screens/MainScreens/Settings/SecurityScreen';
 import FollowRequestsScreen from '../../screens/MainScreens/FollowRequestsScreen';
 import AddFriendScreen from '../../screens/MainScreens/AddFriendScreen';
 import FriendsScreen from '../../screens/MainScreens/FriendsScreen';
+import AlternativeLookScreen from '../../screens/MainScreens/AlternativeLookScreen';
 import CommentsScreen from '../../screens/MainScreens/CommentsScreen';
+
 const ProfileStack = createStackNavigator();
-// const AlternativeLookStack = createStackNavigator();
-// const AlternativeLookStackScreen = () => (
-//   <AlternativeLookStack.Navigator>
-//     <AlternativeLookStack.Screen name="Comment" component={CommentsScreen} />
-//     <AlternativeLookStack.Screen
-//       name="AlternativeLook"
-//       component={AlternativeLookScreen}
-//     />
-//   </AlternativeLookStack.Navigator>
-// )
+
 export default function ProfileStackScreen() {
   return (
     <ProfileStack.Navigator
@@ -62,14 +53,12 @@ export default function ProfileStackScreen() {
       <ProfileStack.Screen name="Help" component={HelpScreen} />
       <ProfileStack.Screen name="About" component={AboutScreen} />
       <ProfileStack.Screen name="Subs" component={SubsScreen} />
-      <ProfileStack.Screen name="Look" component={LookScreen} />
-      <ProfileStack.Screen name="AddFriend" component={AddFriendScreen} />
       <ProfileStack.Screen name="Friends" component={FriendsScreen} />
-      <ProfileStack.Screen name="Comment" component={CommentsScreen} />
       <ProfileStack.Screen
         name="AlternativeLook"
         component={AlternativeLookScreen}
       />
+      <ProfileStack.Screen name="Comments" component={CommentsScreen} />
       <ProfileStack.Screen
         name="FollowRequests"
         component={FollowRequestsScreen}
