@@ -25,18 +25,19 @@ import * as ImagePicker from 'expo-image-picker';
 import { addLook } from '../../../services/api/look';
 import TextButton from '../../../components/TextButton';
 
-const RenderedPhotoGrid = memo(
-  ({ selectedItems, clickEventListener, navigation, ...props }) => {
-    return (
-      <PhotoGrid
-        items={selectedItems}
-        clickEventListener={clickEventListener}
-        navigation={navigation}
-        {...props}
-      />
-    );
-  }
-);
+const RenderedPhotoGrid = memo(({ selectedItems, navigation, ...props }) => {
+  const clickEventListener = React.useCallback((item) => {
+    navigation.navigate('Item', { fetchId: item.id });
+  });
+  return (
+    <PhotoGrid
+      items={selectedItems}
+      clickEventListener={clickEventListener}
+      navigation={navigation}
+      {...props}
+    />
+  );
+});
 
 export default React.memo(({ route, navigation }) => {
   const [tag, setTag] = useState('');
@@ -97,6 +98,7 @@ export default React.memo(({ route, navigation }) => {
       </TextButton>
     ),
   });
+
   const checkFields = (text) => {
     if (text === '') {
       Alert.alert('All Fields should be filled. ', '');

@@ -59,8 +59,8 @@ const BookmarkButton = React.memo(({ look, userInfo }) => {
     marked
       ? unmark(look.id, { ...look })
       : bookmark(look.id, {
-        ...look,
-      });
+          ...look,
+        });
     setMarked(!marked);
   };
   useEffect(() => {
@@ -97,14 +97,13 @@ const Post = React.memo(({ look, navigation, userInfo }) => {
       clickEventListener={clickEventListener}
       navigation={navigation}
     />
-  )
-    : (
-      <PhotoGrid
-        items={[...look.images]}
-        clickEventListener={clickEventListener}
-        navigation={navigation}
-      />
-    );
+  ) : (
+    <PhotoGrid
+      items={[...look.images]}
+      clickEventListener={clickEventListener}
+      navigation={navigation}
+    />
+  );
   return (
     <View style={styles.postContainer}>
       <View style={styles.postHeaderContainer}>
@@ -138,7 +137,11 @@ const Post = React.memo(({ look, navigation, userInfo }) => {
           <TouchableOpacity
             onPress={() => {
               navigation.navigate('Comments', {
-                photoUrl: currentUser.photoURL,
+                user: {
+                  id: currentUser.id,
+                  photoURL: currentUser.photoURL,
+                  displayName: currentUser.displayName,
+                },
                 postId: look.id,
               });
             }}>

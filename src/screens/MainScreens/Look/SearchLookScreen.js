@@ -78,7 +78,7 @@ export default React.memo(({ navigation }) => {
           <InfiniteHits navigation={navigation} />
         ) : (
           <View>
-            <View style={styles.tabContainer}>
+            {/* <View style={styles.tabContainer}>
               <TouchableOpacity
                 style={styles.tabNormal}
                 onPress={() => {
@@ -96,7 +96,7 @@ export default React.memo(({ navigation }) => {
               <TouchableOpacity style={styles.tabFocused}>
                 <Text style={styles.tabTextFocused}>women</Text>
               </TouchableOpacity>
-            </View>
+            </View> */}
             {loading ? (
               <LoadingScreen />
             ) : (
