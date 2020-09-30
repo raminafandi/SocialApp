@@ -78,7 +78,7 @@ const BookmarkButton = React.memo(({ look, userInfo }) => {
   );
 });
 
-const Post = React.memo(({ look, navigation, userInfo }) => {
+const Post = React.memo(({ look, navigation, userInfo, fromProfile }) => {
   const currentUser = firebase.auth().currentUser;
   const [numOfLikes, setNumOfLikes] = useState(look.likes?.length);
   const clickEventListener = React.useCallback((item) => {
@@ -102,6 +102,7 @@ const Post = React.memo(({ look, navigation, userInfo }) => {
       items={[...look.images]}
       clickEventListener={clickEventListener}
       navigation={navigation}
+      fromProfile={fromProfile}
     />
   );
   return (
@@ -136,13 +137,16 @@ const Post = React.memo(({ look, navigation, userInfo }) => {
           />
           <TouchableOpacity
             onPress={() => {
-              navigation.navigate('Comments', {
-                user: {
-                  id: currentUser.id,
-                  photoURL: currentUser.photoURL,
-                  displayName: currentUser.displayName,
+              navigation.navigate('Look', {
+                screen: 'Comments',
+                params: {
+                  user: {
+                    id: currentUser.id,
+                    photoURL: currentUser.photoURL,
+                    displayName: currentUser.displayName,
+                  },
+                  postId: look.id,
                 },
-                postId: look.id,
               });
             }}>
             <Feather

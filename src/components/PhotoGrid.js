@@ -3,16 +3,9 @@ import {
   StyleSheet,
   Text,
   View,
-  FlatList,
-  Dimensions,
-  TouchableOpacity,
   TouchableWithoutFeedback,
   Image,
-  Modal,
-  ScrollView,
-  Alert,
 } from 'react-native';
-import { wsize } from '../entities/constants';
 
 export default React.memo(function ({
   images: propImages,
@@ -20,6 +13,7 @@ export default React.memo(function ({
   gridStyle,
   clickEventListener,
   navigation,
+  fromProfile,
 }) {
   const [countFrom, setCountFrom] = useState(5);
   const images = items ? items.map((item) => item.image) : propImages;
@@ -166,9 +160,14 @@ export default React.memo(function ({
       return (
         <TouchableWithoutFeedback
           onPress={() => {
-            navigation.navigate('Look', {
-              items: items,
-            });
+            !fromProfile
+              ? navigation.navigate('Look', {
+                  screen: 'Look',
+                  params: {
+                    items: items,
+                  },
+                })
+              : navigation.navigate('Look', { params: { items: items } });
           }}>
           <View style={[styles.imageContent, styles.imageContent3]}>
             <Image
