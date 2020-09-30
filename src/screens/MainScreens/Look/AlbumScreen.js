@@ -1,4 +1,10 @@
-import React, { useState, useEffect, useRef, useLayoutEffect, useContext } from 'react';
+import React, {
+  useState,
+  useEffect,
+  useRef,
+  useLayoutEffect,
+  useContext,
+} from 'react';
 import {
   View,
   Text,
@@ -11,28 +17,30 @@ import {
 } from 'react-native';
 
 import Search from '../../../components/Search';
-import * as albumsAPI from '../../../services/api/album'
+import * as albumsAPI from '../../../services/api/album';
 import { window, wsize, hsize } from '../../../entities/constants';
 import LoadingScreen from '../../OtherScreens/LoadingScreen';
-import { ItemContext } from '../../../services/context/ItemContext'
+import { ItemContext } from '../../../services/context/ItemContext';
 export default React.memo(({ navigation, route }) => {
   const [items, setItems] = useState([]);
   const [search, setSearch] = useState('');
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(true);
   const [selectedItems, setSelectedItems] = useState([]);
   const itemContext = useContext(ItemContext);
   // const firstUpdate = useRef(true);
-  const { id } = route.params
+  const { id } = route.params;
   useEffect(() => {
     // setLoading(true)
-    albumsAPI.getItemsOfAlbum(id).then(doc => {
-      setItems(doc.data().items)
-      setLoading(false)
-    })
-  }, [])
+    albumsAPI.getItemsOfAlbum(id).then((doc) => {
+      setItems(doc.data().items);
+      setLoading(false);
+    });
+  }, []);
   return (
     <View style={styles.container}>
-      {loading ? <LoadingScreen /> :
+      {loading ? (
+        <LoadingScreen />
+      ) : (
         <FlatList
           numColumns={3}
           data={items}
@@ -42,19 +50,25 @@ export default React.memo(({ navigation, route }) => {
               // <TouchableOpacity onPress={() => navigation.navigate('Item', { fetchId: item.id })}>
               //   <Image source={{ uri: item.image }} style={styles.img} />
               // </TouchableOpacity>
-              <TouchableOpacity onPress={() => {
-                itemContext.selectItem(item)
-                navigation.navigate('AddLook')
+              <TouchableOpacity
+                disabled={
+                  itemContext.selectedItems.find((i) => i.id === item.id)
+                    ? true
+                    : false
+                }
+                onPress={() => {
+                  itemContext.selectItem(item);
+                  navigation.navigate('AddLook');
                 }}>
                 <Image source={{ uri: item.image }} style={styles.img} />
               </TouchableOpacity>
-            )
+            );
           }}
         />
-      }
+      )}
     </View>
   );
-})
+});
 
 const styles = StyleSheet.create({
   container: {

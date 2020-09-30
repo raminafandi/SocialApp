@@ -19,30 +19,32 @@ import { DraggableGrid } from 'react-native-draggable-grid';
 import { window, wsize, hsize } from '../../../entities/constants';
 import { ItemContext } from '../../../services/context/ItemContext';
 import { HeaderBackButton } from '@react-navigation/stack';
+import { Entypo } from '@expo/vector-icons';
 
 export default React.memo(({ navigation, route }) => {
   const { items } = route.params;
-  const { dragSelectedItems } = useContext(ItemContext)
-  const [localItems, setLocalItems] = useState(items.map((item) => ({ name: item.image, key: item.id })))
+  const { dragSelectedItems } = useContext(ItemContext);
+  const [localItems, setLocalItems] = useState(
+    items.map((item) => ({ name: item.image, key: item.id }))
+  );
   const renderItem = ({ name, key }) => {
     return (
-      <View
-        key={key}
-      >
+      <View key={key}>
         <Image source={{ uri: name }} style={styles.img} />
       </View>
-    )
-  }
+    );
+  };
 
   navigation.setOptions({
     headerLeft: (props) => (
       <HeaderBackButton
         {...props}
         onPress={() => {
-          dragSelectedItems(localItems.map(item => ({ image: item.name, id: item.key })))
-          navigation.goBack()
-        }
-        }
+          dragSelectedItems(
+            localItems.map((item) => ({ image: item.name, id: item.key }))
+          );
+          navigation.goBack();
+        }}
         navigation={navigation}
       />
     ),
@@ -50,13 +52,23 @@ export default React.memo(({ navigation, route }) => {
 
   return (
     <View style={styles.container}>
+      <View style={styles.infoContainer}>
+        <Entypo
+          name="info-with-circle"
+          size={22}
+          color="#52BDEB"
+          style={styles.infoIcon}
+        />
+        <Text style={styles.infoText}>
+          Press and hold, then drag item for changing order of the grid
+        </Text>
+      </View>
       <DraggableGrid
         numColumns={3}
         data={localItems}
         style={styles.list}
         renderItem={renderItem}
-        onDragRelease={data => setLocalItems(data)
-        }
+        onDragRelease={(data) => setLocalItems(data)}
       />
     </View>
   );
@@ -77,5 +89,19 @@ const styles = StyleSheet.create({
     height: wsize(125),
     borderWidth: 1,
     borderColor: 'white',
+  },
+  infoContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: 30,
+  },
+  infoIcon: {
+    marginRight: 10,
+  },
+  infoText: {
+    textAlign: 'center',
+    color: 'grey',
+    fontSize: 16,
   },
 });

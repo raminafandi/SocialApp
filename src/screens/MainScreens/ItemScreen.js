@@ -136,9 +136,11 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: wsize(22),
     color: '#262626',
+    textAlign: 'center',
   },
   postBrand: {
     fontSize: wsize(22),
+    textAlign: 'center',
   },
   toggleableContainer: {
     justifyContent: 'center',
@@ -156,6 +158,7 @@ const styles = StyleSheet.create({
   postPublisher: {
     fontSize: wsize(19.5),
     color: '#979797',
+    textAlign: 'center',
   },
   postPublisherLink: {
     fontSize: wsize(19.5),
