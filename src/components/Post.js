@@ -59,8 +59,8 @@ const BookmarkButton = React.memo(({ look, userInfo }) => {
     marked
       ? unmark(look.id, { ...look })
       : bookmark(look.id, {
-          ...look,
-        });
+        ...look,
+      });
     setMarked(!marked);
   };
   useEffect(() => {
@@ -98,13 +98,13 @@ const Post = React.memo(({ look, navigation, userInfo, fromProfile }) => {
       navigation={navigation}
     />
   ) : (
-    <PhotoGrid
-      items={[...look.images]}
-      clickEventListener={clickEventListener}
-      navigation={navigation}
-      fromProfile={fromProfile}
-    />
-  );
+      <PhotoGrid
+        items={[...look.images]}
+        clickEventListener={clickEventListener}
+        navigation={navigation}
+        fromProfile={fromProfile}
+      />
+    );
   return (
     <View style={styles.postContainer}>
       <View style={styles.postHeaderContainer}>
@@ -137,17 +137,27 @@ const Post = React.memo(({ look, navigation, userInfo, fromProfile }) => {
           />
           <TouchableOpacity
             onPress={() => {
-              navigation.navigate('Look', {
-                screen: 'Comments',
-                params: {
+              !fromProfile ?
+                navigation.navigate('Look', {
+                  screen: 'Comments',
+                  params: {
+                    user: {
+                      id: currentUser.id,
+                      photoURL: currentUser.photoURL,
+                      displayName: currentUser.displayName,
+                    },
+                    postId: look.id,
+                  },
+                })
+                :
+                navigation.navigate('Comments', {
                   user: {
                     id: currentUser.id,
                     photoURL: currentUser.photoURL,
                     displayName: currentUser.displayName,
                   },
                   postId: look.id,
-                },
-              });
+                });
             }}>
             <Feather
               name="message-circle"
@@ -186,14 +196,27 @@ const Post = React.memo(({ look, navigation, userInfo, fromProfile }) => {
       <TouchableOpacity
         style={styles.viewComments}
         onPress={() => {
-          navigation.navigate('Comments', {
-            user: {
-              id: currentUser.id,
-              photoURL: currentUser.photoURL,
-              displayName: currentUser.displayName,
-            },
-            postId: look.id,
-          });
+          !fromProfile ?
+            navigation.navigate('Look', {
+              screen: 'Comments',
+              params: {
+                user: {
+                  id: currentUser.id,
+                  photoURL: currentUser.photoURL,
+                  displayName: currentUser.displayName,
+                },
+                postId: look.id,
+              },
+            })
+            :
+            navigation.navigate('Comments', {
+              user: {
+                id: currentUser.id,
+                photoURL: currentUser.photoURL,
+                displayName: currentUser.displayName,
+              },
+              postId: look.id,
+            });
         }}>
         <FontText
           style={{ color: 'grey', fontWeight: 'bold', fontSize: wsize(13) }}
