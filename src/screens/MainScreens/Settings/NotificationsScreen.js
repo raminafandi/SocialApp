@@ -28,55 +28,7 @@ const MainScreen = ({ navigation }) => {
   const iconSize = 30;
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <ScrollView style={styles.container}>
-        <Option
-          title="Pause all"
-          navigation={navigation}
-          navigateTo="Notifications"></Option>
-        <Option
-          title="New Sub Notifications"
-          navigation={navigation}
-          navigateTo="Privacy">
-          <MaterialIcons
-            name="person"
-            size={iconSize}
-            color="black"
-            style={styles.iconStyle}
-          />
-        </Option>
-        <Option title="Security" navigation={navigation} navigateTo="Security">
-          <MaterialCommunityIcons
-            name="shield-lock-outline"
-            size={iconSize}
-            color="black"
-            style={styles.iconStyle}
-          />
-        </Option>
-        <Option title="Help" navigation={navigation} navigateTo="Help">
-          <AntDesign
-            name="questioncircleo"
-            size={iconSize}
-            color="black"
-            style={styles.iconStyle}
-          />
-        </Option>
-        <Option title="About" navigation={navigation} navigateTo="About">
-          <AntDesign
-            name="infocirlceo"
-            size={iconSize}
-            color="black"
-            style={styles.iconStyle}
-          />
-        </Option>
-        <View style={styles.logins}>
-          <Text style={styles.loginsText}>Logins</Text>
-        </View>
-        <TextButton
-          textStyle={{ fontSize: wsize(18), paddingLeft: wsize(21) }}
-          onPress={authContext.logout}>
-          Log Out
-        </TextButton>
-      </ScrollView>
+      <ScrollView style={styles.container}></ScrollView>
     </SafeAreaView>
   );
 };
