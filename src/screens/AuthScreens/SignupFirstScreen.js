@@ -97,8 +97,7 @@ export default class LoginScreen extends Component {
                     items: [],
                     date: new Date(),
                   })
-                  .then(function (snapshot) {
-                  });
+                  .then(function (snapshot) {});
               }
               // else {
               //   firebase
@@ -146,7 +145,7 @@ export default class LoginScreen extends Component {
     }
   };
 
-  render(props) {
+  render() {
     return (
       <>
         <Logo />
@@ -214,7 +213,8 @@ export default class LoginScreen extends Component {
             </View>
             <View style={styles.bottomContainer}>
               <Text style={styles.getHelpText}>Already have an account?</Text>
-              <TextButton onPress={() => navigation.navigate('Login')}>
+              <TextButton
+                onPress={() => this.props.navigation.navigate('Login')}>
                 Log In
               </TextButton>
             </View>

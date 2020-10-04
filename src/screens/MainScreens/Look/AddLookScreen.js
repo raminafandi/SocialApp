@@ -34,6 +34,7 @@ const RenderedPhotoGrid = memo(({ selectedItems, navigation, ...props }) => {
       items={selectedItems}
       clickEventListener={clickEventListener}
       navigation={navigation}
+      fromProfile
       {...props}
     />
   );
