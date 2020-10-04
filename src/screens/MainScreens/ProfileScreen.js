@@ -57,7 +57,6 @@ const LooksTab = React.memo(({ navigation }) => {
         }}
         refreshing={loading}
         renderItem={({ item }) => {
-          console.log('gelenitem', item);
           return (
             <TouchableWithoutFeedback
               onPress={() => {

@@ -72,7 +72,6 @@ export default class LoginScreen extends Component {
             .auth()
             .signInWithCredential(credential)
             .then(function (result) {
-              console.log('user signed in ', result.user.uid);
               if (result.additionalUserInfo.isNewUser) {
                 firebase
                   .firestore()
@@ -99,7 +98,6 @@ export default class LoginScreen extends Component {
                     date: new Date(),
                   })
                   .then(function (snapshot) {
-                    console.log('Snapshot', snapshot);
                   });
               }
               // else {
@@ -122,7 +120,6 @@ export default class LoginScreen extends Component {
               // ...
             });
         } else {
-          console.log('User already signed-in Firebase.');
         }
       }.bind(this)
     );
@@ -145,7 +142,6 @@ export default class LoginScreen extends Component {
         return { cancelled: true };
       }
     } catch (e) {
-      console.log('LoginScreen.js.js 30 | Error with login', e);
       return { error: true };
     }
   };
