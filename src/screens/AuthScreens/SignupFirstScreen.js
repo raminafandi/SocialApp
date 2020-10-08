@@ -45,7 +45,7 @@ export default class LoginScreen extends Component {
       for (var i = 0; i < providerData.length; i++) {
         if (
           providerData[i].providerId ===
-            libFirebase.auth.GoogleAuthProvider.PROVIDER_ID &&
+          libFirebase.auth.GoogleAuthProvider.PROVIDER_ID &&
           providerData[i].uid === googleUser.getBasicProfile().getId()
         ) {
           // We don't need to reauth the Firebase connection.
@@ -97,7 +97,7 @@ export default class LoginScreen extends Component {
                     items: [],
                     date: new Date(),
                   })
-                  .then(function (snapshot) {});
+                  .then(function (snapshot) { });
               }
               // else {
               //   firebase
@@ -128,7 +128,9 @@ export default class LoginScreen extends Component {
       const result = await Google.logInAsync({
         // behavior: 'web',
         iosClientId: IOS_CLIENT_ID,
+        iosStandaloneAppClientId: IOS_CLIENT_ID,
         androidClientId: ANDROID_CLIENT_ID,
+        androidStandaloneAppClientId: ANDROID_CLIENT_ID,
         scopes: ['profile', 'email'],
       });
 
