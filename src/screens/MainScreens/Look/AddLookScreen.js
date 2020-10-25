@@ -203,8 +203,8 @@ const styles = StyleSheet.create({
     paddingTop: hsize(24),
   },
   input: {
-    borderColor: 'black',
-    backgroundColor: '#fafafa',
+    borderColor: 'grey',
+    backgroundColor: 'white',
     alignSelf: 'center',
     borderWidth: 1,
     borderRadius: 5,
@@ -235,6 +235,7 @@ const styles = StyleSheet.create({
     borderColor: '#DADBDA',
     paddingHorizontal: wsize(10),
     height: hsize(33),
+    marginTop: hsize(10),
     borderRadius: wsize(5),
     justifyContent: 'space-between',
     overflow: 'hidden',

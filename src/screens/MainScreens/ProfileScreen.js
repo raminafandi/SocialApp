@@ -44,7 +44,7 @@ const LooksTab = React.memo(({ navigation }) => {
     return <LoadingScreen />;
   }
   return (
-    <ScrollView style={{ height: '40%' }}>
+    <ScrollView style={{ height: '40%', backgroundColor: 'white' }}>
       <FlatList
         numColumns={3}
         data={data}
@@ -59,6 +59,7 @@ const LooksTab = React.memo(({ navigation }) => {
         renderItem={({ item }) => {
           return (
             <TouchableWithoutFeedback
+              style={{ flex: 1, width: wsize(123), height: wsize(123) }}
               onPress={() => {
                 navigation.navigate('AlternativeLook', item);
               }}>
@@ -68,18 +69,22 @@ const LooksTab = React.memo(({ navigation }) => {
                   source={{ uri: item.coverImage }}
                 />
               ) : (
-                <TouchableOpacity
-                  onPress={() => {
-                    navigation.navigate('AlternativeLook', item);
-                  }}>
-                  <PhotoGrid
-                    items={item.images}
-                    clickEventListener={(itemFromGrid) =>
-                      navigation.navigate('AlternativeLook', item)
-                    }
-                    gridStyle={{ width: wsize(123), height: wsize(123) }}
-                  />
-                </TouchableOpacity>
+                // <TouchableOpacity
+                //   onPress={() => {
+                //     navigation.navigate('AlternativeLook', item);
+                //   }}>
+                <Image
+                  style={{ width: wsize(123), height: wsize(123) }}
+                  source={{ uri: item.images[0].image }}
+                />
+                // <PhotoGrid
+                //   items={item.images}
+                //   clickEventListener={(itemFromGrid) =>
+                //     navigation.navigate('AlternativeLook', item)
+                //   }
+                //   gridStyle={{ width: wsize(123), height: wsize(123) }}
+                // />
+                // </TouchableOpacity>
               )}
             </TouchableWithoutFeedback>
           );
@@ -103,7 +108,7 @@ const ItemsTab = React.memo(function ({ navigation, user }) {
     return <LoadingScreen fullscreen />;
   }
   return (
-    <ScrollView style={{ height: '40%' }}>
+    <ScrollView style={{ height: '40%', backgroundColor: 'white' }}>
       <FlatList
         numColumns={3}
         data={data}
@@ -133,7 +138,7 @@ const ItemsTab = React.memo(function ({ navigation, user }) {
 
 const BookmarsTab = React.memo(({ navigation, user }) => {
   return (
-    <ScrollView style={{ height: '40%' }}>
+    <ScrollView style={{ height: '40%', backgroundColor: 'white' }}>
       <FlatList
         numColumns={3}
         data={user.saved}
@@ -355,6 +360,7 @@ const ProfileScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: 'white',
     // paddingTop: hsize(44),
   },
   profileInitialContainer: {

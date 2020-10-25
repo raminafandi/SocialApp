@@ -15,12 +15,14 @@ import {
   SafeAreaView,
   FlatList,
   Animated,
+  ImageBackground,
 } from 'react-native';
 import { DraggableGrid } from 'react-native-draggable-grid';
 import { window, wsize, hsize } from '../../../entities/constants';
 import { ItemContext } from '../../../services/context/ItemContext';
 import { HeaderBackButton } from '@react-navigation/stack';
 import { Entypo } from '@expo/vector-icons';
+import { MaterialIcons } from '@expo/vector-icons';
 
 export default React.memo(({ navigation, route }) => {
   const { items } = route.params;
@@ -31,7 +33,13 @@ export default React.memo(({ navigation, route }) => {
   const renderItem = ({ name, key }) => {
     return (
       <View key={key}>
-        <Image source={{ uri: name }} style={styles.img} />
+        <ImageBackground source={{ uri: name }} style={styles.img}>
+          <TouchableOpacity
+            onPress={() => {}}
+            style={{ justifyContent: 'flex-end', alignSelf: 'flex-end' }}>
+            <MaterialIcons name="cancel" size={20} color="red" />
+          </TouchableOpacity>
+        </ImageBackground>
       </View>
     );
   };
