@@ -22,7 +22,7 @@ const AuthProvider = ({ children, ...props }) => {
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     YellowBox.ignoreWarnings(['Setting a timer']);
-    console.disableYellowBox = true;
+    // console.disableYellowBox = true;
     const subscriber = firebase.auth().onAuthStateChanged(onAuthStateChanged);
     // Facebook.initializeAsync('326392205351093')
     return subscriber; // unsubscribe on unmount

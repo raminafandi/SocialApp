@@ -14,6 +14,7 @@ import {
   ScrollView,
   SafeAreaView,
   FlatList,
+  Animated,
 } from 'react-native';
 import { DraggableGrid } from 'react-native-draggable-grid';
 import { window, wsize, hsize } from '../../../entities/constants';
@@ -34,7 +35,6 @@ export default React.memo(({ navigation, route }) => {
       </View>
     );
   };
-
   navigation.setOptions({
     headerLeft: (props) => (
       <HeaderBackButton
@@ -49,7 +49,6 @@ export default React.memo(({ navigation, route }) => {
       />
     ),
   });
-
   return (
     <View style={styles.container}>
       <View style={styles.infoContainer}>
