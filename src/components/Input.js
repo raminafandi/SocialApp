@@ -7,6 +7,7 @@ export default function Input(props) {
         <View style={styles.container}>
             <TextInput
                 {...props}
+                autoCapitalize="none"
             />
         </View>
     )
