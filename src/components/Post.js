@@ -59,8 +59,8 @@ const BookmarkButton = React.memo(({ look, userInfo }) => {
     marked
       ? unmark(look.id, { ...look })
       : bookmark(look.id, {
-        ...look,
-      });
+          ...look,
+        });
     setMarked(!marked);
   };
   useEffect(() => {
@@ -98,13 +98,13 @@ const Post = React.memo(({ look, navigation, userInfo, fromProfile }) => {
       navigation={navigation}
     />
   ) : (
-      <PhotoGrid
-        items={[...look.images]}
-        clickEventListener={clickEventListener}
-        navigation={navigation}
-        fromProfile={fromProfile}
-      />
-    );
+    <PhotoGrid
+      items={[...look.images]}
+      clickEventListener={clickEventListener}
+      navigation={navigation}
+      fromProfile={fromProfile}
+    />
+  );
   return (
     <View style={styles.postContainer}>
       <View style={styles.postHeaderContainer}>
@@ -137,27 +137,26 @@ const Post = React.memo(({ look, navigation, userInfo, fromProfile }) => {
           />
           <TouchableOpacity
             onPress={() => {
-              !fromProfile ?
-                navigation.navigate('Look', {
-                  screen: 'Comments',
-                  params: {
+              !fromProfile
+                ? navigation.navigate('Look', {
+                    screen: 'Comments',
+                    params: {
+                      user: {
+                        id: currentUser.id,
+                        photoURL: currentUser.photoURL,
+                        displayName: currentUser.displayName,
+                      },
+                      postId: look.id,
+                    },
+                  })
+                : navigation.navigate('Comments', {
                     user: {
                       id: currentUser.id,
                       photoURL: currentUser.photoURL,
                       displayName: currentUser.displayName,
                     },
                     postId: look.id,
-                  },
-                })
-                :
-                navigation.navigate('Comments', {
-                  user: {
-                    id: currentUser.id,
-                    photoURL: currentUser.photoURL,
-                    displayName: currentUser.displayName,
-                  },
-                  postId: look.id,
-                });
+                  });
             }}>
             <Feather
               name="message-circle"
@@ -196,27 +195,26 @@ const Post = React.memo(({ look, navigation, userInfo, fromProfile }) => {
       <TouchableOpacity
         style={styles.viewComments}
         onPress={() => {
-          !fromProfile ?
-            navigation.navigate('Look', {
-              screen: 'Comments',
-              params: {
+          !fromProfile
+            ? navigation.navigate('Look', {
+                screen: 'Comments',
+                params: {
+                  user: {
+                    id: currentUser.id,
+                    photoURL: currentUser.photoURL,
+                    displayName: currentUser.displayName,
+                  },
+                  postId: look.id,
+                },
+              })
+            : navigation.navigate('Comments', {
                 user: {
                   id: currentUser.id,
                   photoURL: currentUser.photoURL,
                   displayName: currentUser.displayName,
                 },
                 postId: look.id,
-              },
-            })
-            :
-            navigation.navigate('Comments', {
-              user: {
-                id: currentUser.id,
-                photoURL: currentUser.photoURL,
-                displayName: currentUser.displayName,
-              },
-              postId: look.id,
-            });
+              });
         }}>
         <FontText
           style={{ color: 'grey', fontWeight: 'bold', fontSize: wsize(13) }}
@@ -289,6 +287,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginBottom: hsize(13),
+    marginTop: hsize(30),
   },
   postActionsLeft: {
     flexDirection: 'row',

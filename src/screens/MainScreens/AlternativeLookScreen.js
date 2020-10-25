@@ -12,7 +12,8 @@ const AlternativeLookScreen = React.memo(function ({ navigation, route }) {
   }, []);
   if (userInfo)
     return (
-      <ScrollView style={{ flex: 1, paddingVertical: 10 }}>
+      <ScrollView
+        style={{ flex: 1, paddingVertical: 10, backgroundColor: '#FFFEFE' }}>
         <Post
           look={item}
           userInfo={userInfo}
@@ -23,4 +24,5 @@ const AlternativeLookScreen = React.memo(function ({ navigation, route }) {
     );
   return <LoadingScreen />;
 });
+
 export default AlternativeLookScreen;
