@@ -92,7 +92,6 @@ export default React.memo(({ route, navigation }) => {
       <TextButton
         onPress={() => {
           checkFields(itemContext.text);
-          navigation.navigate('Home');
         }}
         style={{ marginRight: wsize(10) }}>
         Add Look
@@ -105,6 +104,7 @@ export default React.memo(({ route, navigation }) => {
       Alert.alert('All Fields should be filled. ', '');
     } else {
       submitHandler();
+      navigation.navigate('Home');
     }
   };
   if (loading) return <LoadingScreen fullscreen />;
