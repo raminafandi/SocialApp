@@ -117,6 +117,7 @@ const BookmarkButton = React.memo(({ item, userInfo }) => {
 const styles = StyleSheet.create({
   container: {
     paddingTop: hsize(30),
+    backgroundColor: 'white',
   },
   postContainer: {
     justifyContent: 'center',
