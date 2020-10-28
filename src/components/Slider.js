@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import { View, StyleSheet, ScrollView, Image, Dimensions } from 'react-native';
 import PhotoGrid from './PhotoGrid';
 import { window, wsize, hsize } from '../entities/constants';
@@ -9,13 +9,23 @@ export default React.memo(function ({
   navigation,
   clickEventListener,
 }) {
+  const [bullet, setBullet] = useState(true);
   return (
     <View>
       <ScrollView
         horizontal={true}
+        onScrollEndDrag={() => {
+          if (bullet === true) {
+            setBullet(false);
+          } else {
+            setBullet(true);
+          }
+          console.log('bullet', bullet);
+        }}
         decelerationRate={'fast'}
         scrollEventThrottle={200}
         contentContainerStyle={{ width: window.width * 2 }}
+        showsHorizontalScrollIndicator={false}
         pagingEnabled={true}>
         <View style={styles.view}>
           <Image
@@ -37,6 +47,27 @@ export default React.memo(function ({
           />
         </View>
       </ScrollView>
+      {bullet ? (
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}>
+          <View style={styles.bigBullet} />
+          <View style={styles.littleBullet} />
+        </View>
+      ) : (
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}>
+          <View style={styles.littleBullet} />
+          <View style={styles.bigBullet} />
+        </View>
+      )}
     </View>
   );
 });
@@ -47,5 +78,19 @@ const styles = StyleSheet.create({
     height: 300,
     margin: 0,
     padding: 0,
+  },
+  bigBullet: {
+    height: 16,
+    width: 16,
+    backgroundColor: '#adb5bd',
+    margin: 8,
+    borderRadius: 8,
+  },
+  littleBullet: {
+    height: 10,
+    width: 10,
+    backgroundColor: '#ced4da',
+    margin: 8,
+    borderRadius: 5,
   },
 });

@@ -32,6 +32,7 @@ const MainScreen = ({ navigation }) => {
         <Option
           title="Notifications"
           navigation={navigation}
+          textStyle={{ fontWeight: 'bold' }}
           navigateTo="Notifications">
           <MaterialIcons
             name="notifications-none"
@@ -40,7 +41,11 @@ const MainScreen = ({ navigation }) => {
             style={styles.iconStyle}
           />
         </Option>
-        <Option title="Privacy" navigation={navigation} navigateTo="Privacy">
+        <Option
+          title="Privacy"
+          navigation={navigation}
+          textStyle={{ fontWeight: 'bold' }}
+          navigateTo="Privacy">
           <MaterialIcons
             name="person"
             size={iconSize}
@@ -48,7 +53,11 @@ const MainScreen = ({ navigation }) => {
             style={styles.iconStyle}
           />
         </Option>
-        <Option title="Security" navigation={navigation} navigateTo="Security">
+        <Option
+          title="Security"
+          textStyle={{ fontWeight: 'bold' }}
+          navigation={navigation}
+          navigateTo="Security">
           <MaterialCommunityIcons
             name="shield-lock-outline"
             size={iconSize}
@@ -56,7 +65,11 @@ const MainScreen = ({ navigation }) => {
             style={styles.iconStyle}
           />
         </Option>
-        <Option title="Help" navigation={navigation} navigateTo="Help">
+        <Option
+          title="Help"
+          textStyle={{ fontWeight: 'bold' }}
+          navigation={navigation}
+          navigateTo="Help">
           <AntDesign
             name="questioncircleo"
             size={iconSize}
@@ -64,7 +77,11 @@ const MainScreen = ({ navigation }) => {
             style={styles.iconStyle}
           />
         </Option>
-        <Option title="About" navigation={navigation} navigateTo="About">
+        <Option
+          title="About"
+          textStyle={{ fontWeight: 'bold' }}
+          navigation={navigation}
+          navigateTo="About">
           <AntDesign
             name="infocirlceo"
             size={iconSize}

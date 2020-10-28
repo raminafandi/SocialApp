@@ -6,6 +6,7 @@ export default function ({
   title,
   setModalVisible,
   navigation,
+  textStyle,
   navigateTo,
   children,
   ...props
@@ -19,7 +20,7 @@ export default function ({
           setModalVisible(false);
         }}>
         {children}
-        <Text style={styles.modalOptionText}>{title}</Text>
+        <Text style={[styles.modalOptionText, textStyle]}>{title}</Text>
       </TouchableOpacity>
     );
   } else {
@@ -30,7 +31,7 @@ export default function ({
           navigation.navigate(navigateTo);
         }}>
         {children}
-        <Text style={styles.modalOptionText}>{title}</Text>
+        <Text style={[styles.modalOptionText, textStyle]}>{title}</Text>
       </TouchableOpacity>
     );
   }
