@@ -67,6 +67,7 @@ const createUser = (email, password, userName, fullName) => {
         Alert.alert('Wrong Credentials', error);
       }
       console.log(error);
+      throw error;
     });
 };
 
@@ -79,6 +80,7 @@ const loginUser = (email, password) => {
     })
     .catch((err) => {
       Alert.alert('Wrong Credentials', 'Login Credentials are not valid');
+      throw err;
     });
 };
 

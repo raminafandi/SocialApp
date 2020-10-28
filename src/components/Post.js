@@ -59,8 +59,8 @@ const BookmarkButton = React.memo(({ look, userInfo }) => {
     marked
       ? unmark(look.id, { ...look })
       : bookmark(look.id, {
-          ...look,
-        });
+        ...look,
+      });
     setMarked(!marked);
   };
   useEffect(() => {
@@ -84,11 +84,17 @@ const Post = React.memo(({ look, navigation, userInfo, fromProfile }) => {
   const clickEventListener = React.useCallback((item) => {
     navigation.navigate('Item', { fetchId: item.id });
   });
-  const clickEventListenerOverlay = React.useCallback((look, navigation) => {
+  const clickEventListenerOverlay = React.useCallback((look) => {
     navigation.navigate('Look', { images: look });
   });
   const profileClickHandler = () => {
-    navigation.navigate('OtherProfile', { user: look.author });
+    navigation.navigate('OtherProfile', {
+      screen: "OtherProfile",
+      params: {
+        user: look.author
+
+      }
+    });
   };
   const carouselOrGrid = look.coverImage ? (
     <Slider
@@ -98,13 +104,13 @@ const Post = React.memo(({ look, navigation, userInfo, fromProfile }) => {
       navigation={navigation}
     />
   ) : (
-    <PhotoGrid
-      items={[...look.images]}
-      clickEventListener={clickEventListener}
-      navigation={navigation}
-      fromProfile={fromProfile}
-    />
-  );
+      <PhotoGrid
+        items={[...look.images]}
+        clickEventListener={clickEventListener}
+        navigation={navigation}
+        fromProfile={fromProfile}
+      />
+    );
   return (
     <View style={styles.postContainer}>
       <View style={styles.postHeaderContainer}>
@@ -139,24 +145,24 @@ const Post = React.memo(({ look, navigation, userInfo, fromProfile }) => {
             onPress={() => {
               !fromProfile
                 ? navigation.navigate('Look', {
-                    screen: 'Comments',
-                    params: {
-                      user: {
-                        id: currentUser.id,
-                        photoURL: currentUser.photoURL,
-                        displayName: currentUser.displayName,
-                      },
-                      postId: look.id,
-                    },
-                  })
-                : navigation.navigate('Comments', {
+                  screen: 'Comments',
+                  params: {
                     user: {
                       id: currentUser.id,
                       photoURL: currentUser.photoURL,
                       displayName: currentUser.displayName,
                     },
                     postId: look.id,
-                  });
+                  },
+                })
+                : navigation.navigate('Comments', {
+                  user: {
+                    id: currentUser.id,
+                    photoURL: currentUser.photoURL,
+                    displayName: currentUser.displayName,
+                  },
+                  postId: look.id,
+                });
             }}>
             <Feather
               name="message-circle"
@@ -197,24 +203,24 @@ const Post = React.memo(({ look, navigation, userInfo, fromProfile }) => {
         onPress={() => {
           !fromProfile
             ? navigation.navigate('Look', {
-                screen: 'Comments',
-                params: {
-                  user: {
-                    id: currentUser.id,
-                    photoURL: currentUser.photoURL,
-                    displayName: currentUser.displayName,
-                  },
-                  postId: look.id,
-                },
-              })
-            : navigation.navigate('Comments', {
+              screen: 'Comments',
+              params: {
                 user: {
                   id: currentUser.id,
                   photoURL: currentUser.photoURL,
                   displayName: currentUser.displayName,
                 },
                 postId: look.id,
-              });
+              },
+            })
+            : navigation.navigate('Comments', {
+              user: {
+                id: currentUser.id,
+                photoURL: currentUser.photoURL,
+                displayName: currentUser.displayName,
+              },
+              postId: look.id,
+            });
         }}>
         <FontText
           style={{ color: 'grey', fontWeight: 'bold', fontSize: wsize(13) }}

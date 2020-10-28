@@ -141,7 +141,7 @@ const BookmarsTab = React.memo(({ navigation, user }) => {
     <ScrollView style={{ height: '40%', backgroundColor: 'white' }}>
       <FlatList
         numColumns={3}
-        data={user.saved}
+        data={[...user.saved].reverse()}
         renderItem={({ item }) => {
           if (item.item)
             return (

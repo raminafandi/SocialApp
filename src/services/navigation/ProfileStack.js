@@ -18,6 +18,7 @@ import FriendsScreen from '../../screens/MainScreens/FriendsScreen';
 import AlternativeLookScreen from '../../screens/MainScreens/AlternativeLookScreen';
 import CommentsScreen from '../../screens/MainScreens/CommentsScreen';
 import LookScreen from '../../screens/MainScreens/Look/LookScreen'
+
 const ProfileStack = createStackNavigator();
 
 export default function ProfileStackScreen() {

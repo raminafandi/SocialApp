@@ -18,14 +18,16 @@ import { FlatList } from 'react-native-gesture-handler';
 import * as userAPI from '../../services/api/user';
 import * as itemAPI from '../../services/api/item';
 import * as lookAPI from '../../services/api/look';
+import { useNavigation } from '@react-navigation/native';
 const tabs = {
   items: 'items',
   looks: 'looks',
   bookmarks: 'bookmarks',
 };
 
-const LooksTab = React.memo(({ navigation, user }) => {
+const LooksTab = React.memo(({  user }) => {
   const [data, setData] = useState([]);
+  const navigation = useNavigation();
   const [loading, setLoading] = useState(true);
   const fetchData = () => lookAPI.getUserLooks(user.id);
   useEffect(() => {
@@ -38,42 +40,44 @@ const LooksTab = React.memo(({ navigation, user }) => {
     return <LoadingScreen />;
   }
   return (
-    <ScrollView style={{height: '40%'}}>
-    <FlatList
-      numColumns={3}
-      data={data}
-      onRefresh={() => {
-        setLoading(true);
-        fetchData().then((res) => {
-          setData(res);
-          setLoading(false);
-        });
-      }}
-      refreshing={loading}
-      renderItem={({ item }) => {
-        return (
-          <TouchableOpacity
-            onPress={() => {
-              navigation.navigate('AlternativeLook', item);
-            }}>
-            {item.coverImage ? (
-              <Image
-                style={{ width: wsize(123), height: wsize(123) }}
-                source={{ uri: item.coverImage }}
-              />
-            ) : (
-              <PhotoGrid
-                items={item.images}
-                clickEventListener={(itemFromGrid) =>
-                  navigation.navigate('AlternativeLook', item)
-                }
-                gridStyle={{ width: wsize(123), height: wsize(123) }}
-              />
-            )}
-          </TouchableOpacity>
-        );
-      }}
-    />
+    <ScrollView style={{ height: '40%' }}>
+      <FlatList
+        numColumns={3}
+        data={data}
+        onRefresh={() => {
+          setLoading(true);
+          fetchData().then((res) => {
+            setData(res);
+            setLoading(false);
+          });
+        }}
+        refreshing={loading}
+        renderItem={({ item }) => {
+          return (
+            <TouchableOpacity
+              style={{ width: wsize(123), height: wsize(123) }}
+              onPress={() => {
+                navigation.navigate('AlternativeLook', item);
+              }}>
+              {item.coverImage ? (
+                <Image
+                  style={{ width: wsize(123), height: wsize(123) }}
+                  source={{ uri: item.coverImage }}
+                />
+              ) : (
+                  <PhotoGrid
+                    items={item.images}
+                    clickEventListener={() => { 
+                      navigation.navigate('AlternativeLook', item)
+                    }}
+                    gridStyle={{ width: wsize(123), height: wsize(123) }}
+                    style={{ width: wsize(123), height: wsize(123) }}
+                  />
+                )}
+            </TouchableOpacity>
+          );
+        }}
+      />
     </ScrollView>
   );
 });
@@ -96,23 +100,23 @@ const ItemsTab = React.memo(({ navigation, user }) => {
     return <LoadingScreen />;
   }
   return (
-    <ScrollView style={{height: '40%'}}>
+    <ScrollView style={{ height: '40%' }}>
 
-    <FlatList
-      numColumns={3}
-      data={data}
-      renderItem={({ item }) => (
-        <TouchableOpacity
-          onPress={() => {
-            navigation.navigate('Item', item);
-          }}>
-          <Image
-            style={{ width: wsize(124), height: wsize(123) }}
-            source={{ uri: item.image }}
-          />
-        </TouchableOpacity>
-      )}
-    />
+      <FlatList
+        numColumns={3}
+        data={data}
+        renderItem={({ item }) => (
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate('Item', item);
+            }}>
+            <Image
+              style={{ width: wsize(124), height: wsize(123) }}
+              source={{ uri: item.image }}
+            />
+          </TouchableOpacity>
+        )}
+      />
     </ScrollView>
   );
 });
@@ -120,12 +124,13 @@ const ItemsTab = React.memo(({ navigation, user }) => {
 const OtherProfileScreen = ({ navigation, route }) => {
   const [modalVisible, setModalVisible] = useState(false);
   const { user } = route.params;
+  console.log(navigation)
   const { bookmarks, items, looks } = tabs;
   const [userExtraInfo, setUserExstraInfo] = useState(null);
   const [currentTab, setCurrentTab] = useState(looks);
   const [isPrivate, setIsPrivate] = useState(false);
   const [subscribed, setSubscribed] = useState(false);
-  const [subText, setSubText] = useState('Sub')
+  const [subText, setSubText] = useState('sub')
   const isSubscribed = () => {
     userAPI
       .getUserInfo()
@@ -146,18 +151,20 @@ const OtherProfileScreen = ({ navigation, route }) => {
     if (isPrivate) {
       userAPI.sendSubscribeRequestToPrivateUser(user.id);
       setSubText('requested')
+      setSubscribed(true)
     } else {
+      setSubText('unsub')
+      setSubscribed(true)
       userAPI
         .subscribeToUser(user.id)
-        .then(() => {
-          setSubscribed(true)
-          setSubText('unsub')
-        })
         .catch(console.error);
     }
   };
   const unsubscriptionHandler = () => {
-    userAPI.unsubscribeFromUser(user.id).then(() => setSubscribed(false));
+    setSubscribed(false)
+    setSubText('sub')
+    userAPI.unsubscribeFromUser(user.id);
+
   };
   useEffect(() => {
     fetchData();
@@ -220,7 +227,7 @@ const OtherProfileScreen = ({ navigation, route }) => {
         </View>
         <Button
           title={subText}
-          disabled={subText==="requested" ? true : false}
+          disabled={subText === "requested" ? true : false}
           style={{
             backgroundColor: subscribed ? '#D8D8D8' : '#0148FF',
             marginTop: wsize(20),
@@ -266,8 +273,8 @@ const OtherProfileScreen = ({ navigation, route }) => {
         ) : currentTab === looks ? (
           <LooksTab navigation={navigation} user={user} />
         ) : (
-          <ItemsTab navigation={navigation} user={user} />
-        )}
+              <ItemsTab navigation={navigation} user={user} />
+            )}
       </View>
     </SafeAreaView>
   );
