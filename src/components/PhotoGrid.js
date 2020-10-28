@@ -20,17 +20,7 @@ export default React.memo(function ({
   const RenderOne = React.memo(({ images, clickEventListener }) => {
     return (
       <View style={styles.row}>
-        <TouchableWithoutFeedback
-          onPress={() => {
-            !fromProfile
-              ? navigation.navigate('Look', {
-                  screen: 'Look',
-                  params: {
-                    items: items,
-                  },
-                })
-              : navigation.navigate('Look', { items: items });
-          }}>
+        <TouchableWithoutFeedback onPress={() => clickEventListener(items[0])}>
           <View style={[styles.imageContent, styles.imageContent1]}>
             <Image
               style={styles.image}
@@ -52,14 +42,8 @@ export default React.memo(function ({
       <View style={styles.row}>
         <TouchableWithoutFeedback
           onPress={() => {
-            !fromProfile
-              ? navigation.navigate('Look', {
-                  screen: 'Look',
-                  params: {
-                    items: items,
-                  },
-                })
-              : navigation.navigate('Look', { items: items });
+            items &&
+              clickEventListener(conditionalRender ? items[1] : items[0]);
           }}>
           <View style={[styles.imageContent, styles.imageContent2]}>
             <Image
@@ -71,14 +55,8 @@ export default React.memo(function ({
         </TouchableWithoutFeedback>
         <TouchableWithoutFeedback
           onPress={() => {
-            !fromProfile
-              ? navigation.navigate('Look', {
-                  screen: 'Look',
-                  params: {
-                    items: items,
-                  },
-                })
-              : navigation.navigate('Look', { items: items });
+            items &&
+              clickEventListener(conditionalRender ? items[2] : items[1]);
           }}>
           <View style={[styles.imageContent, styles.imageContent2]}>
             <Image
@@ -102,16 +80,7 @@ export default React.memo(function ({
             more
             images={images}
             countFrom={countFrom}
-            clickEventListener={
-              !fromProfile
-                ? navigation.navigate('Look', {
-                    screen: 'Look',
-                    params: {
-                      items: items,
-                    },
-                  })
-                : navigation.navigate('Look', { items: items })
-            }
+            clickEventListener={clickEventListener}
             conditionalRender={conditionalRender}
           />
         ) : (
@@ -129,14 +98,8 @@ export default React.memo(function ({
         <View style={styles.row}>
           <TouchableWithoutFeedback
             onPress={() => {
-              !fromProfile
-                ? navigation.navigate('Look', {
-                    screen: 'Look',
-                    params: {
-                      items: items,
-                    },
-                  })
-                : navigation.navigate('Look', { items: items });
+              items &&
+                clickEventListener(conditionalRender ? items[1] : items[2]);
             }}>
             <View style={[styles.imageContent, styles.imageContent3]}>
               <Image
@@ -148,14 +111,8 @@ export default React.memo(function ({
           </TouchableWithoutFeedback>
           <TouchableWithoutFeedback
             onPress={() => {
-              !fromProfile
-                ? navigation.navigate('Look', {
-                    screen: 'Look',
-                    params: {
-                      items: items,
-                    },
-                  })
-                : navigation.navigate('Look', { items: items });
+              items &&
+                clickEventListener(conditionalRender ? items[2] : items[3]);
             }}>
             <View style={[styles.imageContent, styles.imageContent3]}>
               <Image
