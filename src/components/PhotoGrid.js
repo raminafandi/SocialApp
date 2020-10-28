@@ -4,6 +4,7 @@ import {
   Text,
   View,
   TouchableWithoutFeedback,
+  TouchableOpacity,
   Image,
 } from 'react-native';
 
@@ -20,7 +21,9 @@ export default React.memo(function ({
   const RenderOne = React.memo(({ images, clickEventListener }) => {
     return (
       <View style={styles.row}>
-        <TouchableWithoutFeedback onPress={() => clickEventListener(items[0])}>
+        <TouchableWithoutFeedback
+          disabled
+          onPress={() => clickEventListener(items[0])}>
           <View style={[styles.imageContent, styles.imageContent1]}>
             <Image
               style={styles.image}
@@ -41,6 +44,7 @@ export default React.memo(function ({
     return (
       <View style={styles.row}>
         <TouchableWithoutFeedback
+          disabled
           onPress={() => {
             items &&
               clickEventListener(conditionalRender ? items[1] : items[0]);
@@ -54,6 +58,7 @@ export default React.memo(function ({
           </View>
         </TouchableWithoutFeedback>
         <TouchableWithoutFeedback
+          disabled
           onPress={() => {
             items &&
               clickEventListener(conditionalRender ? items[2] : items[1]);
@@ -97,6 +102,7 @@ export default React.memo(function ({
       return (
         <View style={styles.row}>
           <TouchableWithoutFeedback
+            disabled
             onPress={() => {
               items &&
                 clickEventListener(conditionalRender ? items[1] : items[2]);
@@ -110,6 +116,7 @@ export default React.memo(function ({
             </View>
           </TouchableWithoutFeedback>
           <TouchableWithoutFeedback
+            disabled
             onPress={() => {
               items &&
                 clickEventListener(conditionalRender ? items[2] : items[3]);
@@ -159,6 +166,7 @@ export default React.memo(function ({
         images.length == 4 || (images.length > +countFrom && +countFrom == 4);
       return (
         <TouchableWithoutFeedback
+          disabled
           onPress={() => {
             !fromProfile
               ? navigation.navigate('Look', {
@@ -191,25 +199,37 @@ export default React.memo(function ({
     imagesToShow.length = countFrom;
   }
   return (
-    <View style={[styles.container, gridStyle]}>
-      {[1, 3, 4].includes(imagesToShow.length) && (
-        <RenderOne clickEventListener={clickEventListener} images={images} />
-      )}
-      {imagesToShow.length >= 2 && imagesToShow.length != 4 && (
-        <RenderTwo
-          clickEventListener={clickEventListener}
-          countFrom={countFrom}
-          images={images}
-        />
-      )}
-      {imagesToShow.length >= 4 && (
-        <RenderThree
-          clickEventListener={clickEventListener}
-          countFrom={countFrom}
-          images={images}
-        />
-      )}
-    </View>
+    <TouchableWithoutFeedback
+      onPress={() => {
+        !fromProfile
+          ? navigation.navigate('Look', {
+              screen: 'Look',
+              params: {
+                items: items,
+              },
+            })
+          : navigation.navigate('Look', { items: items });
+      }}>
+      <View style={[styles.container, gridStyle]}>
+        {[1, 3, 4].includes(imagesToShow.length) && (
+          <RenderOne clickEventListener={clickEventListener} images={images} />
+        )}
+        {imagesToShow.length >= 2 && imagesToShow.length != 4 && (
+          <RenderTwo
+            clickEventListener={clickEventListener}
+            countFrom={countFrom}
+            images={images}
+          />
+        )}
+        {imagesToShow.length >= 4 && (
+          <RenderThree
+            clickEventListener={clickEventListener}
+            countFrom={countFrom}
+            images={images}
+          />
+        )}
+      </View>
+    </TouchableWithoutFeedback>
   );
 });
 
