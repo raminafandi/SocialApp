@@ -35,7 +35,9 @@ export default React.memo(({ navigation, route }) => {
       <View key={key}>
         <ImageBackground source={{ uri: name }} style={styles.img}>
           <TouchableOpacity
-            onPress={() => {}}
+            onPress={() => {
+              setLocalItems(localItems.filter(item => item.key !== key))
+            }}
             style={{ justifyContent: 'flex-end', alignSelf: 'flex-end' }}>
             <MaterialIcons name="cancel" size={20} color="red" />
           </TouchableOpacity>

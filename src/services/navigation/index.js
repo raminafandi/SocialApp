@@ -15,6 +15,7 @@ import AddPostStack from './AddPostStack';
 import CommentsScreen from '../../screens/MainScreens/CommentsScreen';
 
 import { createStackNavigator } from '@react-navigation/stack';
+import AlternativeLookScreen from '../../screens/MainScreens/AlternativeLookScreen';
 
 const Tab = createBottomTabNavigator();
 const HomeStack = createStackNavigator();
@@ -36,6 +37,13 @@ const HomeLookStackScreen = () => {
     </HomeLookStack.Navigator>
   );
 };
+const OtherProfileStack = createStackNavigator();
+const OtherProfileStackComponent = () => (
+  <OtherProfileStack.Navigator>
+    <OtherProfileStack.Screen name="OtherProfile" component={OtherProfileScreen} />
+    <OtherProfileStack.Screen name="AlternativeLook" component={AlternativeLookScreen} />
+  </OtherProfileStack.Navigator>
+)
 const HomeStackScreen = () => (
   <HomeStack.Navigator>
     <HomeStack.Screen
@@ -60,7 +68,7 @@ const HomeStackScreen = () => (
     />
     <HomeStack.Screen
       name="OtherProfile"
-      component={OtherProfileScreen}
+      component={OtherProfileStackComponent}
       options={{ title: '' }}
     />
   </HomeStack.Navigator>
