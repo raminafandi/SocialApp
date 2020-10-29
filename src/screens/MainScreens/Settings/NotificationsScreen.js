@@ -10,7 +10,8 @@ import {
   SafeAreaView,
   Alert,
 } from 'react-native';
-
+import * as Notifications from 'expo-notifications';
+import * as Permissions from 'expo-permissions';
 import { window, wsize, hsize } from '../../../entities/constants';
 import {
   FontAwesome5,
@@ -27,10 +28,41 @@ const MainScreen = ({ navigation }) => {
   const authContext = useContext(AuthContext);
   const iconSize = 30;
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <ScrollView style={styles.container}></ScrollView>
-    </SafeAreaView>
+    <View
+      style={{
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'space-around',
+      }}>
+      <Text>Your expo push token: {expoPushToken}</Text>
+      <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+        <Text>Title: {notification && notification.request.content.title}</Text>
+        <Text>Body: {notification && notification.request.content.body}</Text>
+        <Text>
+          Data:
+          {notification && JSON.stringify(notification.request.content.data)}
+        </Text>
+      </View>
+      <Button
+        title="Press to schedule a notification"
+        onPress={async () => {
+          await schedulePushNotification(expoPushToken);
+        }}
+      />
+    </View>
   );
+
+  async function schedulePushNotification(token) {
+    await Notifications.scheduleNotificationAsync({
+      content: {
+        to: token,
+        title: 'TTOK-O! 📬',
+        body: 'Here is the notification body',
+        data: { data: 'goes here' },
+      },
+      trigger: { seconds: 1 },
+    });
+  }
 };
 
 const styles = StyleSheet.create({
