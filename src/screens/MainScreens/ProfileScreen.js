@@ -166,18 +166,10 @@ const BookmarsTab = React.memo(({ navigation, user }) => {
                   source={{ uri: item.data.coverImage }}
                 />
               ) : (
-                <TouchableOpacity
-                  onPress={() => {
-                    navigation.navigate('AlternativeLook', item.data);
-                  }}>
-                  <PhotoGrid
-                    items={item.data.images}
-                    clickEventListener={(itemFromGrid) =>
-                      navigation.navigate('AlternativeLook', item.data)
-                    }
-                    gridStyle={{ width: wsize(123), height: wsize(123) }}
-                  />
-                </TouchableOpacity>
+                <Image
+                  style={{ width: wsize(123), height: wsize(123) }}
+                  source={{ uri: item.data.images[0].image }}
+                />
               )}
             </TouchableWithoutFeedback>
           );

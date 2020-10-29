@@ -20,7 +20,6 @@ export default React.memo(function ({
           } else {
             setBullet(true);
           }
-          console.log('bullet', bullet);
         }}
         decelerationRate={'fast'}
         scrollEventThrottle={200}

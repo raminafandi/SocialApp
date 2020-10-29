@@ -76,7 +76,13 @@ const loginUser = (email, password) => {
     .auth()
     .signInWithEmailAndPassword(email, password)
     .then(() => {
-      registerForPushNotificationsAsync();
+      registerForPushNotificationsAsync().then((token) => console.log(token));
+      const subscription = Notifications.addNotificationReceivedListener(
+        (notification) => {
+          console.log(notification);
+        }
+      );
+      return () => subscription.remove(); // return removeListeners;
     })
     .catch((err) => {
       Alert.alert('Wrong Credentials', 'Login Credentials are not valid');
@@ -123,10 +129,7 @@ const addItemIdToProfile = (itemId) => {
 };
 
 const logoutUser = () => {
-  return firebase
-    .auth()
-    .signOut()
-    .catch(console.log);
+  return firebase.auth().signOut().catch(console.log);
 };
 
 const getUserInfo = (userId = firebase.auth().currentUser.uid) => {
@@ -189,7 +192,11 @@ const deleteSubRequestForPrivateUser = (userId) => {
   ]);
 };
 const isPrivateUser = (userId = firebase.auth().currentUser.uid) => {
-  return db.collection('users').doc(userId).get().then(doc => doc.data().private)
+  return db
+    .collection('users')
+    .doc(userId)
+    .get()
+    .then((doc) => doc.data().private);
 };
 const subscribeToUser = (userId) => {
   const currentUser = firebase.auth().currentUser;
@@ -235,15 +242,15 @@ const unsubscribeFromUser = (userId) => {
 const makePrivate = () => {
   let currentUser = firebase.auth().currentUser;
   return db.collection('users').doc(currentUser.uid).update({
-    private: true
-  })
+    private: true,
+  });
 };
 
 const makePublic = () => {
   let currentUser = firebase.auth().currentUser;
   return db.collection('users').doc(currentUser.uid).update({
-    private: false
-  })
+    private: false,
+  });
 };
 const updateUserInfo = async (
   user,
