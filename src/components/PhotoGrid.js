@@ -7,13 +7,13 @@ import {
   TouchableOpacity,
   Image,
 } from 'react-native';
-
+import { useNavigation } from '@react-navigation/native'
 export default React.memo(function ({
   images: propImages,
   items,
   gridStyle,
   clickEventListener,
-  navigation,
+  // navigation,
   fromProfile,
 }) {
   const [countFrom, setCountFrom] = useState(5);
@@ -79,23 +79,23 @@ export default React.memo(function ({
     ({ images, countFrom, clickEventListener }) => {
       const overlay =
         !countFrom ||
-        countFrom > 5 ||
-        (images.length > countFrom && [4, 5].includes(+countFrom)) ? (
-          <RenderCountOverlay
-            more
-            images={images}
-            countFrom={countFrom}
-            clickEventListener={clickEventListener}
-            conditionalRender={conditionalRender}
-          />
-        ) : (
-          <RenderCountOverlay
-            images={images}
-            countFrom={countFrom}
-            clickEventListener={clickEventListener}
-            conditionalRender={conditionalRender}
-          />
-        );
+          countFrom > 5 ||
+          (images.length > countFrom && [4, 5].includes(+countFrom)) ? (
+            <RenderCountOverlay
+              more
+              images={images}
+              countFrom={countFrom}
+              clickEventListener={clickEventListener}
+              conditionalRender={conditionalRender}
+            />
+          ) : (
+            <RenderCountOverlay
+              images={images}
+              countFrom={countFrom}
+              clickEventListener={clickEventListener}
+              conditionalRender={conditionalRender}
+            />
+          );
       const conditionalRender =
         images.length == 4 || (images.length > +countFrom && +countFrom == 4);
 
@@ -170,11 +170,11 @@ export default React.memo(function ({
           onPress={() => {
             !fromProfile
               ? navigation.navigate('Look', {
-                  screen: 'Look',
-                  params: {
-                    items: items,
-                  },
-                })
+                screen: 'Look',
+                params: {
+                  items: items,
+                },
+              })
               : navigation.navigate('Look', { items: items });
           }}>
           <View style={[styles.imageContent, styles.imageContent3]}>
@@ -194,20 +194,21 @@ export default React.memo(function ({
     }
   );
   const imagesToShow = [...images];
-
+  const navigation = useNavigation();
   if (countFrom && images.length > countFrom) {
     imagesToShow.length = countFrom;
   }
   return (
     <TouchableWithoutFeedback
+    style={gridStyle}
       onPress={() => {
         !fromProfile
           ? navigation.navigate('Look', {
-              screen: 'Look',
-              params: {
-                items: items,
-              },
-            })
+            screen: 'Look',
+            params: {
+              items: items,
+            },
+          })
           : navigation.navigate('Look', { items: items });
       }}>
       <View style={[styles.container, gridStyle]}>
