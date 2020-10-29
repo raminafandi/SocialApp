@@ -70,8 +70,10 @@ const LooksTab = React.memo(({  user }) => {
                     clickEventListener={() => { 
                       navigation.navigate('AlternativeLook', item)
                     }}
-                    gridStyle={{ width: wsize(123), height: wsize(123) }}
+                    gridStyle={{ width: wsize(123), height: wsize(123), overflow: 'hidden', }}
                     style={{ width: wsize(123), height: wsize(123) }}
+                    imageStyle={{width: 50, height: 50}}
+                    small
                   />
                 )}
             </TouchableOpacity>

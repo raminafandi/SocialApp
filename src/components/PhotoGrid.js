@@ -15,6 +15,9 @@ export default React.memo(function ({
   clickEventListener,
   // navigation,
   fromProfile,
+  imageStyle,
+  small,
+  ...props
 }) {
   const [countFrom, setCountFrom] = useState(5);
   const images = items ? items.map((item) => item.image) : propImages;
@@ -24,9 +27,9 @@ export default React.memo(function ({
         <TouchableWithoutFeedback
           disabled
           onPress={() => clickEventListener(items[0])}>
-          <View style={[styles.imageContent, styles.imageContent1]}>
+          <View style={[styles.imageContent, { height: small ? 60 : 120 }, styles.imageContent1]}>
             <Image
-              style={styles.image}
+              style={[styles.image, imageStyle]}
               source={{ uri: images[0] }}
               resizeMode="contain"
             />
@@ -49,9 +52,9 @@ export default React.memo(function ({
             items &&
               clickEventListener(conditionalRender ? items[1] : items[0]);
           }}>
-          <View style={[styles.imageContent, styles.imageContent2]}>
+          <View style={[styles.imageContent, { height: small ? 60 : 120 }, styles.imageContent2]}>
             <Image
-              style={styles.image}
+              style={[styles.image, imageStyle]}
               source={{ uri: conditionalRender ? images[1] : images[0] }}
               resizeMode="contain"
             />
@@ -63,9 +66,9 @@ export default React.memo(function ({
             items &&
               clickEventListener(conditionalRender ? items[2] : items[1]);
           }}>
-          <View style={[styles.imageContent, styles.imageContent2]}>
+          <View style={[styles.imageContent, { height: small ? 60 : 120 }, styles.imageContent2]}>
             <Image
-              style={styles.image}
+              style={[styles.image, imageStyle]}
               source={{ uri: conditionalRender ? images[2] : images[1] }}
               resizeMode="contain"
             />
@@ -107,9 +110,9 @@ export default React.memo(function ({
               items &&
                 clickEventListener(conditionalRender ? items[1] : items[2]);
             }}>
-            <View style={[styles.imageContent, styles.imageContent3]}>
+            <View style={[styles.imageContent, { height: small ? 60 : 120 }, styles.imageContent3]}>
               <Image
-                style={styles.image}
+                style={[styles.image, imageStyle]}
                 source={{ uri: conditionalRender ? images[1] : images[2] }}
                 resizeMode="contain"
               />
@@ -121,9 +124,9 @@ export default React.memo(function ({
               items &&
                 clickEventListener(conditionalRender ? items[2] : items[3]);
             }}>
-            <View style={[styles.imageContent, styles.imageContent3]}>
+            <View style={[styles.imageContent, { height: small ? 60 : 120 }, styles.imageContent3]}>
               <Image
-                style={styles.image}
+                style={[styles.image, imageStyle]}
                 source={{ uri: conditionalRender ? images[2] : images[3] }}
                 resizeMode="contain"
               />
@@ -141,9 +144,9 @@ export default React.memo(function ({
         onPress={() => {
           clickEventListener();
         }}>
-        <View style={[styles.imageContent, styles.imageContent3]}>
+        <View style={[styles.imageContent, { height: small ? 60 : 120 }, styles.imageContent3]}>
           <Image
-            style={styles.image}
+            style={[styles.image, imageStyle]}
             source={{ uri: images[images.length - 1] }}
             resizeMode="contain"
           />
@@ -177,9 +180,9 @@ export default React.memo(function ({
               })
               : navigation.navigate('Look', { items: items });
           }}>
-          <View style={[styles.imageContent, styles.imageContent3]}>
+          <View style={[styles.imageContent, { height: small ? 60 : 120 }, styles.imageContent3]}>
             <Image
-              style={styles.image}
+              style={[styles.image, imageStyle]}
               source={{ uri: conditionalRender ? images[3] : images[4] }}
               resizeMode="contain"
             />
@@ -200,7 +203,7 @@ export default React.memo(function ({
   }
   return (
     <TouchableWithoutFeedback
-    style={gridStyle}
+      style={gridStyle}
       onPress={() => {
         !fromProfile
           ? navigation.navigate('Look', {
