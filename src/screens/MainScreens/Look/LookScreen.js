@@ -1,3 +1,4 @@
+import { useRoute } from '@react-navigation/native';
 import React, {
   useState,
   useEffect,
@@ -19,7 +20,10 @@ import {
 import { window, wsize, hsize } from '../../../entities/constants';
 
 export default React.memo(({ navigation, route }) => {
-  const { items } = route.params;
+  const { items } = route.params
+
+
+  console.log("LOOOK SCREEN", items)
   return (
     <View style={styles.container}>
       <FlatList

@@ -19,6 +19,8 @@ import * as lookApi from '../services/api/look';
 import { bookmark, unmark } from '../services/api/user';
 import FontText from './FontText';
 import Slider from './Slider';
+import { useNavigation } from '@react-navigation/native';
+import LookScreen from '../screens/MainScreens/Look/LookScreen';
 
 const iconSize = wsize(28);
 
@@ -78,12 +80,14 @@ const BookmarkButton = React.memo(({ look, userInfo }) => {
   );
 });
 
-const Post = React.memo(({ look, navigation, userInfo, fromProfile }) => {
+const Post = React.memo(({ look, userInfo, fromProfile, fromOtherProfile }) => {
+  const navigation = useNavigation()
   const currentUser = firebase.auth().currentUser;
   const [numOfLikes, setNumOfLikes] = useState(look.likes?.length);
-  const clickEventListener = React.useCallback((item) => {
+  const clickEventListener = (item) => {
+    console.log('Item id in Post.js: ', item)
     navigation.navigate('Item', { fetchId: item.id });
-  });
+  };
   const clickEventListenerOverlay = React.useCallback((look) => {
     navigation.navigate('Look', { images: look });
   });
@@ -92,7 +96,6 @@ const Post = React.memo(({ look, navigation, userInfo, fromProfile }) => {
       screen: "OtherProfile",
       params: {
         user: look.author
-
       }
     });
   };
@@ -100,16 +103,32 @@ const Post = React.memo(({ look, navigation, userInfo, fromProfile }) => {
     <Slider
       coverImage={look.coverImage}
       items={[...look.images]}
-      clickEventListener={clickEventListener}
+      clickEventListener={() => {
+        navigation.navigate('Look', {
+          screen: 'Look',
+          params: {
+            items: look.images,
+          },
+        })
+      }}
       navigation={navigation}
     />
   ) : (
-      <PhotoGrid
-        items={[...look.images]}
-        clickEventListener={clickEventListener}
-        navigation={navigation}
-        fromProfile={fromProfile}
-      />
+      <TouchableOpacity onPress={() => {
+        navigation.navigate('Look', {
+          screen: 'Look',
+          params: {
+            items: look.images,
+          },
+        })
+      }}>
+        <PhotoGrid
+          items={[...look.images]}
+          clickEventListener={clickEventListener}
+        // navigation={navigation}
+        // fromProfile={fromProfile}
+        />
+      </TouchableOpacity>
     );
   return (
     <View style={styles.postContainer}>
@@ -201,6 +220,22 @@ const Post = React.memo(({ look, navigation, userInfo, fromProfile }) => {
       <TouchableOpacity
         style={styles.viewComments}
         onPress={() => {
+          if(fromOtherProfile){
+            console.log('FROM OTHER PROFILE')
+            navigation.navigate('Look', {
+              screen: 'Comments',
+              params: {
+                user: {
+                  id: currentUser.id,
+                  photoURL: currentUser.photoURL,
+                  displayName: currentUser.displayName,
+                },
+                postId: look.id,
+              },
+            })
+            return;
+          } 
+          
           !fromProfile
             ? navigation.navigate('Look', {
               screen: 'Comments',

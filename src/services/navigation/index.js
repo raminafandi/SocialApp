@@ -42,6 +42,7 @@ const OtherProfileStackComponent = () => (
   <OtherProfileStack.Navigator>
     <OtherProfileStack.Screen name="OtherProfile" component={OtherProfileScreen} />
     <OtherProfileStack.Screen name="AlternativeLook" component={AlternativeLookScreen} />
+    <OtherProfileStack.Screen name="Comment" component={CommentsScreen} />
   </OtherProfileStack.Navigator>
 )
 const HomeStackScreen = () => (

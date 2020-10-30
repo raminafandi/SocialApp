@@ -204,15 +204,26 @@ export default React.memo(function ({
   return (
     <TouchableWithoutFeedback
       style={gridStyle}
+      disabled
       onPress={() => {
-        !fromProfile
-          ? navigation.navigate('Look', {
+        // clickEventListener()
+        console.log('FromProfile: ', fromProfile)
+        fromProfile
+          // ? console.log('fromProfile')
+          ? clickEventListener()
+          // ? navigation.navigate('Look', {
+          //     screen: 'Look',
+          //     params: {
+          //       items: items,
+          //     },
+          //   })
+          // : console.log("NOT fromProfile")
+          : navigation.navigate('Look', {
             screen: 'Look',
             params: {
-              items: items,
-            },
-          })
-          : navigation.navigate('Look', { items: items });
+              items 
+            }
+          });
       }}>
       <View style={[styles.container, gridStyle]}>
         {[1, 3, 4].includes(imagesToShow.length) && (

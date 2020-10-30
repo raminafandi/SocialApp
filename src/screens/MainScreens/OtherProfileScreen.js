@@ -25,7 +25,7 @@ const tabs = {
   bookmarks: 'bookmarks',
 };
 
-const LooksTab = React.memo(({  user }) => {
+const LooksTab = React.memo(({ user }) => {
   const [data, setData] = useState([]);
   const navigation = useNavigation();
   const [loading, setLoading] = useState(true);
@@ -55,26 +55,46 @@ const LooksTab = React.memo(({  user }) => {
         renderItem={({ item }) => {
           return (
             <TouchableOpacity
-              style={{ width: wsize(123), height: wsize(123) }}
-              onPress={() => {
-                navigation.navigate('AlternativeLook', item);
-              }}>
+              // style={{ width: wsize(123), height: wsize(123) }}
+              // onPress={() => {
+              //   navigation.navigate('AlternativeLook', item);
+              // }}
+              >
               {item.coverImage ? (
                 <Image
                   style={{ width: wsize(123), height: wsize(123) }}
                   source={{ uri: item.coverImage }}
                 />
               ) : (
-                  <PhotoGrid
-                    items={item.images}
-                    clickEventListener={() => { 
-                      navigation.navigate('AlternativeLook', item)
-                    }}
-                    gridStyle={{ width: wsize(123), height: wsize(123), overflow: 'hidden', }}
-                    style={{ width: wsize(123), height: wsize(123) }}
-                    imageStyle={{width: 50, height: 50}}
-                    small
-                  />
+                  <TouchableOpacity onPress={() => {
+
+                    navigation.navigate('AlternativeLook', {
+                      item: item,
+                      fromOtherProfile: true,
+                      // items: item.data.images
+                    });
+                  }}>
+                    <PhotoGrid
+                      items={item.images}
+                      clickEventListener={() => {
+                        navigation.navigate('AlternativeLook', {
+                          item: item,
+                          // items: item.data.images
+                        });
+                        // navigation.navigate('AlternativeLook', item)
+                      }
+                      }
+                      gridStyle={{
+                        width: wsize(123),
+                        height: wsize(123),
+                        overflow: 'hidden',
+                      }}
+                      style={{ width: wsize(123), height: wsize(123) }}
+                      imageStyle={{ width: 50, height: 50 }}
+                      small
+                      fromProfile
+                    />
+                  </TouchableOpacity>
                 )}
             </TouchableOpacity>
           );

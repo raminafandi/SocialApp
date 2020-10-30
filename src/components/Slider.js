@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, ScrollView, Image, Dimensions } from 'react-native';
+import { View, StyleSheet, ScrollView, Image, Dimensions, TouchableWithoutFeedback } from 'react-native';
 import PhotoGrid from './PhotoGrid';
 import { window, wsize, hsize } from '../entities/constants';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 export default React.memo(function ({
   coverImage,
@@ -32,19 +33,21 @@ export default React.memo(function ({
             style={{ width: window.width - 35, height: 300 }}
           />
         </View>
-        <View style={{ flex: 1, width: window.width }}>
-          <PhotoGrid
-            items={items}
-            clickEventListener={clickEventListener}
-            navigation={navigation}
-            gridStyle={{
-              flex: 1,
-              justifyContent: 'center',
-              width: window.width,
-              marginLeft: -35,
-            }}
-          />
-        </View>
+        {/* <View style={{ flex: 1, width: window.width }}> */}
+          <TouchableOpacity style={{ flex: 1, width: window.width }} onPress={clickEventListener}>
+            <PhotoGrid
+              items={items}
+              clickEventListener={clickEventListener}
+              navigation={navigation}
+              gridStyle={{
+                flex: 1,
+                justifyContent: 'center',
+                width: window.width,
+                marginLeft: -35,
+              }}
+            />
+          </TouchableOpacity>
+        {/* </View> */}
       </ScrollView>
       {bullet ? (
         <View
@@ -57,16 +60,16 @@ export default React.memo(function ({
           <View style={styles.littleBullet} />
         </View>
       ) : (
-        <View
-          style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}>
-          <View style={styles.littleBullet} />
-          <View style={styles.bigBullet} />
-        </View>
-      )}
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}>
+            <View style={styles.littleBullet} />
+            <View style={styles.bigBullet} />
+          </View>
+        )}
     </View>
   );
 });
