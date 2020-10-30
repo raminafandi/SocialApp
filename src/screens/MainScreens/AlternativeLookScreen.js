@@ -5,7 +5,9 @@ import { getUserInfo } from '../../services/api/user';
 import LoadingScreen from '../OtherScreens/LoadingScreen';
 
 const AlternativeLookScreen = React.memo(function ({ navigation, route }) {
-  const item = route.params;
+  const item = route.params.item;
+  const fromOtherProfile = route.params.fromOtherProfile
+  console.log('item: ', item)
   const [userInfo, setUserInfo] = useState(null);
   useEffect(() => {
     getUserInfo().then((doc) => setUserInfo(doc.data()));
@@ -19,6 +21,7 @@ const AlternativeLookScreen = React.memo(function ({ navigation, route }) {
           userInfo={userInfo}
           navigation={navigation}
           fromProfile
+          fromOtherProfile={fromOtherProfile}
         />
       </ScrollView>
     );

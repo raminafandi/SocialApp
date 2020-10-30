@@ -59,31 +59,37 @@ const LooksTab = React.memo(({ navigation }) => {
         renderItem={({ item }) => {
           return (
             <TouchableWithoutFeedback
-              style={{ flex: 1, width: wsize(123), height: wsize(123) }}
               onPress={() => {
-                navigation.navigate('AlternativeLook', item);
-              }}>
+                // navigation.navigate('AlternativeLook', item);
+                navigation.navigate('AlternativeLook', { item: item.data, items: item.data.images });
+              }}
+              >
               {item.coverImage ? (
                 <Image
                   style={{ width: wsize(123), height: wsize(123) }}
                   source={{ uri: item.coverImage }}
                 />
               ) : (
-                <PhotoGrid
-                  items={item.images}
-                  clickEventListener={() => {
-                    navigation.navigate('AlternativeLook', item);
-                  }}
-                  gridStyle={{
-                    width: wsize(123),
-                    height: wsize(123),
-                    overflow: 'hidden',
-                  }}
-                  style={{ width: wsize(123), height: wsize(123) }}
-                  imageStyle={{ width: 50, height: 50 }}
-                  small
-                />
-              )}
+                  <TouchableOpacity onPress={() => {
+                    navigation.navigate('AlternativeLook', { item: item, items: item.images });
+                  }}>
+                    <PhotoGrid
+                      items={item.images}
+                      clickEventListener={() => {
+                        navigation.navigate('AlternativeLook', { item: item.data, items: item.data.images });
+                        // navigation.navigate('AlternativeLook', item);
+                      }}
+                      gridStyle={{
+                        width: wsize(123),
+                        height: wsize(123),
+                        overflow: 'hidden',
+                      }}
+                      style={{ width: wsize(123), height: wsize(123) }}
+                      imageStyle={{ width: 50, height: 50 }}
+                      small
+                    />
+                  </TouchableOpacity>
+                )}
             </TouchableWithoutFeedback>
           );
         }}
@@ -164,21 +170,26 @@ const BookmarsTab = React.memo(({ navigation, user }) => {
                   source={{ uri: item.data.coverImage }}
                 />
               ) : (
-                <PhotoGrid
-                  items={item.data.images}
-                  clickEventListener={() => {
-                    navigation.navigate('AlternativeLook', item.data);
-                  }}
-                  gridStyle={{
-                    width: wsize(123),
-                    height: wsize(123),
-                    overflow: 'hidden',
-                  }}
-                  style={{ width: wsize(123), height: wsize(123) }}
-                  imageStyle={{ width: 50, height: 50 }}
-                  small
-                />
-              )}
+                  <TouchableOpacity onPress={() => {
+                    navigation.navigate('AlternativeLook', { item: item.data, items: item.data.images });
+                  }}>
+                    <PhotoGrid
+                      items={item.data.images}
+                      clickEventListener={() => {
+                        navigation.navigate('AlternativeLook', { item: item.data, items: item.data.images });
+                      }}
+                      gridStyle={{
+                        width: wsize(123),
+                        height: wsize(123),
+                        overflow: 'hidden',
+                      }}
+                      style={{ width: wsize(123), height: wsize(123) }}
+                      imageStyle={{ width: 50, height: 50 }}
+                      small
+                      fromProfile
+                    />
+                  </TouchableOpacity>
+                )}
             </TouchableWithoutFeedback>
           );
         }}

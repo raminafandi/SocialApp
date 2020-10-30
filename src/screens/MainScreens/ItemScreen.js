@@ -20,6 +20,7 @@ import { bookmark, unmark, getUserInfo } from '../../services/api/user';
 import { AuthContext } from '../../services/context/AuthContext';
 const iconSize = wsize(26);
 export default React.memo(({ route }) => {
+  // console.log("fetchId: ", fetchId)
   const [item, setItem] = useState(null);
   const [display, setDisplay] = useState('none');
   const [userInfo, setUserInfo] = useState(null);
