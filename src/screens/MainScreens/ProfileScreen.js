@@ -425,6 +425,7 @@ const styles = StyleSheet.create({
   },
   followersText: {
     fontSize: wsize(15),
+    marginTop: hsize(3),
   },
   followersLittleButton: {
     borderWidth: 1,
