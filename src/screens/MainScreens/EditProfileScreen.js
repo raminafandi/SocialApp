@@ -28,7 +28,9 @@ const EditProfileScreen = ({ route, navigation }) => {
   const [status, setStatus] = useState(userExtraInfo.status || '');
   const [city, setCity] = useState(userExtraInfo.city || '');
   const [link, setLink] = useState(userExtraInfo.link || '');
-  const [description, setDescription] = useState(userExtraInfo.additionalInfo || '');
+  const [description, setDescription] = useState(
+    userExtraInfo.additionalInfo || ''
+  );
   const [email, setEmail] = useState(user.email || '');
   const [phone, setPhone] = useState(user.phoneNumber || '');
   const [gender, setGender] = useState(userExtraInfo.gender || '');
@@ -55,7 +57,18 @@ const EditProfileScreen = ({ route, navigation }) => {
       .finally(() => setLoading(false));
   };
   navigation.setOptions({
-    headerRight: () => <TextButton style={{ marginRight: wsize(10) }} onPress={submitHandler}>Save</TextButton>,
+    headerRight: () => (
+      <TextButton
+        style={{ marginRight: wsize(10) }}
+        textStyle={{
+          fontWeight: 'bold',
+          color: '#0148FF',
+          fontSize: wsize(18),
+        }}
+        onPress={submitHandler}>
+        Save
+      </TextButton>
+    ),
   });
   const changeProfilePicture = async () => {
     const res = await launchImageLibraryAsync();

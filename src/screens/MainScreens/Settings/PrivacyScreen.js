@@ -13,32 +13,36 @@ import {
 } from 'react-native';
 
 import { window, wsize, hsize } from '../../../entities/constants';
-import FontText from '../../../components/FontText'
-import { makePrivate, makePublic, isPrivateUser } from '../../../services/api/user'
-import LaodingScreen from '../../OtherScreens/LoadingScreen'
+import FontText from '../../../components/FontText';
+import {
+  makePrivate,
+  makePublic,
+  isPrivateUser,
+} from '../../../services/api/user';
+import LaodingScreen from '../../OtherScreens/LoadingScreen';
 const PrivacyScreen = ({ navigation }) => {
-  const [isEnabled, setIsEnabled] = useState(false)
-  const [loading, setLoading] = useState(true)
+  const [isEnabled, setIsEnabled] = useState(false);
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
-    isPrivateUser().then(privacy => {
-      setIsEnabled(privacy)
-
-    }).finally(() => setLoading(false))
-  }, [])
+    isPrivateUser()
+      .then((privacy) => {
+        setIsEnabled(privacy);
+      })
+      .finally(() => setLoading(false));
+  }, []);
   const handleSwitch = () => {
-    if (isEnabled)
-      makePublic();
-    else
-      makePrivate();
-    setIsEnabled(!isEnabled)
-  }
-  if (loading)
-    return <LaodingScreen fullscreen/>
+    if (isEnabled) makePublic();
+    else makePrivate();
+    setIsEnabled(!isEnabled);
+  };
+  if (loading) return <LaodingScreen fullscreen />;
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <ScrollView style={styles.container}>
         <View style={styles.row}>
-          <FontText font="Rubik" style={styles.optionName}>Private Accounts</FontText>
+          <FontText font="Rubik" style={styles.optionName}>
+            Private Account
+          </FontText>
           <Switch
             ios_backgroundColor="#3e3e3e"
             onValueChange={handleSwitch}
@@ -59,7 +63,7 @@ const styles = StyleSheet.create({
     width: window.width,
     justifyContent: 'space-between',
     paddingHorizontal: wsize(24),
-    flexDirection: 'row'
+    flexDirection: 'row',
   },
   optionName: {
     fontStyle: 'normal',
@@ -68,7 +72,6 @@ const styles = StyleSheet.create({
     lineHeight: 21,
     letterSpacing: 0.3,
     color: '#262626',
-
-  }
+  },
 });
 export default PrivacyScreen;
