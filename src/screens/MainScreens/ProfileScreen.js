@@ -69,22 +69,20 @@ const LooksTab = React.memo(({ navigation }) => {
                   source={{ uri: item.coverImage }}
                 />
               ) : (
-                // <TouchableOpacity
-                //   onPress={() => {
-                //     navigation.navigate('AlternativeLook', item);
-                //   }}>
-                <Image
+                <PhotoGrid
+                  items={item.images}
+                  clickEventListener={() => {
+                    navigation.navigate('AlternativeLook', item);
+                  }}
+                  gridStyle={{
+                    width: wsize(123),
+                    height: wsize(123),
+                    overflow: 'hidden',
+                  }}
                   style={{ width: wsize(123), height: wsize(123) }}
-                  source={{ uri: item.images[0].image }}
+                  imageStyle={{ width: 50, height: 50 }}
+                  small
                 />
-                // <PhotoGrid
-                //   items={item.images}
-                //   clickEventListener={(itemFromGrid) =>
-                //     navigation.navigate('AlternativeLook', item)
-                //   }
-                //   gridStyle={{ width: wsize(123), height: wsize(123) }}
-                // />
-                // </TouchableOpacity>
               )}
             </TouchableWithoutFeedback>
           );
@@ -166,9 +164,19 @@ const BookmarsTab = React.memo(({ navigation, user }) => {
                   source={{ uri: item.data.coverImage }}
                 />
               ) : (
-                <Image
+                <PhotoGrid
+                  items={item.data.images}
+                  clickEventListener={() => {
+                    navigation.navigate('AlternativeLook', item.data);
+                  }}
+                  gridStyle={{
+                    width: wsize(123),
+                    height: wsize(123),
+                    overflow: 'hidden',
+                  }}
                   style={{ width: wsize(123), height: wsize(123) }}
-                  source={{ uri: item.data.images[0].image }}
+                  imageStyle={{ width: 50, height: 50 }}
+                  small
                 />
               )}
             </TouchableWithoutFeedback>
