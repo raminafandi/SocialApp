@@ -17,7 +17,8 @@ import AddFriendScreen from '../../screens/MainScreens/AddFriendScreen';
 import FriendsScreen from '../../screens/MainScreens/FriendsScreen';
 import AlternativeLookScreen from '../../screens/MainScreens/AlternativeLookScreen';
 import CommentsScreen from '../../screens/MainScreens/CommentsScreen';
-import LookScreen from '../../screens/MainScreens/Look/LookScreen'
+import LookScreen from '../../screens/MainScreens/Look/LookScreen';
+import { wsize, hsize } from '../../entities/constants';
 
 const ProfileStack = createStackNavigator();
 
@@ -42,9 +43,23 @@ export default function ProfileStackScreen() {
       <ProfileStack.Screen
         name="EditProfile"
         component={EditProfileScreen}
-        options={{ title: 'Edit Profile', headerTitleAlign: 'center' }}
+        options={{
+          title: 'Edit Profile',
+          headerTitleAlign: 'center',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+            fontSize: wsize(18),
+          },
+        }}
       />
-      <ProfileStack.Screen name="Settings" component={SettingsScreen} />
+      <ProfileStack.Screen
+        name="Settings"
+        component={SettingsScreen}
+        options={{
+          headerTitleAlign: 'center',
+        }}
+      />
+      <ProfileStack.Screen name="AddFriend" component={AddFriendScreen} />
       <ProfileStack.Screen
         name="Notifications"
         component={NotificationsScreen}

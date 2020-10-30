@@ -1,7 +1,12 @@
 import React, { useState, useContext } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { MaterialIcons, AntDesign, Ionicons } from '@expo/vector-icons';
+import {
+  MaterialIcons,
+  AntDesign,
+  Ionicons,
+  Feather,
+} from '@expo/vector-icons';
 import HomeScreen from '../../screens/MainScreens/HomeScreen';
 import ItemScreen from '../../screens/MainScreens/ItemScreen';
 import DraggableGrid from '../../screens/MainScreens/Look/DraggableGrid';
@@ -13,6 +18,7 @@ import ProfileStackScreen from './ProfileStack';
 import AuthFlow from './AuthStack';
 import AddPostStack from './AddPostStack';
 import CommentsScreen from '../../screens/MainScreens/CommentsScreen';
+import { wsize, hsize } from '../../entities/constants';
 
 import { createStackNavigator } from '@react-navigation/stack';
 import AlternativeLookScreen from '../../screens/MainScreens/AlternativeLookScreen';
@@ -44,13 +50,20 @@ const OtherProfileStackComponent = () => (
     <OtherProfileStack.Screen name="AlternativeLook" component={AlternativeLookScreen} />
     <OtherProfileStack.Screen name="Comment" component={CommentsScreen} />
   </OtherProfileStack.Navigator>
-)
+);
 const HomeStackScreen = () => (
   <HomeStack.Navigator>
     <HomeStack.Screen
       name="Home"
       component={HomeScreen}
-      options={{ title: 'looks', headerTitleAlign: 'center' }}
+      options={{
+        title: 'looks',
+        headerTitleAlign: 'center',
+        headerTitleStyle: {
+          fontWeight: 'bold',
+          fontSize: wsize(34),
+        },
+      }}
     />
     <HomeStack.Screen
       name="Item"
@@ -85,11 +98,7 @@ const TabNav = () => (
       component={HomeStackScreen}
       options={{
         tabBarIcon: ({ focused, size }) => (
-          <AntDesign
-            name="home"
-            size={size}
-            color={focused ? 'blue' : 'black'}
-          />
+          <Feather name="grid" size={size} color={focused ? 'blue' : 'black'} />
         ),
       }}
     />
