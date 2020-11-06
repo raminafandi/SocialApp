@@ -41,7 +41,13 @@ const HeartButton = React.memo(({ commentId, likes, updateLikes, ...props }) => 
 export default function Comment({ style, id, author,comment, likes, navigation }) {
   const [numOfLikes, setNumOfLikes] = useState(likes.length);
   const profileHandler = () => {
-    navigation.navigate('OtherProfile', { user: author });
+    navigation.navigate('OtherProfile', {
+      screen: "OtherProfile",
+      params: {
+        user: author
+
+      }
+    });
   }
   return (
     <View style={[styles.commentContainer, style]}>

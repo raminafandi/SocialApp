@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, ScrollView, Image, Dimensions, TouchableWithoutFeedback } from 'react-native';
+import { View, StyleSheet, ScrollView, TouchableOpacity, Image, Dimensions, TouchableWithoutFeedback } from 'react-native';
 import PhotoGrid from './PhotoGrid';
 import { window, wsize, hsize } from '../entities/constants';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 
 export default React.memo(function ({
   coverImage,
@@ -33,7 +32,7 @@ export default React.memo(function ({
             style={{ width: window.width - 35, height: 300 }}
           />
         </View>
-        {/* <View style={{ flex: 1, width: window.width }}> */}
+        <View style={{ flex: 1, width: window.width }}>
           <TouchableOpacity style={{ flex: 1, width: window.width }} onPress={clickEventListener}>
             <PhotoGrid
               items={items}
@@ -47,7 +46,7 @@ export default React.memo(function ({
               }}
             />
           </TouchableOpacity>
-        {/* </View> */}
+        </View>
       </ScrollView>
       {bullet ? (
         <View

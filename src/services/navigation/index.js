@@ -49,6 +49,11 @@ const OtherProfileStackComponent = () => (
     <OtherProfileStack.Screen name="OtherProfile" component={OtherProfileScreen} />
     <OtherProfileStack.Screen name="AlternativeLook" component={AlternativeLookScreen} />
     <OtherProfileStack.Screen name="Comment" component={CommentsScreen} />
+    <OtherProfileStack.Screen
+      name="Look"
+      component={LookScreen}
+      options={{ title: '' }}
+    />
   </OtherProfileStack.Navigator>
 );
 const HomeStackScreen = () => (
@@ -142,8 +147,8 @@ export default React.memo(function navigation() {
             ) : authenticated ? (
               <TabNav />
             ) : (
-              <AuthFlow />
-            )}
+                  <AuthFlow />
+                )}
           </NavigationContainer>
         )}
       </AuthContext.Consumer>

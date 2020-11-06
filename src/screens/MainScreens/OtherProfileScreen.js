@@ -59,7 +59,15 @@ const LooksTab = React.memo(({ user }) => {
               // onPress={() => {
               //   navigation.navigate('AlternativeLook', item);
               // }}
-              >
+              onPress={() => {
+
+                navigation.navigate('AlternativeLook', {
+                  item: item,
+                  fromOtherProfile: true,
+                  // items: item.data.images
+                });
+              }}
+            >
               {item.coverImage ? (
                 <Image
                   style={{ width: wsize(123), height: wsize(123) }}
@@ -146,7 +154,6 @@ const ItemsTab = React.memo(({ navigation, user }) => {
 const OtherProfileScreen = ({ navigation, route }) => {
   const [modalVisible, setModalVisible] = useState(false);
   const { user } = route.params;
-  console.log(navigation)
   const { bookmarks, items, looks } = tabs;
   const [userExtraInfo, setUserExstraInfo] = useState(null);
   const [currentTab, setCurrentTab] = useState(looks);
@@ -235,9 +242,9 @@ const OtherProfileScreen = ({ navigation, route }) => {
             </View>
           </View>
           <View style={styles.followersContainerRight}>
-            <TouchableOpacity style={styles.followersLittleButton}>
+            {/* <TouchableOpacity style={styles.followersLittleButton}>
               <Text style={styles.lbuttonText}>chat</Text>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
             <TouchableOpacity
               style={styles.followersLittleButton}
               onPress={() => {

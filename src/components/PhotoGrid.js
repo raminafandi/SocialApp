@@ -207,7 +207,6 @@ export default React.memo(function ({
       disabled
       onPress={() => {
         // clickEventListener()
-        console.log('FromProfile: ', fromProfile)
         fromProfile
           // ? console.log('fromProfile')
           ? clickEventListener()

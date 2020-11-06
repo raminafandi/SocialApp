@@ -21,7 +21,19 @@ import LookScreen from '../../screens/MainScreens/Look/LookScreen';
 import { wsize, hsize } from '../../entities/constants';
 
 const ProfileStack = createStackNavigator();
-
+const OtherProfileStack = createStackNavigator();
+const OtherProfileStackComponent = () => (
+  <OtherProfileStack.Navigator>
+    <OtherProfileStack.Screen name="OtherProfile" component={OtherProfileScreen} />
+    <OtherProfileStack.Screen name="AlternativeLook" component={AlternativeLookScreen} />
+    <OtherProfileStack.Screen name="Comment" component={CommentsScreen} />
+    <OtherProfileStack.Screen
+      name="Look"
+      component={LookScreen}
+      options={{ title: '' }}
+    />
+  </OtherProfileStack.Navigator>
+);
 export default function ProfileStackScreen() {
   return (
     <ProfileStack.Navigator
@@ -39,7 +51,7 @@ export default function ProfileStackScreen() {
         }}
       />
       <ProfileStack.Screen name="Item" component={ItemScreen} />
-      <ProfileStack.Screen name="OtherProfile" component={OtherProfileScreen} />
+      <ProfileStack.Screen name="OtherProfile" component={OtherProfileStackComponent} />
       <ProfileStack.Screen
         name="EditProfile"
         component={EditProfileScreen}
