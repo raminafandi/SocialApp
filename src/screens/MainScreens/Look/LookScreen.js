@@ -19,11 +19,11 @@ import {
 
 import { window, wsize, hsize } from '../../../entities/constants';
 
-export default React.memo(({ navigation, route }) => {
+export default React.memo(({ navigation }) => {
+  const route = useRoute()
   const { items } = route.params
 
 
-  console.log("LOOOK SCREEN", items)
   return (
     <View style={styles.container}>
       <FlatList

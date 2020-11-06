@@ -21,6 +21,7 @@ import FontText from './FontText';
 import Slider from './Slider';
 import { useNavigation } from '@react-navigation/native';
 import LookScreen from '../screens/MainScreens/Look/LookScreen';
+import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
 const iconSize = wsize(28);
 
@@ -85,8 +86,20 @@ const Post = React.memo(({ look, userInfo, fromProfile, fromOtherProfile }) => {
   const currentUser = firebase.auth().currentUser;
   const [numOfLikes, setNumOfLikes] = useState(look.likes?.length);
   const clickEventListener = (item) => {
-    console.log('Item id in Post.js: ', item)
-    navigation.navigate('Item', { fetchId: item.id });
+    fromProfile || fromOtherProfile ?
+      navigation.navigate('Look', {
+        screen: 'Look',
+        items: look.images,
+
+      })
+      :
+      navigation.navigate('Look', {
+        screen: 'Look',
+        params: {
+          items: look.images,
+
+        }
+      })
   };
   const clickEventListenerOverlay = React.useCallback((look) => {
     navigation.navigate('Look', { images: look });
@@ -96,6 +109,7 @@ const Post = React.memo(({ look, userInfo, fromProfile, fromOtherProfile }) => {
       screen: "OtherProfile",
       params: {
         user: look.author
+
       }
     });
   };
@@ -103,32 +117,18 @@ const Post = React.memo(({ look, userInfo, fromProfile, fromOtherProfile }) => {
     <Slider
       coverImage={look.coverImage}
       items={[...look.images]}
-      clickEventListener={() => {
-        navigation.navigate('Look', {
-          screen: 'Look',
-          params: {
-            items: look.images,
-          },
-        })
-      }}
+      clickEventListener={clickEventListener}
       navigation={navigation}
     />
   ) : (
-      <TouchableOpacity onPress={() => {
-        navigation.navigate('Look', {
-          screen: 'Look',
-          params: {
-            items: look.images,
-          },
-        })
-      }}>
+      <TouchableWithoutFeedback onPress={clickEventListener}>
         <PhotoGrid
           items={[...look.images]}
           clickEventListener={clickEventListener}
         // navigation={navigation}
         // fromProfile={fromProfile}
         />
-      </TouchableOpacity>
+      </TouchableWithoutFeedback>
     );
   return (
     <View style={styles.postContainer}>
@@ -220,8 +220,7 @@ const Post = React.memo(({ look, userInfo, fromProfile, fromOtherProfile }) => {
       <TouchableOpacity
         style={styles.viewComments}
         onPress={() => {
-          if(fromOtherProfile){
-            console.log('FROM OTHER PROFILE')
+          if (fromOtherProfile) {
             navigation.navigate('Look', {
               screen: 'Comments',
               params: {
@@ -234,8 +233,8 @@ const Post = React.memo(({ look, userInfo, fromProfile, fromOtherProfile }) => {
               },
             })
             return;
-          } 
-          
+          }
+
           !fromProfile
             ? navigation.navigate('Look', {
               screen: 'Comments',

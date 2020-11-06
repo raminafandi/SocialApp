@@ -13,7 +13,7 @@ const AddPostScreen = ({ navigation }) => {
           title="look"
           onPress={() => navigation.navigate('SearchLook')}
           style={{
-            backgroundColor: '#52BDEB',
+            backgroundColor: '#6044F0',
             marginTop: wsize(5),
             width: wsize(335),
             height: hsize(83),
@@ -24,7 +24,7 @@ const AddPostScreen = ({ navigation }) => {
           title="item"
           onPress={() => navigation.navigate('AddPhoto')}
           style={{
-            backgroundColor: '#0148FF',
+            backgroundColor: '#52BDEB',
             marginTop: wsize(5),
             width: wsize(335),
             height: hsize(83),
@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: wsize(36),
-    fontWeight: 'bold', //should be fixed to the 500
+    fontWeight: '500', //should be fixed to the 500
     marginBottom: hsize(38),
   },
 });

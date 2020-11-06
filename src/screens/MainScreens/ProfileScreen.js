@@ -61,9 +61,9 @@ const LooksTab = React.memo(({ navigation }) => {
             <TouchableWithoutFeedback
               onPress={() => {
                 // navigation.navigate('AlternativeLook', item);
-                navigation.navigate('AlternativeLook', { item: item.data, items: item.data.images });
+                navigation.navigate('AlternativeLook', { item: item, items: item.images });
               }}
-              >
+            >
               {item.coverImage ? (
                 <Image
                   style={{ width: wsize(123), height: wsize(123) }}
@@ -162,7 +162,8 @@ const BookmarsTab = React.memo(({ navigation, user }) => {
           return (
             <TouchableWithoutFeedback
               onPress={() => {
-                navigation.navigate('AlternativeLook', item.data);
+                navigation.navigate('AlternativeLook', { item: item.data, items: item.data.images })
+                // navigation.navigate('AlternativeLook', item.data);
               }}>
               {item.data.coverImage ? (
                 <Image
@@ -176,7 +177,7 @@ const BookmarsTab = React.memo(({ navigation, user }) => {
                     <PhotoGrid
                       items={item.data.images}
                       clickEventListener={() => {
-                        navigation.navigate('AlternativeLook', { item: item.data, items: item.data.images });
+                        // navigation.navigate('AlternativeLook', { item: item.data, items: item.data.images });
                       }}
                       gridStyle={{
                         width: wsize(123),
