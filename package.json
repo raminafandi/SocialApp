@@ -24,7 +24,7 @@
     "expo-notifications": "~0.3.3",
     "expo-permissions": "~9.0.1",
     "expo-status-bar": "^1.0.2",
-    "firebase": "7.9.0",
+    "firebase": "10.9.0",
     "react": "~16.11.0",
     "react-dom": "~16.11.0",
     "react-instantsearch-native": "^6.7.0",
